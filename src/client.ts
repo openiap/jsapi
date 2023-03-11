@@ -42,7 +42,7 @@ export class client {
     try {
       this.replies = {};
       this.streams = {};
-      this.doping = config.DoPing;
+      this.doping = config.settings.DoPing;
       if (ws != null) this.ws = ws;
       if (stream != null) this.stream = stream;
       if (call != null) this.call = call;

@@ -13,7 +13,7 @@ export class openiap {
     client: client;
     reconnectms: number = 100;
     public signedin: boolean = false;
-    constructor(public url: string) {
+    constructor(public url: string, public jwt: string) {
     }
     loginresolve: any;
     async connect(first: boolean) {
@@ -43,6 +43,8 @@ export class openiap {
         this.reconnectms = 100;
         var u = new URL(this.url);
         var _jwt = process.env.jwt
+        if(client.jwt != null && client.jwt != "") _jwt = client.jwt;
+        if(this.jwt != null && this.jwt != "") _jwt = this.jwt;
         var _username = u.username;
         var _password = u.password;
         if(_jwt == null) _jwt = "";
@@ -50,14 +52,14 @@ export class openiap {
         if(_password == null) _password = "";
 
         if (_username != "" && _password != "") {
-            var user = await this.Signin({ username: _username, password: _password, ping: config.DoPing })
+            var user = await this.Signin({ username: _username, password: _password, ping: config.settings.DoPing })
             if (this.loginresolve != null) {
                 this.loginresolve(user);
                 this.loginresolve = null;
             }
             return;
         } else if (_jwt != "") {
-            var user = await this.Signin({ jwt: _jwt, ping: config.DoPing })
+            var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing })
             if (this.loginresolve != null) {
                 this.loginresolve(user);
                 this.loginresolve = null;

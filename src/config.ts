@@ -1,25 +1,27 @@
 export class config {
-  public static ThrottlerMS:number = 0;
-  public static EndstreamDelay:number = 0;
-  public static BeginstreamDelay:number = 0;
-  public static ChecksumCheckFiles:boolean = true;
-  public static ChecksumCheckPackages:boolean = false;
-  public static DoPing:boolean = true;
-  public static doDumpStack:boolean = true;
-  public static doDumpMesssages:boolean = false;
-  public static doDumpMesssagesSeq:boolean = true;
-  public static doDumpMesssagesIds:boolean = true;
-  public static doDumpTimestamp:boolean = false;
-  public static doDumpMesssageStreams:boolean = true;
-  public static doDumpMessageHexLines:number = 50
-  public static doDumpMessageHexBytesPerLine:number = 16 * 2;
-  public static DoDumpToConsole:boolean = true;
-  public static doDumpToFile:boolean = false;
-  public static defaultsocketport:number = 8080;
-  public static defaultwebport:number = 8080;
-  public static defaultgrpcport:number = 50051; // 50051;
-  public static SendFileHighWaterMark:number = 1024 * 256;
-  public static role:string = "client";
+  public static settings = {
+    ThrottlerMS : 0,
+    EndstreamDelay : 0,
+    BeginstreamDelay : 0,
+    ChecksumCheckFiles : true,
+    ChecksumCheckPackages : false,
+    DoPing : false,
+    doDumpStack : false,
+    doDumpMesssages : false,
+    doDumpMesssagesSeq : true,
+    doDumpMesssagesIds : true,
+    doDumpTimestamp : false,
+    doDumpMesssageStreams : false,
+    doDumpMessageHexLines : 50,
+    doDumpMessageHexBytesPerLine : 16 * 2,
+    DoDumpToConsole : false,
+    doDumpToFile : false,
+    defaultsocketport : 8080,
+    defaultwebport : 8080,
+    defaultgrpcport : 50051,
+    SendFileHighWaterMark : 1024 * 256,
+    role : "client"
+  }
 
   public static color = {
     Reset: "\x1b[0m",
@@ -57,18 +59,18 @@ export class config {
   }
   public static err(error:any) {
     if(!error) return;
-    if (error && error.stack && config.doDumpStack) {
+    if (error && error.stack && config.settings.doDumpStack) {
       console.log(`[${config.colrole()}][${config.col("ERR", config.color.FgRed)}] ${error.stack}`);
       return
     }
     console.log(`[${config.colrole()}][${config.col("ERR", config.color.FgRed)}] ${error.message ? error.message : error}`);
   }
   public static dumpmessage(direction:string, message:any) {
-    if (!config.doDumpMesssages) return;
+    if (!config.settings.doDumpMesssages) return;
     let { id, rid, command } = message;
     let sequence = message.seq;
     if (command == "beginstream" || command == "stream" || command == "endstream") {
-      if (!config.doDumpMesssageStreams)
+      if (!config.settings.doDumpMesssageStreams)
         return;
     }
     if (!rid) rid = "";
@@ -90,7 +92,7 @@ export class config {
     }
     var columns = 90;
     var sub = 3;
-    sub = `${config.ts()}[${config.role}][${direction}]${config.seq(sequence, id, rid)}[${command}] `.length;
+    sub = `${config.ts()}[${config.settings.role}][${direction}]${config.seq(sequence, id, rid)}[${command}] `.length;
     if (data && data.length > columns) data = data.substr(0, columns - sub -3 ) + "...";
     if (direction == "SND") direction = config.col(direction, config.color.Dim + config.color.FgGreen);
     if (direction == "RCV") direction = config.col(direction, config.color.FgCyan);
@@ -101,7 +103,7 @@ export class config {
     if (data) {
       if (message.command == "stream" && message.data.length > 6) {
         config.dumpdata(message.data);
-        if (!config.doDumpMesssageStreams)
+        if (!config.settings.doDumpMesssageStreams)
           return;
       }
     }
@@ -114,20 +116,20 @@ export class config {
     var content = "";
     const ALL_EXCEPT_PRINTABLE_LATIN = /[^\x20-\x7f]/g
     const CONTROL_CHARACTERS_ONLY = /[\x00-\x1f]/g
-    if(config.DoDumpToConsole) {
-      for (var start = 0; start < data.length && start < (config.doDumpMessageHexLines*config.doDumpMessageHexBytesPerLine); start += config.doDumpMessageHexBytesPerLine) {
-        const end = Math.min(start + config.doDumpMessageHexBytesPerLine, data.length)
+    if(config.settings.DoDumpToConsole) {
+      for (var start = 0; start < data.length && start < (config.settings.doDumpMessageHexLines*config.settings.doDumpMessageHexBytesPerLine); start += config.settings.doDumpMessageHexBytesPerLine) {
+        const end = Math.min(start + config.settings.doDumpMessageHexBytesPerLine, data.length)
         const slice = data.slice(start, end)
-        content += config.hex(slice, config.doDumpMessageHexBytesPerLine, 2, radix, littleEndian) + " " + slice.toString('ascii').replace(CONTROL_CHARACTERS_ONLY, ".") + "\n";
+        content += config.hex(slice, config.settings.doDumpMessageHexBytesPerLine, 2, radix, littleEndian) + " " + slice.toString('ascii').replace(CONTROL_CHARACTERS_ONLY, ".") + "\n";
       }
       console.log(content.substring(0, content.length - 1));
     }
   
-    if(config.doDumpToFile) {
-      for (var start = 0; start < data.length; start += config.doDumpMessageHexBytesPerLine) {
-        const end = Math.min(start + config.doDumpMessageHexBytesPerLine, data.length)
+    if(config.settings.doDumpToFile) {
+      for (var start = 0; start < data.length; start += config.settings.doDumpMessageHexBytesPerLine) {
+        const end = Math.min(start + config.settings.doDumpMessageHexBytesPerLine, data.length)
         const slice = data.slice(start, end)
-        content += config.hex(slice, config.doDumpMessageHexBytesPerLine, 2, radix, littleEndian) + " " + slice.toString('ascii').replace(CONTROL_CHARACTERS_ONLY, ".") + "\n";
+        content += config.hex(slice, config.settings.doDumpMessageHexBytesPerLine, 2, radix, littleEndian) + " " + slice.toString('ascii').replace(CONTROL_CHARACTERS_ONLY, ".") + "\n";
       }
       
     }
@@ -222,23 +224,23 @@ export class config {
     return c + text + config.color.Reset;
   }
   static colrole() {
-    if (config.role == "client") {
-      return config.col(config.role, config.color.Dim + config.color.FgBlue);
+    if (config.settings.role == "client") {
+      return config.col(config.settings.role, config.color.Dim + config.color.FgBlue);
     }
-    return config.col(config.role, config.color.Dim + config.color.FgGreen);
+    return config.col(config.settings.role, config.color.Dim + config.color.FgGreen);
   }
   static ts() {
-    if(!config.doDumpTimestamp) return "";
+    if(!config.settings.doDumpTimestamp) return "";
     var dt = new Date();
     return "[" + dt.getHours().toString().padStart(2, '0') + ":" + dt.getMinutes().toString().padStart(2, '0') + ":" + 
     dt.getSeconds().toString().padStart(2, '0') + "." + dt.getMilliseconds().toString().padStart(3, '0') + "]";
   }
   static seq(sequence: number, id:string, rid:string) {
     var result = "";
-    if(config.doDumpMesssagesSeq) {
+    if(config.settings.doDumpMesssagesSeq) {
       result += `[${sequence}]`;
     }
-    if(config.doDumpMesssagesIds) {
+    if(config.settings.doDumpMesssagesIds) {
       result += `[${id}][${rid}]`;
     }
     return result;
