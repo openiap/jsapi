@@ -1,11 +1,12 @@
 export class config {
+  public static instance: config;
   public static ThrottlerMS:number = 0;
   public static EndstreamDelay:number = 0;
   public static BeginstreamDelay:number = 0;
   public static ChecksumCheckFiles:boolean = true;
   public static ChecksumCheckPackages:boolean = false;
   public static DoPing:boolean = true;
-  public static doDumpStack:boolean = true;
+  public static doDumpStack:boolean = false;
   public static doDumpMesssages:boolean = false;
   public static doDumpMesssagesSeq:boolean = true;
   public static doDumpMesssagesIds:boolean = true;
@@ -13,7 +14,7 @@ export class config {
   public static doDumpMesssageStreams:boolean = true;
   public static doDumpMessageHexLines:number = 50
   public static doDumpMessageHexBytesPerLine:number = 16 * 2;
-  public static DoDumpToConsole:boolean = true;
+  public static DoDumpToConsole:boolean = false;
   public static doDumpToFile:boolean = false;
   public static defaultsocketport:number = 8080;
   public static defaultwebport:number = 8080;
