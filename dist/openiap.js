@@ -169,7 +169,7 @@ var openiap = /** @class */ (function () {
                         rt = RefreshToken.decode(message.data.value);
                         this.client.jwt = rt.jwt;
                         this.client.user = rt.user;
-                        return [3 /*break*/, 13];
+                        return [2 /*return*/, null];
                     case 1:
                         if (!(message.command == "watchevent")) return [3 /*break*/, 2];
                         we = BLAHBLAH;

@@ -98,6 +98,7 @@ export class openiap {
             let rt: RefreshToken = RefreshToken.decode(message.data.value);
             this.client.jwt = rt.jwt;
             this.client.user = rt.user;
+            return null;
         } else if (message.command == "watchevent") {
             let we: WatchEvent = BLAHBLAH;
             if (this.watchids[we.id]) {
