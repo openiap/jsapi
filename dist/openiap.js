@@ -160,7 +160,7 @@ var openiap = /** @class */ (function () {
     };
     openiap.prototype.onMessage = function (client, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, command, BLAHBLAH, reply, rt, we, we, data, user, data, reply2, error_1;
+            var _a, command, BLAHBLAH, reply, rt, we, we, data, user_1, data, user, jwt, reply2, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -187,10 +187,10 @@ var openiap = /** @class */ (function () {
                         data = JSON.parse(we.data);
                         delete data.spanId;
                         delete data.traceId;
-                        user = data.__user;
+                        user_1 = data.__user;
                         delete data.__jwt;
                         delete data.__user;
-                        this.queuecallbacks[we.correlationId](data, user);
+                        this.queuecallbacks[we.correlationId](data, user_1);
                         delete this.queuecallbacks[we.correlationId];
                         return [3 /*break*/, 11];
                     case 3:
@@ -202,7 +202,15 @@ var openiap = /** @class */ (function () {
                         if (typeof data == "string") {
                             data = JSON.parse(data);
                         }
-                        return [4 /*yield*/, this.queues[we.queuename](we, data)];
+                        user = null;
+                        jwt = null;
+                        if (data.__jwt != null)
+                            jwt = data.__jwt;
+                        if (data.__user != null)
+                            user = data.__user;
+                        delete data.__jwt;
+                        delete data.__user;
+                        return [4 /*yield*/, this.queues[we.queuename](we, data, user, jwt)];
                     case 5:
                         reply2 = _b.sent();
                         if (!(reply2 != null)) return [3 /*break*/, 7];

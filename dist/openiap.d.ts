@@ -43,8 +43,8 @@ export declare class openiap {
     UploadFile(filename: string, mimetype: string, content: Uint8Array): Promise<string>;
     queues: any;
     defaltqueue: string;
-    RegisterQueue(options: RegisterQueueOptions, callback: (msg: QueueEvent, payload: any) => any): Promise<string>;
-    RegisterExchange(options: RegisterExchangeOptions, callback: (msg: QueueEvent, payload: any) => any): Promise<string>;
+    RegisterQueue(options: RegisterQueueOptions, callback: (msg: QueueEvent, payload: any, user: any, jwt: string) => any): Promise<string>;
+    RegisterExchange(options: RegisterExchangeOptions, callback: (msg: QueueEvent, payload: any, user: any, jwt: string) => any): Promise<string>;
     UnRegisterQueue(options: UnRegisterQueueOptions): Promise<void>;
     queuecallbacks: any;
     QueueMessage(options: QueueMessageOptions, rpc?: boolean): Promise<any>;

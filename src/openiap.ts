@@ -121,7 +121,13 @@ export class openiap {
                 try {
                     var data = JSON.parse(we.data)
                     if (typeof data == "string") { data = JSON.parse(data)}
-                    var reply2 = await this.queues[we.queuename](we, data);
+                    var user = null;
+                    var jwt = null;
+                    if(data.__jwt != null) jwt = data.__jwt;
+                    if(data.__user != null) user = data.__user;
+                    delete data.__jwt;
+                    delete data.__user;
+                    var reply2 = await this.queues[we.queuename](we, data, user, jwt);
                     if(reply2 != null) {
                         await this.QueueMessage({ correlationId: we.correlationId, queuename: we.replyto, data: reply2, striptoken: true}, false);
                     }
@@ -345,7 +351,7 @@ export class openiap {
     }
     queues: any = {};
     defaltqueue: string = "";
-    async RegisterQueue(options: RegisterQueueOptions, callback: (msg: QueueEvent, payload: any)=> any ): Promise<string> {
+    async RegisterQueue(options: RegisterQueueOptions, callback: (msg: QueueEvent, payload: any, user: any, jwt: string)=> any ): Promise<string> {
         if (!callback) return "";
         const opt: RegisterQueueOptions = Object.assign(new RegisterQueueDefaults(), options)
         let message = RegisterQueueRequest.create(opt as any);
@@ -360,7 +366,7 @@ export class openiap {
         }
         return result.queuename;
     }
-    async RegisterExchange(options: RegisterExchangeOptions, callback: (msg: QueueEvent, payload: any)=> any): Promise<string> {
+    async RegisterExchange(options: RegisterExchangeOptions, callback: (msg: QueueEvent, payload: any, user: any, jwt: string)=> any): Promise<string> {
         if (!callback) return "";
         const opt: RegisterExchangeOptions = Object.assign(new RegisterExchangeDefaults(), options)
         let message = RegisterExchangeRequest.create(opt as any);
