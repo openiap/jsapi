@@ -702,7 +702,7 @@ var openiap = /** @class */ (function () {
                         return [4 /*yield*/, protowrap.RPC(this.client, payload)];
                     case 1:
                         result = _b.apply(_a, [(_c.sent()).data.value]);
-                        if (this.defaltqueue == "")
+                        if (this.defaltqueue == "" && (opt.queuename == "" || opt.queuename == null))
                             this.defaltqueue = result.queuename;
                         if (result.queuename != null && result.queuename != "" && result.queuename != opt.queuename) {
                             this.queues[result.queuename] = callback;

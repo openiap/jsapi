@@ -359,7 +359,7 @@ export class openiap {
         const payload = Envelope.create({ command: "registerqueue", data, jwt: opt.jwt });
         if(opt.queuename && opt.queuename != "") this.queues[opt.queuename] = callback;
         const result = RegisterQueueResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
-        if(this.defaltqueue == "") this.defaltqueue = result.queuename;
+        if(this.defaltqueue == "" && (opt.queuename == ""|| opt.queuename == null)) this.defaltqueue = result.queuename;
         if (result.queuename != null && result.queuename != "" && result.queuename != opt.queuename) {
             this.queues[result.queuename] = callback;
             delete this.queues[opt.queuename];
