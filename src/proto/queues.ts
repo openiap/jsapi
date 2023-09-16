@@ -30,6 +30,7 @@ export interface QueueMessageRequest {
   exchangename: string;
   data: string;
   striptoken: boolean;
+  expiration: number;
 }
 
 export interface QueueMessageResponse {
@@ -312,6 +313,7 @@ function createBaseQueueMessageRequest(): QueueMessageRequest {
     exchangename: "",
     data: "",
     striptoken: false,
+    expiration: 0,
   };
 }
 
@@ -337,6 +339,9 @@ export const QueueMessageRequest = {
     }
     if (message.striptoken === true) {
       writer.uint32(56).bool(message.striptoken);
+    }
+    if (message.expiration !== 0) {
+      writer.uint32(64).int32(message.expiration);
     }
     return writer;
   },
@@ -369,6 +374,9 @@ export const QueueMessageRequest = {
         case 7:
           message.striptoken = reader.bool();
           break;
+        case 8:
+          message.expiration = reader.int32();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -386,6 +394,7 @@ export const QueueMessageRequest = {
       exchangename: isSet(object.exchangename) ? String(object.exchangename) : "",
       data: isSet(object.data) ? String(object.data) : "",
       striptoken: isSet(object.striptoken) ? Boolean(object.striptoken) : false,
+      expiration: isSet(object.expiration) ? Number(object.expiration) : 0,
     };
   },
 
@@ -398,6 +407,7 @@ export const QueueMessageRequest = {
     message.exchangename !== undefined && (obj.exchangename = message.exchangename);
     message.data !== undefined && (obj.data = message.data);
     message.striptoken !== undefined && (obj.striptoken = message.striptoken);
+    message.expiration !== undefined && (obj.expiration = Math.round(message.expiration));
     return obj;
   },
 
@@ -414,6 +424,7 @@ export const QueueMessageRequest = {
     message.exchangename = object.exchangename ?? "";
     message.data = object.data ?? "";
     message.striptoken = object.striptoken ?? false;
+    message.expiration = object.expiration ?? 0;
     return message;
   },
 };

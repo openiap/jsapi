@@ -3,8 +3,9 @@ import * as _m0 from "protobufjs/minimal";
 import { map } from "rxjs/operators";
 import { Any } from "./google/protobuf/any";
 import { Timestamp } from "./google/protobuf/timestamp";
-import { AggregateRequest, AggregateResponse, CountRequest, CountResponse, DeleteManyRequest, DeleteManyResponse, DeleteOneRequest, DeleteOneResponse, DropCollectionRequest, DropCollectionResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, InsertManyRequest, InsertManyResponse, InsertOneRequest, InsertOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, ListCollectionsRequest, ListCollectionsResponse, QueryRequest, QueryResponse, UpdateDocumentRequest, UpdateDocumentResponse, UpdateOneRequest, UpdateOneResponse, } from "./querys";
+import { AggregateRequest, AggregateResponse, CountRequest, CountResponse, CreateCollectionRequest, CreateCollectionResponse, DeleteManyRequest, DeleteManyResponse, DeleteOneRequest, DeleteOneResponse, DropCollectionRequest, DropCollectionResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, InsertManyRequest, InsertManyResponse, InsertOneRequest, InsertOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, ListCollectionsRequest, ListCollectionsResponse, QueryRequest, QueryResponse, UpdateDocumentRequest, UpdateDocumentResponse, UpdateOneRequest, UpdateOneResponse, } from "./querys";
 import { QueueMessageRequest, QueueMessageResponse, RegisterExchangeRequest, RegisterExchangeResponse, RegisterQueueRequest, RegisterQueueResponse, UnRegisterQueueRequest, UnRegisterQueueResponse, } from "./queues";
+import { StripeCustomer } from "./stripe";
 import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch";
 import { AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, PushWorkitemRequest, PushWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, } from "./workitems";
 export var protobufPackage = "openiap";
@@ -199,6 +200,43 @@ export var PingResponse = {
     },
     fromPartial: function (_) {
         var message = createBasePingResponse();
+        return message;
+    },
+};
+function createBaseNoop() {
+    return {};
+}
+export var Noop = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseNoop();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (_) {
+        return {};
+    },
+    toJSON: function (_) {
+        var obj = {};
+        return obj;
+    },
+    create: function (base) {
+        return Noop.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (_) {
+        var message = createBaseNoop();
         return message;
     },
 };
@@ -1481,6 +1519,472 @@ export var User = {
         return message;
     },
 };
+function createBaseCustomer() {
+    return {
+        _id: "",
+        _type: "",
+        stripeid: "",
+        userid: "",
+        name: "",
+        country: "",
+        email: "",
+        address: "",
+        vattype: "",
+        vatnumber: "",
+        taxrate: "",
+        tax: 0,
+        coupon: "",
+        hascard: false,
+        memory: "",
+        openflowuserplan: "",
+        supportplan: "",
+        supporthourplan: "",
+        subscriptionid: "",
+        admins: "",
+        users: "",
+        customattr1: "",
+        customattr2: "",
+        customattr3: "",
+        customattr4: "",
+        customattr5: "",
+        domains: [],
+        dbusage: 0,
+        dblocked: false,
+    };
+}
+export var Customer = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message._id !== "") {
+            writer.uint32(10).string(message._id);
+        }
+        if (message._type !== "") {
+            writer.uint32(18).string(message._type);
+        }
+        if (message.stripeid !== "") {
+            writer.uint32(26).string(message.stripeid);
+        }
+        if (message.userid !== "") {
+            writer.uint32(34).string(message.userid);
+        }
+        if (message.name !== "") {
+            writer.uint32(42).string(message.name);
+        }
+        if (message.country !== "") {
+            writer.uint32(50).string(message.country);
+        }
+        if (message.email !== "") {
+            writer.uint32(58).string(message.email);
+        }
+        if (message.address !== "") {
+            writer.uint32(66).string(message.address);
+        }
+        if (message.vattype !== "") {
+            writer.uint32(74).string(message.vattype);
+        }
+        if (message.vatnumber !== "") {
+            writer.uint32(82).string(message.vatnumber);
+        }
+        if (message.taxrate !== "") {
+            writer.uint32(90).string(message.taxrate);
+        }
+        if (message.tax !== 0) {
+            writer.uint32(96).int32(message.tax);
+        }
+        if (message.coupon !== "") {
+            writer.uint32(106).string(message.coupon);
+        }
+        if (message.hascard === true) {
+            writer.uint32(112).bool(message.hascard);
+        }
+        if (message.memory !== "") {
+            writer.uint32(122).string(message.memory);
+        }
+        if (message.openflowuserplan !== "") {
+            writer.uint32(130).string(message.openflowuserplan);
+        }
+        if (message.supportplan !== "") {
+            writer.uint32(138).string(message.supportplan);
+        }
+        if (message.supporthourplan !== "") {
+            writer.uint32(146).string(message.supporthourplan);
+        }
+        if (message.subscriptionid !== "") {
+            writer.uint32(154).string(message.subscriptionid);
+        }
+        if (message.admins !== "") {
+            writer.uint32(162).string(message.admins);
+        }
+        if (message.users !== "") {
+            writer.uint32(170).string(message.users);
+        }
+        if (message.customattr1 !== "") {
+            writer.uint32(178).string(message.customattr1);
+        }
+        if (message.customattr2 !== "") {
+            writer.uint32(186).string(message.customattr2);
+        }
+        if (message.customattr3 !== "") {
+            writer.uint32(194).string(message.customattr3);
+        }
+        if (message.customattr4 !== "") {
+            writer.uint32(202).string(message.customattr4);
+        }
+        if (message.customattr5 !== "") {
+            writer.uint32(210).string(message.customattr5);
+        }
+        for (var _i = 0, _a = message.domains; _i < _a.length; _i++) {
+            var v = _a[_i];
+            writer.uint32(218).string(v);
+        }
+        if (message.dbusage !== 0) {
+            writer.uint32(224).int32(message.dbusage);
+        }
+        if (message.dblocked === true) {
+            writer.uint32(232).bool(message.dblocked);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCustomer();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message._id = reader.string();
+                    break;
+                case 2:
+                    message._type = reader.string();
+                    break;
+                case 3:
+                    message.stripeid = reader.string();
+                    break;
+                case 4:
+                    message.userid = reader.string();
+                    break;
+                case 5:
+                    message.name = reader.string();
+                    break;
+                case 6:
+                    message.country = reader.string();
+                    break;
+                case 7:
+                    message.email = reader.string();
+                    break;
+                case 8:
+                    message.address = reader.string();
+                    break;
+                case 9:
+                    message.vattype = reader.string();
+                    break;
+                case 10:
+                    message.vatnumber = reader.string();
+                    break;
+                case 11:
+                    message.taxrate = reader.string();
+                    break;
+                case 12:
+                    message.tax = reader.int32();
+                    break;
+                case 13:
+                    message.coupon = reader.string();
+                    break;
+                case 14:
+                    message.hascard = reader.bool();
+                    break;
+                case 15:
+                    message.memory = reader.string();
+                    break;
+                case 16:
+                    message.openflowuserplan = reader.string();
+                    break;
+                case 17:
+                    message.supportplan = reader.string();
+                    break;
+                case 18:
+                    message.supporthourplan = reader.string();
+                    break;
+                case 19:
+                    message.subscriptionid = reader.string();
+                    break;
+                case 20:
+                    message.admins = reader.string();
+                    break;
+                case 21:
+                    message.users = reader.string();
+                    break;
+                case 22:
+                    message.customattr1 = reader.string();
+                    break;
+                case 23:
+                    message.customattr2 = reader.string();
+                    break;
+                case 24:
+                    message.customattr3 = reader.string();
+                    break;
+                case 25:
+                    message.customattr4 = reader.string();
+                    break;
+                case 26:
+                    message.customattr5 = reader.string();
+                    break;
+                case 27:
+                    message.domains.push(reader.string());
+                    break;
+                case 28:
+                    message.dbusage = reader.int32();
+                    break;
+                case 29:
+                    message.dblocked = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            _id: isSet(object._id) ? String(object._id) : "",
+            _type: isSet(object._type) ? String(object._type) : "",
+            stripeid: isSet(object.stripeid) ? String(object.stripeid) : "",
+            userid: isSet(object.userid) ? String(object.userid) : "",
+            name: isSet(object.name) ? String(object.name) : "",
+            country: isSet(object.country) ? String(object.country) : "",
+            email: isSet(object.email) ? String(object.email) : "",
+            address: isSet(object.address) ? String(object.address) : "",
+            vattype: isSet(object.vattype) ? String(object.vattype) : "",
+            vatnumber: isSet(object.vatnumber) ? String(object.vatnumber) : "",
+            taxrate: isSet(object.taxrate) ? String(object.taxrate) : "",
+            tax: isSet(object.tax) ? Number(object.tax) : 0,
+            coupon: isSet(object.coupon) ? String(object.coupon) : "",
+            hascard: isSet(object.hascard) ? Boolean(object.hascard) : false,
+            memory: isSet(object.memory) ? String(object.memory) : "",
+            openflowuserplan: isSet(object.openflowuserplan) ? String(object.openflowuserplan) : "",
+            supportplan: isSet(object.supportplan) ? String(object.supportplan) : "",
+            supporthourplan: isSet(object.supporthourplan) ? String(object.supporthourplan) : "",
+            subscriptionid: isSet(object.subscriptionid) ? String(object.subscriptionid) : "",
+            admins: isSet(object.admins) ? String(object.admins) : "",
+            users: isSet(object.users) ? String(object.users) : "",
+            customattr1: isSet(object.customattr1) ? String(object.customattr1) : "",
+            customattr2: isSet(object.customattr2) ? String(object.customattr2) : "",
+            customattr3: isSet(object.customattr3) ? String(object.customattr3) : "",
+            customattr4: isSet(object.customattr4) ? String(object.customattr4) : "",
+            customattr5: isSet(object.customattr5) ? String(object.customattr5) : "",
+            domains: Array.isArray(object === null || object === void 0 ? void 0 : object.domains) ? object.domains.map(function (e) { return String(e); }) : [],
+            dbusage: isSet(object.dbusage) ? Number(object.dbusage) : 0,
+            dblocked: isSet(object.dblocked) ? Boolean(object.dblocked) : false,
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message._id !== undefined && (obj._id = message._id);
+        message._type !== undefined && (obj._type = message._type);
+        message.stripeid !== undefined && (obj.stripeid = message.stripeid);
+        message.userid !== undefined && (obj.userid = message.userid);
+        message.name !== undefined && (obj.name = message.name);
+        message.country !== undefined && (obj.country = message.country);
+        message.email !== undefined && (obj.email = message.email);
+        message.address !== undefined && (obj.address = message.address);
+        message.vattype !== undefined && (obj.vattype = message.vattype);
+        message.vatnumber !== undefined && (obj.vatnumber = message.vatnumber);
+        message.taxrate !== undefined && (obj.taxrate = message.taxrate);
+        message.tax !== undefined && (obj.tax = Math.round(message.tax));
+        message.coupon !== undefined && (obj.coupon = message.coupon);
+        message.hascard !== undefined && (obj.hascard = message.hascard);
+        message.memory !== undefined && (obj.memory = message.memory);
+        message.openflowuserplan !== undefined && (obj.openflowuserplan = message.openflowuserplan);
+        message.supportplan !== undefined && (obj.supportplan = message.supportplan);
+        message.supporthourplan !== undefined && (obj.supporthourplan = message.supporthourplan);
+        message.subscriptionid !== undefined && (obj.subscriptionid = message.subscriptionid);
+        message.admins !== undefined && (obj.admins = message.admins);
+        message.users !== undefined && (obj.users = message.users);
+        message.customattr1 !== undefined && (obj.customattr1 = message.customattr1);
+        message.customattr2 !== undefined && (obj.customattr2 = message.customattr2);
+        message.customattr3 !== undefined && (obj.customattr3 = message.customattr3);
+        message.customattr4 !== undefined && (obj.customattr4 = message.customattr4);
+        message.customattr5 !== undefined && (obj.customattr5 = message.customattr5);
+        if (message.domains) {
+            obj.domains = message.domains.map(function (e) { return e; });
+        }
+        else {
+            obj.domains = [];
+        }
+        message.dbusage !== undefined && (obj.dbusage = Math.round(message.dbusage));
+        message.dblocked !== undefined && (obj.dblocked = message.dblocked);
+        return obj;
+    },
+    create: function (base) {
+        return Customer.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
+        var message = createBaseCustomer();
+        message._id = (_a = object._id) !== null && _a !== void 0 ? _a : "";
+        message._type = (_b = object._type) !== null && _b !== void 0 ? _b : "";
+        message.stripeid = (_c = object.stripeid) !== null && _c !== void 0 ? _c : "";
+        message.userid = (_d = object.userid) !== null && _d !== void 0 ? _d : "";
+        message.name = (_e = object.name) !== null && _e !== void 0 ? _e : "";
+        message.country = (_f = object.country) !== null && _f !== void 0 ? _f : "";
+        message.email = (_g = object.email) !== null && _g !== void 0 ? _g : "";
+        message.address = (_h = object.address) !== null && _h !== void 0 ? _h : "";
+        message.vattype = (_j = object.vattype) !== null && _j !== void 0 ? _j : "";
+        message.vatnumber = (_k = object.vatnumber) !== null && _k !== void 0 ? _k : "";
+        message.taxrate = (_l = object.taxrate) !== null && _l !== void 0 ? _l : "";
+        message.tax = (_m = object.tax) !== null && _m !== void 0 ? _m : 0;
+        message.coupon = (_o = object.coupon) !== null && _o !== void 0 ? _o : "";
+        message.hascard = (_p = object.hascard) !== null && _p !== void 0 ? _p : false;
+        message.memory = (_q = object.memory) !== null && _q !== void 0 ? _q : "";
+        message.openflowuserplan = (_r = object.openflowuserplan) !== null && _r !== void 0 ? _r : "";
+        message.supportplan = (_s = object.supportplan) !== null && _s !== void 0 ? _s : "";
+        message.supporthourplan = (_t = object.supporthourplan) !== null && _t !== void 0 ? _t : "";
+        message.subscriptionid = (_u = object.subscriptionid) !== null && _u !== void 0 ? _u : "";
+        message.admins = (_v = object.admins) !== null && _v !== void 0 ? _v : "";
+        message.users = (_w = object.users) !== null && _w !== void 0 ? _w : "";
+        message.customattr1 = (_x = object.customattr1) !== null && _x !== void 0 ? _x : "";
+        message.customattr2 = (_y = object.customattr2) !== null && _y !== void 0 ? _y : "";
+        message.customattr3 = (_z = object.customattr3) !== null && _z !== void 0 ? _z : "";
+        message.customattr4 = (_0 = object.customattr4) !== null && _0 !== void 0 ? _0 : "";
+        message.customattr5 = (_1 = object.customattr5) !== null && _1 !== void 0 ? _1 : "";
+        message.domains = ((_2 = object.domains) === null || _2 === void 0 ? void 0 : _2.map(function (e) { return e; })) || [];
+        message.dbusage = (_3 = object.dbusage) !== null && _3 !== void 0 ? _3 : 0;
+        message.dblocked = (_4 = object.dblocked) !== null && _4 !== void 0 ? _4 : false;
+        return message;
+    },
+};
+function createBaseEnsureCustomerRequest() {
+    return { customer: undefined, stripe: undefined, ensureas: "" };
+}
+export var EnsureCustomerRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.customer !== undefined) {
+            Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
+        }
+        if (message.stripe !== undefined) {
+            StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
+        }
+        if (message.ensureas !== "") {
+            writer.uint32(26).string(message.ensureas);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseEnsureCustomerRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.customer = Customer.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.stripe = StripeCustomer.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.ensureas = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            customer: isSet(object.customer) ? Customer.fromJSON(object.customer) : undefined,
+            stripe: isSet(object.stripe) ? StripeCustomer.fromJSON(object.stripe) : undefined,
+            ensureas: isSet(object.ensureas) ? String(object.ensureas) : "",
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.customer !== undefined && (obj.customer = message.customer ? Customer.toJSON(message.customer) : undefined);
+        message.stripe !== undefined && (obj.stripe = message.stripe ? StripeCustomer.toJSON(message.stripe) : undefined);
+        message.ensureas !== undefined && (obj.ensureas = message.ensureas);
+        return obj;
+    },
+    create: function (base) {
+        return EnsureCustomerRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseEnsureCustomerRequest();
+        message.customer = (object.customer !== undefined && object.customer !== null)
+            ? Customer.fromPartial(object.customer)
+            : undefined;
+        message.stripe = (object.stripe !== undefined && object.stripe !== null)
+            ? StripeCustomer.fromPartial(object.stripe)
+            : undefined;
+        message.ensureas = (_a = object.ensureas) !== null && _a !== void 0 ? _a : "";
+        return message;
+    },
+};
+function createBaseEnsureCustomerResponse() {
+    return { customer: undefined, stripe: undefined };
+}
+export var EnsureCustomerResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.customer !== undefined) {
+            Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
+        }
+        if (message.stripe !== undefined) {
+            StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseEnsureCustomerResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.customer = Customer.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    message.stripe = StripeCustomer.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            customer: isSet(object.customer) ? Customer.fromJSON(object.customer) : undefined,
+            stripe: isSet(object.stripe) ? StripeCustomer.fromJSON(object.stripe) : undefined,
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.customer !== undefined && (obj.customer = message.customer ? Customer.toJSON(message.customer) : undefined);
+        message.stripe !== undefined && (obj.stripe = message.stripe ? StripeCustomer.toJSON(message.stripe) : undefined);
+        return obj;
+    },
+    create: function (base) {
+        return EnsureCustomerResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var message = createBaseEnsureCustomerResponse();
+        message.customer = (object.customer !== undefined && object.customer !== null)
+            ? Customer.fromPartial(object.customer)
+            : undefined;
+        message.stripe = (object.stripe !== undefined && object.stripe !== null)
+            ? StripeCustomer.fromPartial(object.stripe)
+            : undefined;
+        return message;
+    },
+};
 var FlowServiceClientImpl = /** @class */ (function () {
     function FlowServiceClientImpl(rpc, opts) {
         this.service = (opts === null || opts === void 0 ? void 0 : opts.service) || "openiap.FlowService";
@@ -1492,6 +1996,7 @@ var FlowServiceClientImpl = /** @class */ (function () {
         this.CustomCommand = this.CustomCommand.bind(this);
         this.ListCollections = this.ListCollections.bind(this);
         this.DropCollection = this.DropCollection.bind(this);
+        this.CreateCollection = this.CreateCollection.bind(this);
         this.Query = this.Query.bind(this);
         this.GetDocumentVersion = this.GetDocumentVersion.bind(this);
         this.Aggregate = this.Aggregate.bind(this);
@@ -1516,6 +2021,7 @@ var FlowServiceClientImpl = /** @class */ (function () {
         this.PopWorkitem = this.PopWorkitem.bind(this);
         this.DeleteWorkitem = this.DeleteWorkitem.bind(this);
         this.AddWorkItemQueue = this.AddWorkItemQueue.bind(this);
+        this.EnsureCustomer = this.EnsureCustomer.bind(this);
     }
     FlowServiceClientImpl.prototype.SetupStream = function (request) {
         var data = request.pipe(map(function (request) { return Envelope.encode(request).finish(); }));
@@ -1551,6 +2057,11 @@ var FlowServiceClientImpl = /** @class */ (function () {
         var data = DropCollectionRequest.encode(request).finish();
         var promise = this.rpc.request(this.service, "DropCollection", data);
         return promise.then(function (data) { return DropCollectionResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.CreateCollection = function (request) {
+        var data = CreateCollectionRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "CreateCollection", data);
+        return promise.then(function (data) { return CreateCollectionResponse.decode(new _m0.Reader(data)); });
     };
     FlowServiceClientImpl.prototype.Query = function (request) {
         var data = QueryRequest.encode(request).finish();
@@ -1671,6 +2182,11 @@ var FlowServiceClientImpl = /** @class */ (function () {
         var data = AddWorkItemQueueRequest.encode(request).finish();
         var promise = this.rpc.request(this.service, "AddWorkItemQueue", data);
         return promise.then(function (data) { return AddWorkItemQueueResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.EnsureCustomer = function (request) {
+        var data = EnsureCustomerRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "EnsureCustomer", data);
+        return promise.then(function (data) { return EnsureCustomerResponse.decode(new _m0.Reader(data)); });
     };
     return FlowServiceClientImpl;
 }());

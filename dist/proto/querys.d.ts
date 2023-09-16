@@ -11,6 +11,33 @@ export interface DropCollectionRequest {
 }
 export interface DropCollectionResponse {
 }
+export interface col_timeseries {
+    timeField: string;
+    metaField: string;
+    granularity: string;
+}
+export interface col_collation {
+    locale: string;
+    caseLevel: boolean;
+    caseFirst: string;
+    strength: number;
+    numericOrdering: boolean;
+    alternate: string;
+    maxVariable: string;
+    backwards: boolean;
+}
+export interface CreateCollectionRequest {
+    collectionname: string;
+    collation: col_collation | undefined;
+    timeseries: col_timeseries | undefined;
+    expireAfterSeconds: number;
+    changeStreamPreAndPostImages: boolean;
+    capped: boolean;
+    max: number;
+    size: number;
+}
+export interface CreateCollectionResponse {
+}
 export interface QueryRequest {
     query: string;
     collectionname: string;
@@ -48,6 +75,16 @@ export interface CountRequest {
 }
 export interface CountResponse {
     result: number;
+}
+export interface DistinctRequest {
+    collectionname: string;
+    field: string;
+    query: string;
+    queryas: string;
+    options: string;
+}
+export interface DistinctResponse {
+    results: string[];
 }
 export interface InsertOneRequest {
     collectionname: string;
@@ -187,6 +224,204 @@ export declare const DropCollectionResponse: {
     toJSON(_: DropCollectionResponse): unknown;
     create<I extends {} & {} & { [K in Exclude<keyof I, never>]: never; }>(base?: I): DropCollectionResponse;
     fromPartial<I_1 extends {} & {} & { [K_1 in Exclude<keyof I_1, never>]: never; }>(_: I_1): DropCollectionResponse;
+};
+export declare const col_timeseries: {
+    encode(message: col_timeseries, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): col_timeseries;
+    fromJSON(object: any): col_timeseries;
+    toJSON(message: col_timeseries): unknown;
+    create<I extends {
+        timeField?: string;
+        metaField?: string;
+        granularity?: string;
+    } & {
+        timeField?: string;
+        metaField?: string;
+        granularity?: string;
+    } & { [K in Exclude<keyof I, keyof col_timeseries>]: never; }>(base?: I): col_timeseries;
+    fromPartial<I_1 extends {
+        timeField?: string;
+        metaField?: string;
+        granularity?: string;
+    } & {
+        timeField?: string;
+        metaField?: string;
+        granularity?: string;
+    } & { [K_1 in Exclude<keyof I_1, keyof col_timeseries>]: never; }>(object: I_1): col_timeseries;
+};
+export declare const col_collation: {
+    encode(message: col_collation, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): col_collation;
+    fromJSON(object: any): col_collation;
+    toJSON(message: col_collation): unknown;
+    create<I extends {
+        locale?: string;
+        caseLevel?: boolean;
+        caseFirst?: string;
+        strength?: number;
+        numericOrdering?: boolean;
+        alternate?: string;
+        maxVariable?: string;
+        backwards?: boolean;
+    } & {
+        locale?: string;
+        caseLevel?: boolean;
+        caseFirst?: string;
+        strength?: number;
+        numericOrdering?: boolean;
+        alternate?: string;
+        maxVariable?: string;
+        backwards?: boolean;
+    } & { [K in Exclude<keyof I, keyof col_collation>]: never; }>(base?: I): col_collation;
+    fromPartial<I_1 extends {
+        locale?: string;
+        caseLevel?: boolean;
+        caseFirst?: string;
+        strength?: number;
+        numericOrdering?: boolean;
+        alternate?: string;
+        maxVariable?: string;
+        backwards?: boolean;
+    } & {
+        locale?: string;
+        caseLevel?: boolean;
+        caseFirst?: string;
+        strength?: number;
+        numericOrdering?: boolean;
+        alternate?: string;
+        maxVariable?: string;
+        backwards?: boolean;
+    } & { [K_1 in Exclude<keyof I_1, keyof col_collation>]: never; }>(object: I_1): col_collation;
+};
+export declare const CreateCollectionRequest: {
+    encode(message: CreateCollectionRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): CreateCollectionRequest;
+    fromJSON(object: any): CreateCollectionRequest;
+    toJSON(message: CreateCollectionRequest): unknown;
+    create<I extends {
+        collectionname?: string;
+        collation?: {
+            locale?: string;
+            caseLevel?: boolean;
+            caseFirst?: string;
+            strength?: number;
+            numericOrdering?: boolean;
+            alternate?: string;
+            maxVariable?: string;
+            backwards?: boolean;
+        };
+        timeseries?: {
+            timeField?: string;
+            metaField?: string;
+            granularity?: string;
+        };
+        expireAfterSeconds?: number;
+        changeStreamPreAndPostImages?: boolean;
+        capped?: boolean;
+        max?: number;
+        size?: number;
+    } & {
+        collectionname?: string;
+        collation?: {
+            locale?: string;
+            caseLevel?: boolean;
+            caseFirst?: string;
+            strength?: number;
+            numericOrdering?: boolean;
+            alternate?: string;
+            maxVariable?: string;
+            backwards?: boolean;
+        } & {
+            locale?: string;
+            caseLevel?: boolean;
+            caseFirst?: string;
+            strength?: number;
+            numericOrdering?: boolean;
+            alternate?: string;
+            maxVariable?: string;
+            backwards?: boolean;
+        } & { [K in Exclude<keyof I["collation"], keyof col_collation>]: never; };
+        timeseries?: {
+            timeField?: string;
+            metaField?: string;
+            granularity?: string;
+        } & {
+            timeField?: string;
+            metaField?: string;
+            granularity?: string;
+        } & { [K_1 in Exclude<keyof I["timeseries"], keyof col_timeseries>]: never; };
+        expireAfterSeconds?: number;
+        changeStreamPreAndPostImages?: boolean;
+        capped?: boolean;
+        max?: number;
+        size?: number;
+    } & { [K_2 in Exclude<keyof I, keyof CreateCollectionRequest>]: never; }>(base?: I): CreateCollectionRequest;
+    fromPartial<I_1 extends {
+        collectionname?: string;
+        collation?: {
+            locale?: string;
+            caseLevel?: boolean;
+            caseFirst?: string;
+            strength?: number;
+            numericOrdering?: boolean;
+            alternate?: string;
+            maxVariable?: string;
+            backwards?: boolean;
+        };
+        timeseries?: {
+            timeField?: string;
+            metaField?: string;
+            granularity?: string;
+        };
+        expireAfterSeconds?: number;
+        changeStreamPreAndPostImages?: boolean;
+        capped?: boolean;
+        max?: number;
+        size?: number;
+    } & {
+        collectionname?: string;
+        collation?: {
+            locale?: string;
+            caseLevel?: boolean;
+            caseFirst?: string;
+            strength?: number;
+            numericOrdering?: boolean;
+            alternate?: string;
+            maxVariable?: string;
+            backwards?: boolean;
+        } & {
+            locale?: string;
+            caseLevel?: boolean;
+            caseFirst?: string;
+            strength?: number;
+            numericOrdering?: boolean;
+            alternate?: string;
+            maxVariable?: string;
+            backwards?: boolean;
+        } & { [K_3 in Exclude<keyof I_1["collation"], keyof col_collation>]: never; };
+        timeseries?: {
+            timeField?: string;
+            metaField?: string;
+            granularity?: string;
+        } & {
+            timeField?: string;
+            metaField?: string;
+            granularity?: string;
+        } & { [K_4 in Exclude<keyof I_1["timeseries"], keyof col_timeseries>]: never; };
+        expireAfterSeconds?: number;
+        changeStreamPreAndPostImages?: boolean;
+        capped?: boolean;
+        max?: number;
+        size?: number;
+    } & { [K_5 in Exclude<keyof I_1, keyof CreateCollectionRequest>]: never; }>(object: I_1): CreateCollectionRequest;
+};
+export declare const CreateCollectionResponse: {
+    encode(_: CreateCollectionResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): CreateCollectionResponse;
+    fromJSON(_: any): CreateCollectionResponse;
+    toJSON(_: CreateCollectionResponse): unknown;
+    create<I extends {} & {} & { [K in Exclude<keyof I, never>]: never; }>(base?: I): CreateCollectionResponse;
+    fromPartial<I_1 extends {} & {} & { [K_1 in Exclude<keyof I_1, never>]: never; }>(_: I_1): CreateCollectionResponse;
 };
 export declare const QueryRequest: {
     encode(message: QueryRequest, writer?: _m0.Writer): _m0.Writer;
@@ -371,6 +606,54 @@ export declare const CountResponse: {
     } & {
         result?: number;
     } & { [K_1 in Exclude<keyof I_1, "result">]: never; }>(object: I_1): CountResponse;
+};
+export declare const DistinctRequest: {
+    encode(message: DistinctRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DistinctRequest;
+    fromJSON(object: any): DistinctRequest;
+    toJSON(message: DistinctRequest): unknown;
+    create<I extends {
+        collectionname?: string;
+        field?: string;
+        query?: string;
+        queryas?: string;
+        options?: string;
+    } & {
+        collectionname?: string;
+        field?: string;
+        query?: string;
+        queryas?: string;
+        options?: string;
+    } & { [K in Exclude<keyof I, keyof DistinctRequest>]: never; }>(base?: I): DistinctRequest;
+    fromPartial<I_1 extends {
+        collectionname?: string;
+        field?: string;
+        query?: string;
+        queryas?: string;
+        options?: string;
+    } & {
+        collectionname?: string;
+        field?: string;
+        query?: string;
+        queryas?: string;
+        options?: string;
+    } & { [K_1 in Exclude<keyof I_1, keyof DistinctRequest>]: never; }>(object: I_1): DistinctRequest;
+};
+export declare const DistinctResponse: {
+    encode(message: DistinctResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DistinctResponse;
+    fromJSON(object: any): DistinctResponse;
+    toJSON(message: DistinctResponse): unknown;
+    create<I extends {
+        results?: string[];
+    } & {
+        results?: string[] & string[] & { [K in Exclude<keyof I["results"], keyof string[]>]: never; };
+    } & { [K_1 in Exclude<keyof I, "results">]: never; }>(base?: I): DistinctResponse;
+    fromPartial<I_1 extends {
+        results?: string[];
+    } & {
+        results?: string[] & string[] & { [K_2 in Exclude<keyof I_1["results"], keyof string[]>]: never; };
+    } & { [K_3 in Exclude<keyof I_1, "results">]: never; }>(object: I_1): DistinctResponse;
 };
 export declare const InsertOneRequest: {
     encode(message: InsertOneRequest, writer?: _m0.Writer): _m0.Writer;

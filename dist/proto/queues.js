@@ -223,6 +223,7 @@ function createBaseQueueMessageRequest() {
         exchangename: "",
         data: "",
         striptoken: false,
+        expiration: 0,
     };
 }
 export var QueueMessageRequest = {
@@ -248,6 +249,9 @@ export var QueueMessageRequest = {
         }
         if (message.striptoken === true) {
             writer.uint32(56).bool(message.striptoken);
+        }
+        if (message.expiration !== 0) {
+            writer.uint32(64).int32(message.expiration);
         }
         return writer;
     },
@@ -279,6 +283,9 @@ export var QueueMessageRequest = {
                 case 7:
                     message.striptoken = reader.bool();
                     break;
+                case 8:
+                    message.expiration = reader.int32();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -295,6 +302,7 @@ export var QueueMessageRequest = {
             exchangename: isSet(object.exchangename) ? String(object.exchangename) : "",
             data: isSet(object.data) ? String(object.data) : "",
             striptoken: isSet(object.striptoken) ? Boolean(object.striptoken) : false,
+            expiration: isSet(object.expiration) ? Number(object.expiration) : 0,
         };
     },
     toJSON: function (message) {
@@ -306,13 +314,14 @@ export var QueueMessageRequest = {
         message.exchangename !== undefined && (obj.exchangename = message.exchangename);
         message.data !== undefined && (obj.data = message.data);
         message.striptoken !== undefined && (obj.striptoken = message.striptoken);
+        message.expiration !== undefined && (obj.expiration = Math.round(message.expiration));
         return obj;
     },
     create: function (base) {
         return QueueMessageRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         var message = createBaseQueueMessageRequest();
         message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
         message.correlationId = (_b = object.correlationId) !== null && _b !== void 0 ? _b : "";
@@ -321,6 +330,7 @@ export var QueueMessageRequest = {
         message.exchangename = (_e = object.exchangename) !== null && _e !== void 0 ? _e : "";
         message.data = (_f = object.data) !== null && _f !== void 0 ? _f : "";
         message.striptoken = (_g = object.striptoken) !== null && _g !== void 0 ? _g : false;
+        message.expiration = (_h = object.expiration) !== null && _h !== void 0 ? _h : 0;
         return message;
     },
 };

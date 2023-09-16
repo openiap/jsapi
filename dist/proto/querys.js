@@ -176,6 +176,358 @@ export var DropCollectionResponse = {
         return message;
     },
 };
+function createBasecol_timeseries() {
+    return { timeField: "", metaField: "", granularity: "" };
+}
+export var col_timeseries = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.timeField !== "") {
+            writer.uint32(10).string(message.timeField);
+        }
+        if (message.metaField !== "") {
+            writer.uint32(18).string(message.metaField);
+        }
+        if (message.granularity !== "") {
+            writer.uint32(26).string(message.granularity);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBasecol_timeseries();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.timeField = reader.string();
+                    break;
+                case 2:
+                    message.metaField = reader.string();
+                    break;
+                case 3:
+                    message.granularity = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            timeField: isSet(object.timeField) ? String(object.timeField) : "",
+            metaField: isSet(object.metaField) ? String(object.metaField) : "",
+            granularity: isSet(object.granularity) ? String(object.granularity) : "",
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.timeField !== undefined && (obj.timeField = message.timeField);
+        message.metaField !== undefined && (obj.metaField = message.metaField);
+        message.granularity !== undefined && (obj.granularity = message.granularity);
+        return obj;
+    },
+    create: function (base) {
+        return col_timeseries.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c;
+        var message = createBasecol_timeseries();
+        message.timeField = (_a = object.timeField) !== null && _a !== void 0 ? _a : "";
+        message.metaField = (_b = object.metaField) !== null && _b !== void 0 ? _b : "";
+        message.granularity = (_c = object.granularity) !== null && _c !== void 0 ? _c : "";
+        return message;
+    },
+};
+function createBasecol_collation() {
+    return {
+        locale: "",
+        caseLevel: false,
+        caseFirst: "",
+        strength: 0,
+        numericOrdering: false,
+        alternate: "",
+        maxVariable: "",
+        backwards: false,
+    };
+}
+export var col_collation = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.locale !== "") {
+            writer.uint32(10).string(message.locale);
+        }
+        if (message.caseLevel === true) {
+            writer.uint32(16).bool(message.caseLevel);
+        }
+        if (message.caseFirst !== "") {
+            writer.uint32(26).string(message.caseFirst);
+        }
+        if (message.strength !== 0) {
+            writer.uint32(32).int32(message.strength);
+        }
+        if (message.numericOrdering === true) {
+            writer.uint32(40).bool(message.numericOrdering);
+        }
+        if (message.alternate !== "") {
+            writer.uint32(50).string(message.alternate);
+        }
+        if (message.maxVariable !== "") {
+            writer.uint32(58).string(message.maxVariable);
+        }
+        if (message.backwards === true) {
+            writer.uint32(64).bool(message.backwards);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBasecol_collation();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.locale = reader.string();
+                    break;
+                case 2:
+                    message.caseLevel = reader.bool();
+                    break;
+                case 3:
+                    message.caseFirst = reader.string();
+                    break;
+                case 4:
+                    message.strength = reader.int32();
+                    break;
+                case 5:
+                    message.numericOrdering = reader.bool();
+                    break;
+                case 6:
+                    message.alternate = reader.string();
+                    break;
+                case 7:
+                    message.maxVariable = reader.string();
+                    break;
+                case 8:
+                    message.backwards = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            locale: isSet(object.locale) ? String(object.locale) : "",
+            caseLevel: isSet(object.caseLevel) ? Boolean(object.caseLevel) : false,
+            caseFirst: isSet(object.caseFirst) ? String(object.caseFirst) : "",
+            strength: isSet(object.strength) ? Number(object.strength) : 0,
+            numericOrdering: isSet(object.numericOrdering) ? Boolean(object.numericOrdering) : false,
+            alternate: isSet(object.alternate) ? String(object.alternate) : "",
+            maxVariable: isSet(object.maxVariable) ? String(object.maxVariable) : "",
+            backwards: isSet(object.backwards) ? Boolean(object.backwards) : false,
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.locale !== undefined && (obj.locale = message.locale);
+        message.caseLevel !== undefined && (obj.caseLevel = message.caseLevel);
+        message.caseFirst !== undefined && (obj.caseFirst = message.caseFirst);
+        message.strength !== undefined && (obj.strength = Math.round(message.strength));
+        message.numericOrdering !== undefined && (obj.numericOrdering = message.numericOrdering);
+        message.alternate !== undefined && (obj.alternate = message.alternate);
+        message.maxVariable !== undefined && (obj.maxVariable = message.maxVariable);
+        message.backwards !== undefined && (obj.backwards = message.backwards);
+        return obj;
+    },
+    create: function (base) {
+        return col_collation.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var message = createBasecol_collation();
+        message.locale = (_a = object.locale) !== null && _a !== void 0 ? _a : "";
+        message.caseLevel = (_b = object.caseLevel) !== null && _b !== void 0 ? _b : false;
+        message.caseFirst = (_c = object.caseFirst) !== null && _c !== void 0 ? _c : "";
+        message.strength = (_d = object.strength) !== null && _d !== void 0 ? _d : 0;
+        message.numericOrdering = (_e = object.numericOrdering) !== null && _e !== void 0 ? _e : false;
+        message.alternate = (_f = object.alternate) !== null && _f !== void 0 ? _f : "";
+        message.maxVariable = (_g = object.maxVariable) !== null && _g !== void 0 ? _g : "";
+        message.backwards = (_h = object.backwards) !== null && _h !== void 0 ? _h : false;
+        return message;
+    },
+};
+function createBaseCreateCollectionRequest() {
+    return {
+        collectionname: "",
+        collation: undefined,
+        timeseries: undefined,
+        expireAfterSeconds: 0,
+        changeStreamPreAndPostImages: false,
+        capped: false,
+        max: 0,
+        size: 0,
+    };
+}
+export var CreateCollectionRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.collectionname !== "") {
+            writer.uint32(10).string(message.collectionname);
+        }
+        if (message.collation !== undefined) {
+            col_collation.encode(message.collation, writer.uint32(18).fork()).ldelim();
+        }
+        if (message.timeseries !== undefined) {
+            col_timeseries.encode(message.timeseries, writer.uint32(26).fork()).ldelim();
+        }
+        if (message.expireAfterSeconds !== 0) {
+            writer.uint32(32).int32(message.expireAfterSeconds);
+        }
+        if (message.changeStreamPreAndPostImages === true) {
+            writer.uint32(40).bool(message.changeStreamPreAndPostImages);
+        }
+        if (message.capped === true) {
+            writer.uint32(48).bool(message.capped);
+        }
+        if (message.max !== 0) {
+            writer.uint32(56).int32(message.max);
+        }
+        if (message.size !== 0) {
+            writer.uint32(64).int32(message.size);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCreateCollectionRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.collectionname = reader.string();
+                    break;
+                case 2:
+                    message.collation = col_collation.decode(reader, reader.uint32());
+                    break;
+                case 3:
+                    message.timeseries = col_timeseries.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    message.expireAfterSeconds = reader.int32();
+                    break;
+                case 5:
+                    message.changeStreamPreAndPostImages = reader.bool();
+                    break;
+                case 6:
+                    message.capped = reader.bool();
+                    break;
+                case 7:
+                    message.max = reader.int32();
+                    break;
+                case 8:
+                    message.size = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
+            collation: isSet(object.collation) ? col_collation.fromJSON(object.collation) : undefined,
+            timeseries: isSet(object.timeseries) ? col_timeseries.fromJSON(object.timeseries) : undefined,
+            expireAfterSeconds: isSet(object.expireAfterSeconds) ? Number(object.expireAfterSeconds) : 0,
+            changeStreamPreAndPostImages: isSet(object.changeStreamPreAndPostImages)
+                ? Boolean(object.changeStreamPreAndPostImages)
+                : false,
+            capped: isSet(object.capped) ? Boolean(object.capped) : false,
+            max: isSet(object.max) ? Number(object.max) : 0,
+            size: isSet(object.size) ? Number(object.size) : 0,
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.collectionname !== undefined && (obj.collectionname = message.collectionname);
+        message.collation !== undefined &&
+            (obj.collation = message.collation ? col_collation.toJSON(message.collation) : undefined);
+        message.timeseries !== undefined &&
+            (obj.timeseries = message.timeseries ? col_timeseries.toJSON(message.timeseries) : undefined);
+        message.expireAfterSeconds !== undefined && (obj.expireAfterSeconds = Math.round(message.expireAfterSeconds));
+        message.changeStreamPreAndPostImages !== undefined &&
+            (obj.changeStreamPreAndPostImages = message.changeStreamPreAndPostImages);
+        message.capped !== undefined && (obj.capped = message.capped);
+        message.max !== undefined && (obj.max = Math.round(message.max));
+        message.size !== undefined && (obj.size = Math.round(message.size));
+        return obj;
+    },
+    create: function (base) {
+        return CreateCollectionRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f;
+        var message = createBaseCreateCollectionRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.collation = (object.collation !== undefined && object.collation !== null)
+            ? col_collation.fromPartial(object.collation)
+            : undefined;
+        message.timeseries = (object.timeseries !== undefined && object.timeseries !== null)
+            ? col_timeseries.fromPartial(object.timeseries)
+            : undefined;
+        message.expireAfterSeconds = (_b = object.expireAfterSeconds) !== null && _b !== void 0 ? _b : 0;
+        message.changeStreamPreAndPostImages = (_c = object.changeStreamPreAndPostImages) !== null && _c !== void 0 ? _c : false;
+        message.capped = (_d = object.capped) !== null && _d !== void 0 ? _d : false;
+        message.max = (_e = object.max) !== null && _e !== void 0 ? _e : 0;
+        message.size = (_f = object.size) !== null && _f !== void 0 ? _f : 0;
+        return message;
+    },
+};
+function createBaseCreateCollectionResponse() {
+    return {};
+}
+export var CreateCollectionResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCreateCollectionResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (_) {
+        return {};
+    },
+    toJSON: function (_) {
+        var obj = {};
+        return obj;
+    },
+    create: function (base) {
+        return CreateCollectionResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (_) {
+        var message = createBaseCreateCollectionResponse();
+        return message;
+    },
+};
 function createBaseQueryRequest() {
     return { query: "", collectionname: "", projection: "", top: 0, skip: 0, orderby: "", queryas: "" };
 }
@@ -675,6 +1027,142 @@ export var CountResponse = {
         var _a;
         var message = createBaseCountResponse();
         message.result = (_a = object.result) !== null && _a !== void 0 ? _a : 0;
+        return message;
+    },
+};
+function createBaseDistinctRequest() {
+    return { collectionname: "", field: "", query: "", queryas: "", options: "" };
+}
+export var DistinctRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.collectionname !== "") {
+            writer.uint32(10).string(message.collectionname);
+        }
+        if (message.field !== "") {
+            writer.uint32(26).string(message.field);
+        }
+        if (message.query !== "") {
+            writer.uint32(34).string(message.query);
+        }
+        if (message.queryas !== "") {
+            writer.uint32(42).string(message.queryas);
+        }
+        if (message.options !== "") {
+            writer.uint32(50).string(message.options);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDistinctRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.collectionname = reader.string();
+                    break;
+                case 3:
+                    message.field = reader.string();
+                    break;
+                case 4:
+                    message.query = reader.string();
+                    break;
+                case 5:
+                    message.queryas = reader.string();
+                    break;
+                case 6:
+                    message.options = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
+            field: isSet(object.field) ? String(object.field) : "",
+            query: isSet(object.query) ? String(object.query) : "",
+            queryas: isSet(object.queryas) ? String(object.queryas) : "",
+            options: isSet(object.options) ? String(object.options) : "",
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.collectionname !== undefined && (obj.collectionname = message.collectionname);
+        message.field !== undefined && (obj.field = message.field);
+        message.query !== undefined && (obj.query = message.query);
+        message.queryas !== undefined && (obj.queryas = message.queryas);
+        message.options !== undefined && (obj.options = message.options);
+        return obj;
+    },
+    create: function (base) {
+        return DistinctRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e;
+        var message = createBaseDistinctRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.field = (_b = object.field) !== null && _b !== void 0 ? _b : "";
+        message.query = (_c = object.query) !== null && _c !== void 0 ? _c : "";
+        message.queryas = (_d = object.queryas) !== null && _d !== void 0 ? _d : "";
+        message.options = (_e = object.options) !== null && _e !== void 0 ? _e : "";
+        return message;
+    },
+};
+function createBaseDistinctResponse() {
+    return { results: [] };
+}
+export var DistinctResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        for (var _i = 0, _a = message.results; _i < _a.length; _i++) {
+            var v = _a[_i];
+            writer.uint32(10).string(v);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDistinctResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.results.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return { results: Array.isArray(object === null || object === void 0 ? void 0 : object.results) ? object.results.map(function (e) { return String(e); }) : [] };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        if (message.results) {
+            obj.results = message.results.map(function (e) { return e; });
+        }
+        else {
+            obj.results = [];
+        }
+        return obj;
+    },
+    create: function (base) {
+        return DistinctResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDistinctResponse();
+        message.results = ((_a = object.results) === null || _a === void 0 ? void 0 : _a.map(function (e) { return e; })) || [];
         return message;
     },
 };

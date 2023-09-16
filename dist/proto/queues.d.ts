@@ -23,6 +23,7 @@ export interface QueueMessageRequest {
     exchangename: string;
     data: string;
     striptoken: boolean;
+    expiration: number;
 }
 export interface QueueMessageResponse {
     queuename: string;
@@ -145,6 +146,7 @@ export declare const QueueMessageRequest: {
         exchangename?: string;
         data?: string;
         striptoken?: boolean;
+        expiration?: number;
     } & {
         queuename?: string;
         correlationId?: string;
@@ -153,6 +155,7 @@ export declare const QueueMessageRequest: {
         exchangename?: string;
         data?: string;
         striptoken?: boolean;
+        expiration?: number;
     } & { [K in Exclude<keyof I, keyof QueueMessageRequest>]: never; }>(base?: I): QueueMessageRequest;
     fromPartial<I_1 extends {
         queuename?: string;
@@ -162,6 +165,7 @@ export declare const QueueMessageRequest: {
         exchangename?: string;
         data?: string;
         striptoken?: boolean;
+        expiration?: number;
     } & {
         queuename?: string;
         correlationId?: string;
@@ -170,6 +174,7 @@ export declare const QueueMessageRequest: {
         exchangename?: string;
         data?: string;
         striptoken?: boolean;
+        expiration?: number;
     } & { [K_1 in Exclude<keyof I_1, keyof QueueMessageRequest>]: never; }>(object: I_1): QueueMessageRequest;
 };
 export declare const QueueMessageResponse: {

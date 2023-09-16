@@ -39,7 +39,7 @@ import { config } from "./config";
 var info = config.info, err = config.err, warn = config.warn;
 import { Any } from "./proto/google/protobuf/any";
 import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken } from "./proto/base";
-import { ListCollectionsRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse } from "./proto/querys";
+import { ListCollectionsRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues";
 import { WatchRequest, WatchResponse, UnWatchRequest } from "./proto/watch";
 import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems";
@@ -401,6 +401,27 @@ var openiap = /** @class */ (function () {
                     case 1:
                         result = _b.apply(_a, [(_c.sent()).data.value]);
                         return [2 /*return*/, result.result];
+                }
+            });
+        });
+    };
+    openiap.prototype.Distinct = function (options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var opt, message, data, payload, result, _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        opt = Object.assign(new DistinctDefaults(), options);
+                        message = DistinctRequest.create(opt);
+                        if (typeof message.query == "object")
+                            message.query = this.stringify(message.query);
+                        data = Any.create({ type_url: "type.googleapis.com/openiap.DistinctRequest", "value": DistinctRequest.encode(message).finish() });
+                        payload = Envelope.create({ command: "distinct", data: data, jwt: opt.jwt });
+                        _b = (_a = DistinctResponse).decode;
+                        return [4 /*yield*/, protowrap.RPC(this.client, payload)];
+                    case 1:
+                        result = _b.apply(_a, [(_c.sent()).data.value]);
+                        return [2 /*return*/, result.results];
                 }
             });
         });
@@ -1005,6 +1026,13 @@ var CountDefaults = /** @class */ (function () {
         this.query = {};
     }
     return CountDefaults;
+}());
+var DistinctDefaults = /** @class */ (function () {
+    function DistinctDefaults() {
+        this.collectionname = "entities";
+        this.query = {};
+    }
+    return DistinctDefaults;
 }());
 var AggregateDefaults = /** @class */ (function () {
     function AggregateDefaults() {

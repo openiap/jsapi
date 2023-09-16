@@ -9,6 +9,8 @@ import {
   AggregateResponse,
   CountRequest,
   CountResponse,
+  CreateCollectionRequest,
+  CreateCollectionResponse,
   DeleteManyRequest,
   DeleteManyResponse,
   DeleteOneRequest,
@@ -44,6 +46,7 @@ import {
   UnRegisterQueueRequest,
   UnRegisterQueueResponse,
 } from "./queues";
+import { StripeCustomer } from "./stripe";
 import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch";
 import {
   AddWorkItemQueueRequest,
@@ -78,6 +81,9 @@ export interface PingRequest {
 }
 
 export interface PingResponse {
+}
+
+export interface Noop {
 }
 
 export interface ErrorResponse {
@@ -194,6 +200,49 @@ export interface User {
   username: string;
   email: string;
   roles: Role[];
+}
+
+export interface Customer {
+  _id: string;
+  _type: string;
+  stripeid: string;
+  userid: string;
+  name: string;
+  country: string;
+  email: string;
+  address: string;
+  vattype: string;
+  vatnumber: string;
+  taxrate: string;
+  tax: number;
+  coupon: string;
+  hascard: boolean;
+  memory: string;
+  openflowuserplan: string;
+  supportplan: string;
+  supporthourplan: string;
+  subscriptionid: string;
+  admins: string;
+  users: string;
+  customattr1: string;
+  customattr2: string;
+  customattr3: string;
+  customattr4: string;
+  customattr5: string;
+  domains: string[];
+  dbusage: number;
+  dblocked: boolean;
+}
+
+export interface EnsureCustomerRequest {
+  customer: Customer | undefined;
+  stripe: StripeCustomer | undefined;
+  ensureas: string;
+}
+
+export interface EnsureCustomerResponse {
+  customer: Customer | undefined;
+  stripe: StripeCustomer | undefined;
 }
 
 function createBaseEnvelope(): Envelope {
@@ -403,6 +452,49 @@ export const PingResponse = {
 
   fromPartial<I extends Exact<DeepPartial<PingResponse>, I>>(_: I): PingResponse {
     const message = createBasePingResponse();
+    return message;
+  },
+};
+
+function createBaseNoop(): Noop {
+  return {};
+}
+
+export const Noop = {
+  encode(_: Noop, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Noop {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseNoop();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): Noop {
+    return {};
+  },
+
+  toJSON(_: Noop): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Noop>, I>>(base?: I): Noop {
+    return Noop.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Noop>, I>>(_: I): Noop {
+    const message = createBaseNoop();
     return message;
   },
 };
@@ -1775,6 +1867,486 @@ export const User = {
   },
 };
 
+function createBaseCustomer(): Customer {
+  return {
+    _id: "",
+    _type: "",
+    stripeid: "",
+    userid: "",
+    name: "",
+    country: "",
+    email: "",
+    address: "",
+    vattype: "",
+    vatnumber: "",
+    taxrate: "",
+    tax: 0,
+    coupon: "",
+    hascard: false,
+    memory: "",
+    openflowuserplan: "",
+    supportplan: "",
+    supporthourplan: "",
+    subscriptionid: "",
+    admins: "",
+    users: "",
+    customattr1: "",
+    customattr2: "",
+    customattr3: "",
+    customattr4: "",
+    customattr5: "",
+    domains: [],
+    dbusage: 0,
+    dblocked: false,
+  };
+}
+
+export const Customer = {
+  encode(message: Customer, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message._id !== "") {
+      writer.uint32(10).string(message._id);
+    }
+    if (message._type !== "") {
+      writer.uint32(18).string(message._type);
+    }
+    if (message.stripeid !== "") {
+      writer.uint32(26).string(message.stripeid);
+    }
+    if (message.userid !== "") {
+      writer.uint32(34).string(message.userid);
+    }
+    if (message.name !== "") {
+      writer.uint32(42).string(message.name);
+    }
+    if (message.country !== "") {
+      writer.uint32(50).string(message.country);
+    }
+    if (message.email !== "") {
+      writer.uint32(58).string(message.email);
+    }
+    if (message.address !== "") {
+      writer.uint32(66).string(message.address);
+    }
+    if (message.vattype !== "") {
+      writer.uint32(74).string(message.vattype);
+    }
+    if (message.vatnumber !== "") {
+      writer.uint32(82).string(message.vatnumber);
+    }
+    if (message.taxrate !== "") {
+      writer.uint32(90).string(message.taxrate);
+    }
+    if (message.tax !== 0) {
+      writer.uint32(96).int32(message.tax);
+    }
+    if (message.coupon !== "") {
+      writer.uint32(106).string(message.coupon);
+    }
+    if (message.hascard === true) {
+      writer.uint32(112).bool(message.hascard);
+    }
+    if (message.memory !== "") {
+      writer.uint32(122).string(message.memory);
+    }
+    if (message.openflowuserplan !== "") {
+      writer.uint32(130).string(message.openflowuserplan);
+    }
+    if (message.supportplan !== "") {
+      writer.uint32(138).string(message.supportplan);
+    }
+    if (message.supporthourplan !== "") {
+      writer.uint32(146).string(message.supporthourplan);
+    }
+    if (message.subscriptionid !== "") {
+      writer.uint32(154).string(message.subscriptionid);
+    }
+    if (message.admins !== "") {
+      writer.uint32(162).string(message.admins);
+    }
+    if (message.users !== "") {
+      writer.uint32(170).string(message.users);
+    }
+    if (message.customattr1 !== "") {
+      writer.uint32(178).string(message.customattr1);
+    }
+    if (message.customattr2 !== "") {
+      writer.uint32(186).string(message.customattr2);
+    }
+    if (message.customattr3 !== "") {
+      writer.uint32(194).string(message.customattr3);
+    }
+    if (message.customattr4 !== "") {
+      writer.uint32(202).string(message.customattr4);
+    }
+    if (message.customattr5 !== "") {
+      writer.uint32(210).string(message.customattr5);
+    }
+    for (const v of message.domains) {
+      writer.uint32(218).string(v!);
+    }
+    if (message.dbusage !== 0) {
+      writer.uint32(224).int32(message.dbusage);
+    }
+    if (message.dblocked === true) {
+      writer.uint32(232).bool(message.dblocked);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Customer {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseCustomer();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message._id = reader.string();
+          break;
+        case 2:
+          message._type = reader.string();
+          break;
+        case 3:
+          message.stripeid = reader.string();
+          break;
+        case 4:
+          message.userid = reader.string();
+          break;
+        case 5:
+          message.name = reader.string();
+          break;
+        case 6:
+          message.country = reader.string();
+          break;
+        case 7:
+          message.email = reader.string();
+          break;
+        case 8:
+          message.address = reader.string();
+          break;
+        case 9:
+          message.vattype = reader.string();
+          break;
+        case 10:
+          message.vatnumber = reader.string();
+          break;
+        case 11:
+          message.taxrate = reader.string();
+          break;
+        case 12:
+          message.tax = reader.int32();
+          break;
+        case 13:
+          message.coupon = reader.string();
+          break;
+        case 14:
+          message.hascard = reader.bool();
+          break;
+        case 15:
+          message.memory = reader.string();
+          break;
+        case 16:
+          message.openflowuserplan = reader.string();
+          break;
+        case 17:
+          message.supportplan = reader.string();
+          break;
+        case 18:
+          message.supporthourplan = reader.string();
+          break;
+        case 19:
+          message.subscriptionid = reader.string();
+          break;
+        case 20:
+          message.admins = reader.string();
+          break;
+        case 21:
+          message.users = reader.string();
+          break;
+        case 22:
+          message.customattr1 = reader.string();
+          break;
+        case 23:
+          message.customattr2 = reader.string();
+          break;
+        case 24:
+          message.customattr3 = reader.string();
+          break;
+        case 25:
+          message.customattr4 = reader.string();
+          break;
+        case 26:
+          message.customattr5 = reader.string();
+          break;
+        case 27:
+          message.domains.push(reader.string());
+          break;
+        case 28:
+          message.dbusage = reader.int32();
+          break;
+        case 29:
+          message.dblocked = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Customer {
+    return {
+      _id: isSet(object._id) ? String(object._id) : "",
+      _type: isSet(object._type) ? String(object._type) : "",
+      stripeid: isSet(object.stripeid) ? String(object.stripeid) : "",
+      userid: isSet(object.userid) ? String(object.userid) : "",
+      name: isSet(object.name) ? String(object.name) : "",
+      country: isSet(object.country) ? String(object.country) : "",
+      email: isSet(object.email) ? String(object.email) : "",
+      address: isSet(object.address) ? String(object.address) : "",
+      vattype: isSet(object.vattype) ? String(object.vattype) : "",
+      vatnumber: isSet(object.vatnumber) ? String(object.vatnumber) : "",
+      taxrate: isSet(object.taxrate) ? String(object.taxrate) : "",
+      tax: isSet(object.tax) ? Number(object.tax) : 0,
+      coupon: isSet(object.coupon) ? String(object.coupon) : "",
+      hascard: isSet(object.hascard) ? Boolean(object.hascard) : false,
+      memory: isSet(object.memory) ? String(object.memory) : "",
+      openflowuserplan: isSet(object.openflowuserplan) ? String(object.openflowuserplan) : "",
+      supportplan: isSet(object.supportplan) ? String(object.supportplan) : "",
+      supporthourplan: isSet(object.supporthourplan) ? String(object.supporthourplan) : "",
+      subscriptionid: isSet(object.subscriptionid) ? String(object.subscriptionid) : "",
+      admins: isSet(object.admins) ? String(object.admins) : "",
+      users: isSet(object.users) ? String(object.users) : "",
+      customattr1: isSet(object.customattr1) ? String(object.customattr1) : "",
+      customattr2: isSet(object.customattr2) ? String(object.customattr2) : "",
+      customattr3: isSet(object.customattr3) ? String(object.customattr3) : "",
+      customattr4: isSet(object.customattr4) ? String(object.customattr4) : "",
+      customattr5: isSet(object.customattr5) ? String(object.customattr5) : "",
+      domains: Array.isArray(object?.domains) ? object.domains.map((e: any) => String(e)) : [],
+      dbusage: isSet(object.dbusage) ? Number(object.dbusage) : 0,
+      dblocked: isSet(object.dblocked) ? Boolean(object.dblocked) : false,
+    };
+  },
+
+  toJSON(message: Customer): unknown {
+    const obj: any = {};
+    message._id !== undefined && (obj._id = message._id);
+    message._type !== undefined && (obj._type = message._type);
+    message.stripeid !== undefined && (obj.stripeid = message.stripeid);
+    message.userid !== undefined && (obj.userid = message.userid);
+    message.name !== undefined && (obj.name = message.name);
+    message.country !== undefined && (obj.country = message.country);
+    message.email !== undefined && (obj.email = message.email);
+    message.address !== undefined && (obj.address = message.address);
+    message.vattype !== undefined && (obj.vattype = message.vattype);
+    message.vatnumber !== undefined && (obj.vatnumber = message.vatnumber);
+    message.taxrate !== undefined && (obj.taxrate = message.taxrate);
+    message.tax !== undefined && (obj.tax = Math.round(message.tax));
+    message.coupon !== undefined && (obj.coupon = message.coupon);
+    message.hascard !== undefined && (obj.hascard = message.hascard);
+    message.memory !== undefined && (obj.memory = message.memory);
+    message.openflowuserplan !== undefined && (obj.openflowuserplan = message.openflowuserplan);
+    message.supportplan !== undefined && (obj.supportplan = message.supportplan);
+    message.supporthourplan !== undefined && (obj.supporthourplan = message.supporthourplan);
+    message.subscriptionid !== undefined && (obj.subscriptionid = message.subscriptionid);
+    message.admins !== undefined && (obj.admins = message.admins);
+    message.users !== undefined && (obj.users = message.users);
+    message.customattr1 !== undefined && (obj.customattr1 = message.customattr1);
+    message.customattr2 !== undefined && (obj.customattr2 = message.customattr2);
+    message.customattr3 !== undefined && (obj.customattr3 = message.customattr3);
+    message.customattr4 !== undefined && (obj.customattr4 = message.customattr4);
+    message.customattr5 !== undefined && (obj.customattr5 = message.customattr5);
+    if (message.domains) {
+      obj.domains = message.domains.map((e) => e);
+    } else {
+      obj.domains = [];
+    }
+    message.dbusage !== undefined && (obj.dbusage = Math.round(message.dbusage));
+    message.dblocked !== undefined && (obj.dblocked = message.dblocked);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Customer>, I>>(base?: I): Customer {
+    return Customer.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<Customer>, I>>(object: I): Customer {
+    const message = createBaseCustomer();
+    message._id = object._id ?? "";
+    message._type = object._type ?? "";
+    message.stripeid = object.stripeid ?? "";
+    message.userid = object.userid ?? "";
+    message.name = object.name ?? "";
+    message.country = object.country ?? "";
+    message.email = object.email ?? "";
+    message.address = object.address ?? "";
+    message.vattype = object.vattype ?? "";
+    message.vatnumber = object.vatnumber ?? "";
+    message.taxrate = object.taxrate ?? "";
+    message.tax = object.tax ?? 0;
+    message.coupon = object.coupon ?? "";
+    message.hascard = object.hascard ?? false;
+    message.memory = object.memory ?? "";
+    message.openflowuserplan = object.openflowuserplan ?? "";
+    message.supportplan = object.supportplan ?? "";
+    message.supporthourplan = object.supporthourplan ?? "";
+    message.subscriptionid = object.subscriptionid ?? "";
+    message.admins = object.admins ?? "";
+    message.users = object.users ?? "";
+    message.customattr1 = object.customattr1 ?? "";
+    message.customattr2 = object.customattr2 ?? "";
+    message.customattr3 = object.customattr3 ?? "";
+    message.customattr4 = object.customattr4 ?? "";
+    message.customattr5 = object.customattr5 ?? "";
+    message.domains = object.domains?.map((e) => e) || [];
+    message.dbusage = object.dbusage ?? 0;
+    message.dblocked = object.dblocked ?? false;
+    return message;
+  },
+};
+
+function createBaseEnsureCustomerRequest(): EnsureCustomerRequest {
+  return { customer: undefined, stripe: undefined, ensureas: "" };
+}
+
+export const EnsureCustomerRequest = {
+  encode(message: EnsureCustomerRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.customer !== undefined) {
+      Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.stripe !== undefined) {
+      StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.ensureas !== "") {
+      writer.uint32(26).string(message.ensureas);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): EnsureCustomerRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEnsureCustomerRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.customer = Customer.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.stripe = StripeCustomer.decode(reader, reader.uint32());
+          break;
+        case 3:
+          message.ensureas = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): EnsureCustomerRequest {
+    return {
+      customer: isSet(object.customer) ? Customer.fromJSON(object.customer) : undefined,
+      stripe: isSet(object.stripe) ? StripeCustomer.fromJSON(object.stripe) : undefined,
+      ensureas: isSet(object.ensureas) ? String(object.ensureas) : "",
+    };
+  },
+
+  toJSON(message: EnsureCustomerRequest): unknown {
+    const obj: any = {};
+    message.customer !== undefined && (obj.customer = message.customer ? Customer.toJSON(message.customer) : undefined);
+    message.stripe !== undefined && (obj.stripe = message.stripe ? StripeCustomer.toJSON(message.stripe) : undefined);
+    message.ensureas !== undefined && (obj.ensureas = message.ensureas);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EnsureCustomerRequest>, I>>(base?: I): EnsureCustomerRequest {
+    return EnsureCustomerRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<EnsureCustomerRequest>, I>>(object: I): EnsureCustomerRequest {
+    const message = createBaseEnsureCustomerRequest();
+    message.customer = (object.customer !== undefined && object.customer !== null)
+      ? Customer.fromPartial(object.customer)
+      : undefined;
+    message.stripe = (object.stripe !== undefined && object.stripe !== null)
+      ? StripeCustomer.fromPartial(object.stripe)
+      : undefined;
+    message.ensureas = object.ensureas ?? "";
+    return message;
+  },
+};
+
+function createBaseEnsureCustomerResponse(): EnsureCustomerResponse {
+  return { customer: undefined, stripe: undefined };
+}
+
+export const EnsureCustomerResponse = {
+  encode(message: EnsureCustomerResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.customer !== undefined) {
+      Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.stripe !== undefined) {
+      StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): EnsureCustomerResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEnsureCustomerResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.customer = Customer.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.stripe = StripeCustomer.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): EnsureCustomerResponse {
+    return {
+      customer: isSet(object.customer) ? Customer.fromJSON(object.customer) : undefined,
+      stripe: isSet(object.stripe) ? StripeCustomer.fromJSON(object.stripe) : undefined,
+    };
+  },
+
+  toJSON(message: EnsureCustomerResponse): unknown {
+    const obj: any = {};
+    message.customer !== undefined && (obj.customer = message.customer ? Customer.toJSON(message.customer) : undefined);
+    message.stripe !== undefined && (obj.stripe = message.stripe ? StripeCustomer.toJSON(message.stripe) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<EnsureCustomerResponse>, I>>(base?: I): EnsureCustomerResponse {
+    return EnsureCustomerResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<EnsureCustomerResponse>, I>>(object: I): EnsureCustomerResponse {
+    const message = createBaseEnsureCustomerResponse();
+    message.customer = (object.customer !== undefined && object.customer !== null)
+      ? Customer.fromPartial(object.customer)
+      : undefined;
+    message.stripe = (object.stripe !== undefined && object.stripe !== null)
+      ? StripeCustomer.fromPartial(object.stripe)
+      : undefined;
+    return message;
+  },
+};
+
 export interface FlowService {
   SetupStream(request: Observable<Envelope>): Observable<Envelope>;
   Signin(request: SigninRequest): Promise<SigninResponse>;
@@ -1783,6 +2355,7 @@ export interface FlowService {
   CustomCommand(request: CustomCommandRequest): Promise<CustomCommandResponse>;
   ListCollections(request: ListCollectionsRequest): Promise<ListCollectionsResponse>;
   DropCollection(request: DropCollectionRequest): Promise<DropCollectionResponse>;
+  CreateCollection(request: CreateCollectionRequest): Promise<CreateCollectionResponse>;
   Query(request: QueryRequest): Promise<QueryResponse>;
   GetDocumentVersion(request: GetDocumentVersionRequest): Promise<GetDocumentVersionResponse>;
   Aggregate(request: AggregateRequest): Promise<AggregateResponse>;
@@ -1807,6 +2380,7 @@ export interface FlowService {
   PopWorkitem(request: PopWorkitemRequest): Promise<PopWorkitemResponse>;
   DeleteWorkitem(request: DeleteWorkitemRequest): Promise<DeleteWorkitemResponse>;
   AddWorkItemQueue(request: AddWorkItemQueueRequest): Promise<AddWorkItemQueueResponse>;
+  EnsureCustomer(request: EnsureCustomerRequest): Promise<EnsureCustomerResponse>;
 }
 
 export class FlowServiceClientImpl implements FlowService {
@@ -1822,6 +2396,7 @@ export class FlowServiceClientImpl implements FlowService {
     this.CustomCommand = this.CustomCommand.bind(this);
     this.ListCollections = this.ListCollections.bind(this);
     this.DropCollection = this.DropCollection.bind(this);
+    this.CreateCollection = this.CreateCollection.bind(this);
     this.Query = this.Query.bind(this);
     this.GetDocumentVersion = this.GetDocumentVersion.bind(this);
     this.Aggregate = this.Aggregate.bind(this);
@@ -1846,6 +2421,7 @@ export class FlowServiceClientImpl implements FlowService {
     this.PopWorkitem = this.PopWorkitem.bind(this);
     this.DeleteWorkitem = this.DeleteWorkitem.bind(this);
     this.AddWorkItemQueue = this.AddWorkItemQueue.bind(this);
+    this.EnsureCustomer = this.EnsureCustomer.bind(this);
   }
   SetupStream(request: Observable<Envelope>): Observable<Envelope> {
     const data = request.pipe(map((request) => Envelope.encode(request).finish()));
@@ -1887,6 +2463,12 @@ export class FlowServiceClientImpl implements FlowService {
     const data = DropCollectionRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "DropCollection", data);
     return promise.then((data) => DropCollectionResponse.decode(new _m0.Reader(data)));
+  }
+
+  CreateCollection(request: CreateCollectionRequest): Promise<CreateCollectionResponse> {
+    const data = CreateCollectionRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "CreateCollection", data);
+    return promise.then((data) => CreateCollectionResponse.decode(new _m0.Reader(data)));
   }
 
   Query(request: QueryRequest): Promise<QueryResponse> {
@@ -2031,6 +2613,12 @@ export class FlowServiceClientImpl implements FlowService {
     const data = AddWorkItemQueueRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "AddWorkItemQueue", data);
     return promise.then((data) => AddWorkItemQueueResponse.decode(new _m0.Reader(data)));
+  }
+
+  EnsureCustomer(request: EnsureCustomerRequest): Promise<EnsureCustomerResponse> {
+    const data = EnsureCustomerRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "EnsureCustomer", data);
+    return promise.then((data) => EnsureCustomerResponse.decode(new _m0.Reader(data)));
   }
 }
 

@@ -4,7 +4,7 @@ import { config } from "./config";
 const { info, err, warn }  = config;
 import { Any } from "./proto/google/protobuf/any";
 import { User, SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, DownloadResponse, UploadResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken } from "./proto/base";
-import { ListCollectionsRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateResult, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse } from "./proto/querys";
+import { ListCollectionsRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateResult, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, QueueEvent, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues";
 import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch";
 import { Workitem, PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems";
@@ -224,6 +224,16 @@ export class openiap {
         const payload = Envelope.create({ command: "count", data, jwt: opt.jwt });
         const result = CountResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.result;
+    }
+    async Distinct(options: DistinctOptions): Promise<string[]> {
+        const opt: DistinctOptions = Object.assign(new DistinctDefaults(), options)
+        let message = DistinctRequest.create(opt as any);
+        if (typeof message.query == "object") message.query = this.stringify(message.query);
+        const data = Any.create({type_url: "type.googleapis.com/openiap.DistinctRequest", "value": DistinctRequest.encode(message).finish()})
+        const payload = Envelope.create({ command: "distinct", data, jwt: opt.jwt });
+        // payload.priority = priority;
+        const result = DistinctResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return result.results;
     }
     async Aggregate<T>(options: AggregateOptions): Promise<T[]> {
         const opt: AggregateOptions = Object.assign(new AggregateDefaults(), options)
@@ -551,6 +561,18 @@ export type CountOptions = {
     jwt?: string;
 }
 class CountDefaults {
+    collectionname: string = "entities";
+    query: object = {};
+}
+export type DistinctOptions = {
+    collectionname?: string;
+    field: string;
+    query?: object;
+    queryas?: string;
+    options?: object;
+    jwt?: string;
+}
+class DistinctDefaults {
     collectionname: string = "entities";
     query: object = {};
 }

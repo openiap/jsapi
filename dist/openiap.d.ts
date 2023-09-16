@@ -26,6 +26,7 @@ export declare class openiap {
     Query<T>(options: QueryOptions): Promise<T[]>;
     GetDocumentVersion<T>(options: GetDocumentVersionOptions): Promise<T[]>;
     Count(options: CountOptions): Promise<number>;
+    Distinct(options: DistinctOptions): Promise<string[]>;
     Aggregate<T>(options: AggregateOptions): Promise<T[]>;
     InsertOne<T>(options: InsertOneOptions): Promise<T>;
     InsertMany<T>(options: InsertManyOptions): Promise<T[]>;
@@ -97,6 +98,14 @@ export type CountOptions = {
     projection?: Object;
     orderby?: Object | string;
     queryas?: string;
+    jwt?: string;
+};
+export type DistinctOptions = {
+    collectionname?: string;
+    field: string;
+    query?: object;
+    queryas?: string;
+    options?: object;
     jwt?: string;
 };
 export type AggregateOptions = {
