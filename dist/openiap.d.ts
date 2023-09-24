@@ -11,6 +11,7 @@ export declare class openiap {
     signedin: boolean;
     constructor(url: string, jwt: string);
     loginresolve: any;
+    flowconfig: any;
     connect(first: boolean): Promise<User>;
     Close(): void;
     onConnected(client: client): Promise<void>;

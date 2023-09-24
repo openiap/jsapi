@@ -1253,7 +1253,7 @@ export var SigninRequest = {
     },
 };
 function createBaseSigninResponse() {
-    return { jwt: "", user: undefined };
+    return { jwt: "", user: undefined, config: "" };
 }
 export var SigninResponse = {
     encode: function (message, writer) {
@@ -1263,6 +1263,9 @@ export var SigninResponse = {
         }
         if (message.user !== undefined) {
             User.encode(message.user, writer.uint32(18).fork()).ldelim();
+        }
+        if (message.config !== "") {
+            writer.uint32(26).string(message.config);
         }
         return writer;
     },
@@ -1279,6 +1282,9 @@ export var SigninResponse = {
                 case 2:
                     message.user = User.decode(reader, reader.uint32());
                     break;
+                case 3:
+                    message.config = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1290,22 +1296,25 @@ export var SigninResponse = {
         return {
             jwt: isSet(object.jwt) ? String(object.jwt) : "",
             user: isSet(object.user) ? User.fromJSON(object.user) : undefined,
+            config: isSet(object.config) ? String(object.config) : "",
         };
     },
     toJSON: function (message) {
         var obj = {};
         message.jwt !== undefined && (obj.jwt = message.jwt);
         message.user !== undefined && (obj.user = message.user ? User.toJSON(message.user) : undefined);
+        message.config !== undefined && (obj.config = message.config);
         return obj;
     },
     create: function (base) {
         return SigninResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a;
+        var _a, _b;
         var message = createBaseSigninResponse();
         message.jwt = (_a = object.jwt) !== null && _a !== void 0 ? _a : "";
         message.user = (object.user !== undefined && object.user !== null) ? User.fromPartial(object.user) : undefined;
+        message.config = (_b = object.config) !== null && _b !== void 0 ? _b : "";
         return message;
     },
 };

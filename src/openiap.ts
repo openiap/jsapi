@@ -16,6 +16,7 @@ export class openiap {
     constructor(public url: string, public jwt: string) {
     }
     loginresolve: any;
+    public flowconfig: any = {};
     async connect(first: boolean) {
         return new Promise<User>((resolve) => {
             if (this.loginresolve == null) this.loginresolve = resolve;
@@ -175,6 +176,12 @@ export class openiap {
         if(options.validateonly) {
             info("Validated " + result.user.name);
             return result;
+        }
+        if(result.config != null && result.config != "") {
+            try {
+                this.flowconfig = JSON.parse(result.config);
+            } catch (error) {                
+            }
         }
         info("Signed in as " +result.user.name);
         this.signedin = true;

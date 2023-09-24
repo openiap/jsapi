@@ -49,6 +49,7 @@ var openiap = /** @class */ (function () {
         this.jwt = jwt;
         this.reconnectms = 100;
         this.signedin = false;
+        this.flowconfig = {};
         this.watchids = {};
         this.queues = {};
         this.defaltqueue = "";
@@ -292,6 +293,13 @@ var openiap = /** @class */ (function () {
                         if (options.validateonly) {
                             info("Validated " + result.user.name);
                             return [2 /*return*/, result];
+                        }
+                        if (result.config != null && result.config != "") {
+                            try {
+                                this.flowconfig = JSON.parse(result.config);
+                            }
+                            catch (error) {
+                            }
                         }
                         info("Signed in as " + result.user.name);
                         this.signedin = true;

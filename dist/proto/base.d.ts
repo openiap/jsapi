@@ -105,6 +105,7 @@ export interface SigninRequest {
 export interface SigninResponse {
     jwt: string;
     user: User | undefined;
+    config: string;
 }
 export interface RefreshToken {
     username: string;
@@ -729,6 +730,7 @@ export declare const SigninResponse: {
                 name?: string;
             }[];
         };
+        config?: string;
     } & {
         jwt?: string;
         user?: {
@@ -759,6 +761,7 @@ export declare const SigninResponse: {
                 name?: string;
             }[]>]: never; };
         } & { [K_2 in Exclude<keyof I["user"], keyof User>]: never; };
+        config?: string;
     } & { [K_3 in Exclude<keyof I, keyof SigninResponse>]: never; }>(base?: I): SigninResponse;
     fromPartial<I_1 extends {
         jwt?: string;
@@ -772,6 +775,7 @@ export declare const SigninResponse: {
                 name?: string;
             }[];
         };
+        config?: string;
     } & {
         jwt?: string;
         user?: {
@@ -802,6 +806,7 @@ export declare const SigninResponse: {
                 name?: string;
             }[]>]: never; };
         } & { [K_6 in Exclude<keyof I_1["user"], keyof User>]: never; };
+        config?: string;
     } & { [K_7 in Exclude<keyof I_1, keyof SigninResponse>]: never; }>(object: I_1): SigninResponse;
 };
 export declare const RefreshToken: {

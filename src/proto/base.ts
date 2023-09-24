@@ -181,6 +181,7 @@ export interface SigninRequest {
 export interface SigninResponse {
   jwt: string;
   user: User | undefined;
+  config: string;
 }
 
 export interface RefreshToken {
@@ -1583,7 +1584,7 @@ export const SigninRequest = {
 };
 
 function createBaseSigninResponse(): SigninResponse {
-  return { jwt: "", user: undefined };
+  return { jwt: "", user: undefined, config: "" };
 }
 
 export const SigninResponse = {
@@ -1593,6 +1594,9 @@ export const SigninResponse = {
     }
     if (message.user !== undefined) {
       User.encode(message.user, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.config !== "") {
+      writer.uint32(26).string(message.config);
     }
     return writer;
   },
@@ -1610,6 +1614,9 @@ export const SigninResponse = {
         case 2:
           message.user = User.decode(reader, reader.uint32());
           break;
+        case 3:
+          message.config = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1622,6 +1629,7 @@ export const SigninResponse = {
     return {
       jwt: isSet(object.jwt) ? String(object.jwt) : "",
       user: isSet(object.user) ? User.fromJSON(object.user) : undefined,
+      config: isSet(object.config) ? String(object.config) : "",
     };
   },
 
@@ -1629,6 +1637,7 @@ export const SigninResponse = {
     const obj: any = {};
     message.jwt !== undefined && (obj.jwt = message.jwt);
     message.user !== undefined && (obj.user = message.user ? User.toJSON(message.user) : undefined);
+    message.config !== undefined && (obj.config = message.config);
     return obj;
   },
 
@@ -1640,6 +1649,7 @@ export const SigninResponse = {
     const message = createBaseSigninResponse();
     message.jwt = object.jwt ?? "";
     message.user = (object.user !== undefined && object.user !== null) ? User.fromPartial(object.user) : undefined;
+    message.config = object.config ?? "";
     return message;
   },
 };
