@@ -119,26 +119,35 @@ export interface WorkItemQueue {
   _modifiedby: string;
   _modified: Date | undefined;
   _version: number;
+  packageid: string;
 }
 
 export interface AddWorkItemQueueRequest {
-  name: string;
-  robotqueue: string;
-  amqpqueue: string;
-  projectid: string;
+  workitemqueue: WorkItemQueue | undefined;
   skiprole: boolean;
-  maxretries: number;
-  initialdelay: number;
-  retrydelay: number;
-  success_wiqid: string;
-  failed_wiqid: string;
-  success_wiq: string;
-  failed_wiq: string;
-  _acl: Ace[];
 }
 
 export interface AddWorkItemQueueResponse {
   workitemqueue: WorkItemQueue | undefined;
+}
+
+export interface UpdateWorkItemQueueRequest {
+  workitemqueue: WorkItemQueue | undefined;
+  skiprole: boolean;
+  purge: boolean;
+}
+
+export interface UpdateWorkItemQueueResponse {
+  workitemqueue: WorkItemQueue | undefined;
+}
+
+export interface DeleteWorkItemQueueRequest {
+  wiq: string;
+  wiqid: string;
+  purge: boolean;
+}
+
+export interface DeleteWorkItemQueueResponse {
 }
 
 function createBaseWorkitem(): Workitem {
@@ -1250,6 +1259,7 @@ function createBaseWorkItemQueue(): WorkItemQueue {
     _modifiedby: "",
     _modified: undefined,
     _version: 0,
+    packageid: "",
   };
 }
 
@@ -1320,6 +1330,9 @@ export const WorkItemQueue = {
     }
     if (message._version !== 0) {
       writer.uint32(176).int32(message._version);
+    }
+    if (message.packageid !== "") {
+      writer.uint32(186).string(message.packageid);
     }
     return writer;
   },
@@ -1397,6 +1410,9 @@ export const WorkItemQueue = {
         case 22:
           message._version = reader.int32();
           break;
+        case 23:
+          message.packageid = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1429,6 +1445,7 @@ export const WorkItemQueue = {
       _modifiedby: isSet(object._modifiedby) ? String(object._modifiedby) : "",
       _modified: isSet(object._modified) ? fromJsonTimestamp(object._modified) : undefined,
       _version: isSet(object._version) ? Number(object._version) : 0,
+      packageid: isSet(object.packageid) ? String(object.packageid) : "",
     };
   },
 
@@ -1460,6 +1477,7 @@ export const WorkItemQueue = {
     message._modifiedby !== undefined && (obj._modifiedby = message._modifiedby);
     message._modified !== undefined && (obj._modified = message._modified.toISOString());
     message._version !== undefined && (obj._version = Math.round(message._version));
+    message.packageid !== undefined && (obj.packageid = message.packageid);
     return obj;
   },
 
@@ -1491,68 +1509,22 @@ export const WorkItemQueue = {
     message._modifiedby = object._modifiedby ?? "";
     message._modified = object._modified ?? undefined;
     message._version = object._version ?? 0;
+    message.packageid = object.packageid ?? "";
     return message;
   },
 };
 
 function createBaseAddWorkItemQueueRequest(): AddWorkItemQueueRequest {
-  return {
-    name: "",
-    robotqueue: "",
-    amqpqueue: "",
-    projectid: "",
-    skiprole: false,
-    maxretries: 0,
-    initialdelay: 0,
-    retrydelay: 0,
-    success_wiqid: "",
-    failed_wiqid: "",
-    success_wiq: "",
-    failed_wiq: "",
-    _acl: [],
-  };
+  return { workitemqueue: undefined, skiprole: false };
 }
 
 export const AddWorkItemQueueRequest = {
   encode(message: AddWorkItemQueueRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
-      writer.uint32(10).string(message.name);
-    }
-    if (message.robotqueue !== "") {
-      writer.uint32(18).string(message.robotqueue);
-    }
-    if (message.amqpqueue !== "") {
-      writer.uint32(26).string(message.amqpqueue);
-    }
-    if (message.projectid !== "") {
-      writer.uint32(34).string(message.projectid);
+    if (message.workitemqueue !== undefined) {
+      WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
     }
     if (message.skiprole === true) {
-      writer.uint32(40).bool(message.skiprole);
-    }
-    if (message.maxretries !== 0) {
-      writer.uint32(48).int32(message.maxretries);
-    }
-    if (message.initialdelay !== 0) {
-      writer.uint32(56).int32(message.initialdelay);
-    }
-    if (message.retrydelay !== 0) {
-      writer.uint32(64).int32(message.retrydelay);
-    }
-    if (message.success_wiqid !== "") {
-      writer.uint32(74).string(message.success_wiqid);
-    }
-    if (message.failed_wiqid !== "") {
-      writer.uint32(82).string(message.failed_wiqid);
-    }
-    if (message.success_wiq !== "") {
-      writer.uint32(90).string(message.success_wiq);
-    }
-    if (message.failed_wiq !== "") {
-      writer.uint32(98).string(message.failed_wiq);
-    }
-    for (const v of message._acl) {
-      Ace.encode(v!, writer.uint32(106).fork()).ldelim();
+      writer.uint32(16).bool(message.skiprole);
     }
     return writer;
   },
@@ -1565,43 +1537,10 @@ export const AddWorkItemQueueRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.name = reader.string();
+          message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
           break;
         case 2:
-          message.robotqueue = reader.string();
-          break;
-        case 3:
-          message.amqpqueue = reader.string();
-          break;
-        case 4:
-          message.projectid = reader.string();
-          break;
-        case 5:
           message.skiprole = reader.bool();
-          break;
-        case 6:
-          message.maxretries = reader.int32();
-          break;
-        case 7:
-          message.initialdelay = reader.int32();
-          break;
-        case 8:
-          message.retrydelay = reader.int32();
-          break;
-        case 9:
-          message.success_wiqid = reader.string();
-          break;
-        case 10:
-          message.failed_wiqid = reader.string();
-          break;
-        case 11:
-          message.success_wiq = reader.string();
-          break;
-        case 12:
-          message.failed_wiq = reader.string();
-          break;
-        case 13:
-          message._acl.push(Ace.decode(reader, reader.uint32()));
           break;
         default:
           reader.skipType(tag & 7);
@@ -1613,41 +1552,16 @@ export const AddWorkItemQueueRequest = {
 
   fromJSON(object: any): AddWorkItemQueueRequest {
     return {
-      name: isSet(object.name) ? String(object.name) : "",
-      robotqueue: isSet(object.robotqueue) ? String(object.robotqueue) : "",
-      amqpqueue: isSet(object.amqpqueue) ? String(object.amqpqueue) : "",
-      projectid: isSet(object.projectid) ? String(object.projectid) : "",
+      workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined,
       skiprole: isSet(object.skiprole) ? Boolean(object.skiprole) : false,
-      maxretries: isSet(object.maxretries) ? Number(object.maxretries) : 0,
-      initialdelay: isSet(object.initialdelay) ? Number(object.initialdelay) : 0,
-      retrydelay: isSet(object.retrydelay) ? Number(object.retrydelay) : 0,
-      success_wiqid: isSet(object.success_wiqid) ? String(object.success_wiqid) : "",
-      failed_wiqid: isSet(object.failed_wiqid) ? String(object.failed_wiqid) : "",
-      success_wiq: isSet(object.success_wiq) ? String(object.success_wiq) : "",
-      failed_wiq: isSet(object.failed_wiq) ? String(object.failed_wiq) : "",
-      _acl: Array.isArray(object?._acl) ? object._acl.map((e: any) => Ace.fromJSON(e)) : [],
     };
   },
 
   toJSON(message: AddWorkItemQueueRequest): unknown {
     const obj: any = {};
-    message.name !== undefined && (obj.name = message.name);
-    message.robotqueue !== undefined && (obj.robotqueue = message.robotqueue);
-    message.amqpqueue !== undefined && (obj.amqpqueue = message.amqpqueue);
-    message.projectid !== undefined && (obj.projectid = message.projectid);
+    message.workitemqueue !== undefined &&
+      (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
     message.skiprole !== undefined && (obj.skiprole = message.skiprole);
-    message.maxretries !== undefined && (obj.maxretries = Math.round(message.maxretries));
-    message.initialdelay !== undefined && (obj.initialdelay = Math.round(message.initialdelay));
-    message.retrydelay !== undefined && (obj.retrydelay = Math.round(message.retrydelay));
-    message.success_wiqid !== undefined && (obj.success_wiqid = message.success_wiqid);
-    message.failed_wiqid !== undefined && (obj.failed_wiqid = message.failed_wiqid);
-    message.success_wiq !== undefined && (obj.success_wiq = message.success_wiq);
-    message.failed_wiq !== undefined && (obj.failed_wiq = message.failed_wiq);
-    if (message._acl) {
-      obj._acl = message._acl.map((e) => e ? Ace.toJSON(e) : undefined);
-    } else {
-      obj._acl = [];
-    }
     return obj;
   },
 
@@ -1657,19 +1571,10 @@ export const AddWorkItemQueueRequest = {
 
   fromPartial<I extends Exact<DeepPartial<AddWorkItemQueueRequest>, I>>(object: I): AddWorkItemQueueRequest {
     const message = createBaseAddWorkItemQueueRequest();
-    message.name = object.name ?? "";
-    message.robotqueue = object.robotqueue ?? "";
-    message.amqpqueue = object.amqpqueue ?? "";
-    message.projectid = object.projectid ?? "";
+    message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
+      ? WorkItemQueue.fromPartial(object.workitemqueue)
+      : undefined;
     message.skiprole = object.skiprole ?? false;
-    message.maxretries = object.maxretries ?? 0;
-    message.initialdelay = object.initialdelay ?? 0;
-    message.retrydelay = object.retrydelay ?? 0;
-    message.success_wiqid = object.success_wiqid ?? "";
-    message.failed_wiqid = object.failed_wiqid ?? "";
-    message.success_wiq = object.success_wiq ?? "";
-    message.failed_wiq = object.failed_wiq ?? "";
-    message._acl = object._acl?.map((e) => Ace.fromPartial(e)) || [];
     return message;
   },
 };
@@ -1724,6 +1629,248 @@ export const AddWorkItemQueueResponse = {
     message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
       ? WorkItemQueue.fromPartial(object.workitemqueue)
       : undefined;
+    return message;
+  },
+};
+
+function createBaseUpdateWorkItemQueueRequest(): UpdateWorkItemQueueRequest {
+  return { workitemqueue: undefined, skiprole: false, purge: false };
+}
+
+export const UpdateWorkItemQueueRequest = {
+  encode(message: UpdateWorkItemQueueRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.workitemqueue !== undefined) {
+      WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.skiprole === true) {
+      writer.uint32(16).bool(message.skiprole);
+    }
+    if (message.purge === true) {
+      writer.uint32(24).bool(message.purge);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateWorkItemQueueRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateWorkItemQueueRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.skiprole = reader.bool();
+          break;
+        case 3:
+          message.purge = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateWorkItemQueueRequest {
+    return {
+      workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined,
+      skiprole: isSet(object.skiprole) ? Boolean(object.skiprole) : false,
+      purge: isSet(object.purge) ? Boolean(object.purge) : false,
+    };
+  },
+
+  toJSON(message: UpdateWorkItemQueueRequest): unknown {
+    const obj: any = {};
+    message.workitemqueue !== undefined &&
+      (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
+    message.skiprole !== undefined && (obj.skiprole = message.skiprole);
+    message.purge !== undefined && (obj.purge = message.purge);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateWorkItemQueueRequest>, I>>(base?: I): UpdateWorkItemQueueRequest {
+    return UpdateWorkItemQueueRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateWorkItemQueueRequest>, I>>(object: I): UpdateWorkItemQueueRequest {
+    const message = createBaseUpdateWorkItemQueueRequest();
+    message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
+      ? WorkItemQueue.fromPartial(object.workitemqueue)
+      : undefined;
+    message.skiprole = object.skiprole ?? false;
+    message.purge = object.purge ?? false;
+    return message;
+  },
+};
+
+function createBaseUpdateWorkItemQueueResponse(): UpdateWorkItemQueueResponse {
+  return { workitemqueue: undefined };
+}
+
+export const UpdateWorkItemQueueResponse = {
+  encode(message: UpdateWorkItemQueueResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.workitemqueue !== undefined) {
+      WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateWorkItemQueueResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateWorkItemQueueResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateWorkItemQueueResponse {
+    return { workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined };
+  },
+
+  toJSON(message: UpdateWorkItemQueueResponse): unknown {
+    const obj: any = {};
+    message.workitemqueue !== undefined &&
+      (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<UpdateWorkItemQueueResponse>, I>>(base?: I): UpdateWorkItemQueueResponse {
+    return UpdateWorkItemQueueResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateWorkItemQueueResponse>, I>>(object: I): UpdateWorkItemQueueResponse {
+    const message = createBaseUpdateWorkItemQueueResponse();
+    message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
+      ? WorkItemQueue.fromPartial(object.workitemqueue)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseDeleteWorkItemQueueRequest(): DeleteWorkItemQueueRequest {
+  return { wiq: "", wiqid: "", purge: false };
+}
+
+export const DeleteWorkItemQueueRequest = {
+  encode(message: DeleteWorkItemQueueRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.wiq !== "") {
+      writer.uint32(10).string(message.wiq);
+    }
+    if (message.wiqid !== "") {
+      writer.uint32(18).string(message.wiqid);
+    }
+    if (message.purge === true) {
+      writer.uint32(24).bool(message.purge);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteWorkItemQueueRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteWorkItemQueueRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.wiq = reader.string();
+          break;
+        case 2:
+          message.wiqid = reader.string();
+          break;
+        case 3:
+          message.purge = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DeleteWorkItemQueueRequest {
+    return {
+      wiq: isSet(object.wiq) ? String(object.wiq) : "",
+      wiqid: isSet(object.wiqid) ? String(object.wiqid) : "",
+      purge: isSet(object.purge) ? Boolean(object.purge) : false,
+    };
+  },
+
+  toJSON(message: DeleteWorkItemQueueRequest): unknown {
+    const obj: any = {};
+    message.wiq !== undefined && (obj.wiq = message.wiq);
+    message.wiqid !== undefined && (obj.wiqid = message.wiqid);
+    message.purge !== undefined && (obj.purge = message.purge);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteWorkItemQueueRequest>, I>>(base?: I): DeleteWorkItemQueueRequest {
+    return DeleteWorkItemQueueRequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteWorkItemQueueRequest>, I>>(object: I): DeleteWorkItemQueueRequest {
+    const message = createBaseDeleteWorkItemQueueRequest();
+    message.wiq = object.wiq ?? "";
+    message.wiqid = object.wiqid ?? "";
+    message.purge = object.purge ?? false;
+    return message;
+  },
+};
+
+function createBaseDeleteWorkItemQueueResponse(): DeleteWorkItemQueueResponse {
+  return {};
+}
+
+export const DeleteWorkItemQueueResponse = {
+  encode(_: DeleteWorkItemQueueResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DeleteWorkItemQueueResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDeleteWorkItemQueueResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): DeleteWorkItemQueueResponse {
+    return {};
+  },
+
+  toJSON(_: DeleteWorkItemQueueResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DeleteWorkItemQueueResponse>, I>>(base?: I): DeleteWorkItemQueueResponse {
+    return DeleteWorkItemQueueResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<DeleteWorkItemQueueResponse>, I>>(_: I): DeleteWorkItemQueueResponse {
+    const message = createBaseDeleteWorkItemQueueResponse();
     return message;
   },
 };

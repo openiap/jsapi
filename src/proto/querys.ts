@@ -49,14 +49,27 @@ export interface CreateCollectionRequest {
 export interface CreateCollectionResponse {
 }
 
+/** MongoDB Query Request. */
 export interface QueryRequest {
+  /** MongoDB Query to execute. This field is required. */
   query: string;
+  /** MongoDB Collection to query. This field is required. */
   collectionname: string;
+  /** MongoDB Query projection. This field is optional. */
   projection: string;
+  /** MongoDB Maximum number of documents to return. This field is optional with a default of 100. */
   top: number;
+  /** MongoDB Number of documents to skip, used for paging on the same query. This field is optional with a default of 0. */
   skip: number;
+  /**
+   * MongoDB order by. This field is optional with a default of {"_id": 1}.
+   * You can specify "timestamp" as a string or an object like {"timestamp": -1}.
+   */
   orderby: string;
+  /** Query as if you were this _id. (_id can be a user, role, or customer from the users collection) */
   queryas: string;
+  /** Enabling explain will provides information on the execution of the query */
+  explain: boolean;
 }
 
 export interface QueryResponse {
@@ -79,6 +92,8 @@ export interface AggregateRequest {
   aggregates: string;
   queryas: string;
   hint: string;
+  /** Enabling explain will provides information on the execution of the pipelines */
+  explain: boolean;
 }
 
 export interface AggregateResponse {
@@ -89,6 +104,8 @@ export interface CountRequest {
   collectionname: string;
   query: string;
   queryas: string;
+  /** Enabling explain will provides information on the execution of the count */
+  explain: boolean;
 }
 
 export interface CountResponse {
@@ -101,6 +118,8 @@ export interface DistinctRequest {
   query: string;
   queryas: string;
   options: string;
+  /** Enabling explain will provides information on the execution of the distinct */
+  explain: boolean;
 }
 
 export interface DistinctResponse {
@@ -777,7 +796,7 @@ export const CreateCollectionResponse = {
 };
 
 function createBaseQueryRequest(): QueryRequest {
-  return { query: "", collectionname: "", projection: "", top: 0, skip: 0, orderby: "", queryas: "" };
+  return { query: "", collectionname: "", projection: "", top: 0, skip: 0, orderby: "", queryas: "", explain: false };
 }
 
 export const QueryRequest = {
@@ -802,6 +821,9 @@ export const QueryRequest = {
     }
     if (message.queryas !== "") {
       writer.uint32(58).string(message.queryas);
+    }
+    if (message.explain === true) {
+      writer.uint32(64).bool(message.explain);
     }
     return writer;
   },
@@ -834,6 +856,9 @@ export const QueryRequest = {
         case 7:
           message.queryas = reader.string();
           break;
+        case 8:
+          message.explain = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -851,6 +876,7 @@ export const QueryRequest = {
       skip: isSet(object.skip) ? Number(object.skip) : 0,
       orderby: isSet(object.orderby) ? String(object.orderby) : "",
       queryas: isSet(object.queryas) ? String(object.queryas) : "",
+      explain: isSet(object.explain) ? Boolean(object.explain) : false,
     };
   },
 
@@ -863,6 +889,7 @@ export const QueryRequest = {
     message.skip !== undefined && (obj.skip = Math.round(message.skip));
     message.orderby !== undefined && (obj.orderby = message.orderby);
     message.queryas !== undefined && (obj.queryas = message.queryas);
+    message.explain !== undefined && (obj.explain = message.explain);
     return obj;
   },
 
@@ -879,6 +906,7 @@ export const QueryRequest = {
     message.skip = object.skip ?? 0;
     message.orderby = object.orderby ?? "";
     message.queryas = object.queryas ?? "";
+    message.explain = object.explain ?? false;
     return message;
   },
 };
@@ -1066,7 +1094,7 @@ export const GetDocumentVersionResponse = {
 };
 
 function createBaseAggregateRequest(): AggregateRequest {
-  return { collectionname: "", aggregates: "", queryas: "", hint: "" };
+  return { collectionname: "", aggregates: "", queryas: "", hint: "", explain: false };
 }
 
 export const AggregateRequest = {
@@ -1082,6 +1110,9 @@ export const AggregateRequest = {
     }
     if (message.hint !== "") {
       writer.uint32(34).string(message.hint);
+    }
+    if (message.explain === true) {
+      writer.uint32(40).bool(message.explain);
     }
     return writer;
   },
@@ -1105,6 +1136,9 @@ export const AggregateRequest = {
         case 4:
           message.hint = reader.string();
           break;
+        case 5:
+          message.explain = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1119,6 +1153,7 @@ export const AggregateRequest = {
       aggregates: isSet(object.aggregates) ? String(object.aggregates) : "",
       queryas: isSet(object.queryas) ? String(object.queryas) : "",
       hint: isSet(object.hint) ? String(object.hint) : "",
+      explain: isSet(object.explain) ? Boolean(object.explain) : false,
     };
   },
 
@@ -1128,6 +1163,7 @@ export const AggregateRequest = {
     message.aggregates !== undefined && (obj.aggregates = message.aggregates);
     message.queryas !== undefined && (obj.queryas = message.queryas);
     message.hint !== undefined && (obj.hint = message.hint);
+    message.explain !== undefined && (obj.explain = message.explain);
     return obj;
   },
 
@@ -1141,6 +1177,7 @@ export const AggregateRequest = {
     message.aggregates = object.aggregates ?? "";
     message.queryas = object.queryas ?? "";
     message.hint = object.hint ?? "";
+    message.explain = object.explain ?? false;
     return message;
   },
 };
@@ -1197,7 +1234,7 @@ export const AggregateResponse = {
 };
 
 function createBaseCountRequest(): CountRequest {
-  return { collectionname: "", query: "", queryas: "" };
+  return { collectionname: "", query: "", queryas: "", explain: false };
 }
 
 export const CountRequest = {
@@ -1210,6 +1247,9 @@ export const CountRequest = {
     }
     if (message.queryas !== "") {
       writer.uint32(26).string(message.queryas);
+    }
+    if (message.explain === true) {
+      writer.uint32(32).bool(message.explain);
     }
     return writer;
   },
@@ -1230,6 +1270,9 @@ export const CountRequest = {
         case 3:
           message.queryas = reader.string();
           break;
+        case 4:
+          message.explain = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1243,6 +1286,7 @@ export const CountRequest = {
       collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
       query: isSet(object.query) ? String(object.query) : "",
       queryas: isSet(object.queryas) ? String(object.queryas) : "",
+      explain: isSet(object.explain) ? Boolean(object.explain) : false,
     };
   },
 
@@ -1251,6 +1295,7 @@ export const CountRequest = {
     message.collectionname !== undefined && (obj.collectionname = message.collectionname);
     message.query !== undefined && (obj.query = message.query);
     message.queryas !== undefined && (obj.queryas = message.queryas);
+    message.explain !== undefined && (obj.explain = message.explain);
     return obj;
   },
 
@@ -1263,6 +1308,7 @@ export const CountRequest = {
     message.collectionname = object.collectionname ?? "";
     message.query = object.query ?? "";
     message.queryas = object.queryas ?? "";
+    message.explain = object.explain ?? false;
     return message;
   },
 };
@@ -1319,7 +1365,7 @@ export const CountResponse = {
 };
 
 function createBaseDistinctRequest(): DistinctRequest {
-  return { collectionname: "", field: "", query: "", queryas: "", options: "" };
+  return { collectionname: "", field: "", query: "", queryas: "", options: "", explain: false };
 }
 
 export const DistinctRequest = {
@@ -1338,6 +1384,9 @@ export const DistinctRequest = {
     }
     if (message.options !== "") {
       writer.uint32(50).string(message.options);
+    }
+    if (message.explain === true) {
+      writer.uint32(56).bool(message.explain);
     }
     return writer;
   },
@@ -1364,6 +1413,9 @@ export const DistinctRequest = {
         case 6:
           message.options = reader.string();
           break;
+        case 7:
+          message.explain = reader.bool();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -1379,6 +1431,7 @@ export const DistinctRequest = {
       query: isSet(object.query) ? String(object.query) : "",
       queryas: isSet(object.queryas) ? String(object.queryas) : "",
       options: isSet(object.options) ? String(object.options) : "",
+      explain: isSet(object.explain) ? Boolean(object.explain) : false,
     };
   },
 
@@ -1389,6 +1442,7 @@ export const DistinctRequest = {
     message.query !== undefined && (obj.query = message.query);
     message.queryas !== undefined && (obj.queryas = message.queryas);
     message.options !== undefined && (obj.options = message.options);
+    message.explain !== undefined && (obj.explain = message.explain);
     return obj;
   },
 
@@ -1403,6 +1457,7 @@ export const DistinctRequest = {
     message.query = object.query ?? "";
     message.queryas = object.queryas ?? "";
     message.options = object.options ?? "";
+    message.explain = object.explain ?? false;
     return message;
   },
 };

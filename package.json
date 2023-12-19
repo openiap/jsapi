@@ -1,6 +1,6 @@
 {
   "name": "@openiap/jsapi",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "./src/index.ts",
   "module": "./dist/index.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "tsc -w",
     "updateproto": "npm uninstall @openiap/proto && npm --save-dev i openiap/proto",
-    "generate": "mkdir -p src/proto && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=false --proto_path=proto --ts_proto_out=./src/proto proto/base.proto proto/ace.proto proto/querys.proto proto/queues.proto proto/watch.proto proto/workitems.proto"
+    "generate": "mkdir -p src/proto && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=false --proto_path=proto --ts_proto_out=./src/proto proto/base.proto proto/ace.proto agent.proto proto/querys.proto proto/queues.proto proto/stripe.proto proto/watch.proto proto/workitems.proto"
   },
   "keywords": [],
   "publishConfig": {

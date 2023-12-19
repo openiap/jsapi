@@ -71,6 +71,21 @@ export interface CreateWorkflowInstanceResponse {
   instanceid: string;
 }
 
+export interface InvokeOpenRPARequest {
+  /** _id from either a {"_type": "role", "rparole": true} role or {"_type": "user"} from the users colletion. */
+  robotid: string;
+  /** _id from a {"_type": "workflow"} from the openrpa collection. The Parameters property will show what arguments the workflow takes and returns. (in/inout/out) */
+  workflowid: string;
+  /** if true will not return a result until the robot has completed the run, if false will simply query the reqesut */
+  rpc: boolean;
+  /** a JSON string with each of the arguments to send to the workflow ( each value must corrospond with a `in` or `inout` Parameter found on the workflow ) */
+  payload: string;
+}
+
+export interface InvokeOpenRPAResponse {
+  payload: string;
+}
+
 function createBaseRegisterQueueRequest(): RegisterQueueRequest {
   return { queuename: "" };
 }
@@ -868,6 +883,137 @@ export const CreateWorkflowInstanceResponse = {
   ): CreateWorkflowInstanceResponse {
     const message = createBaseCreateWorkflowInstanceResponse();
     message.instanceid = object.instanceid ?? "";
+    return message;
+  },
+};
+
+function createBaseInvokeOpenRPARequest(): InvokeOpenRPARequest {
+  return { robotid: "", workflowid: "", rpc: false, payload: "" };
+}
+
+export const InvokeOpenRPARequest = {
+  encode(message: InvokeOpenRPARequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.robotid !== "") {
+      writer.uint32(10).string(message.robotid);
+    }
+    if (message.workflowid !== "") {
+      writer.uint32(18).string(message.workflowid);
+    }
+    if (message.rpc === true) {
+      writer.uint32(24).bool(message.rpc);
+    }
+    if (message.payload !== "") {
+      writer.uint32(34).string(message.payload);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): InvokeOpenRPARequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseInvokeOpenRPARequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.robotid = reader.string();
+          break;
+        case 2:
+          message.workflowid = reader.string();
+          break;
+        case 3:
+          message.rpc = reader.bool();
+          break;
+        case 4:
+          message.payload = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): InvokeOpenRPARequest {
+    return {
+      robotid: isSet(object.robotid) ? String(object.robotid) : "",
+      workflowid: isSet(object.workflowid) ? String(object.workflowid) : "",
+      rpc: isSet(object.rpc) ? Boolean(object.rpc) : false,
+      payload: isSet(object.payload) ? String(object.payload) : "",
+    };
+  },
+
+  toJSON(message: InvokeOpenRPARequest): unknown {
+    const obj: any = {};
+    message.robotid !== undefined && (obj.robotid = message.robotid);
+    message.workflowid !== undefined && (obj.workflowid = message.workflowid);
+    message.rpc !== undefined && (obj.rpc = message.rpc);
+    message.payload !== undefined && (obj.payload = message.payload);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<InvokeOpenRPARequest>, I>>(base?: I): InvokeOpenRPARequest {
+    return InvokeOpenRPARequest.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<InvokeOpenRPARequest>, I>>(object: I): InvokeOpenRPARequest {
+    const message = createBaseInvokeOpenRPARequest();
+    message.robotid = object.robotid ?? "";
+    message.workflowid = object.workflowid ?? "";
+    message.rpc = object.rpc ?? false;
+    message.payload = object.payload ?? "";
+    return message;
+  },
+};
+
+function createBaseInvokeOpenRPAResponse(): InvokeOpenRPAResponse {
+  return { payload: "" };
+}
+
+export const InvokeOpenRPAResponse = {
+  encode(message: InvokeOpenRPAResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.payload !== "") {
+      writer.uint32(10).string(message.payload);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): InvokeOpenRPAResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseInvokeOpenRPAResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.payload = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): InvokeOpenRPAResponse {
+    return { payload: isSet(object.payload) ? String(object.payload) : "" };
+  },
+
+  toJSON(message: InvokeOpenRPAResponse): unknown {
+    const obj: any = {};
+    message.payload !== undefined && (obj.payload = message.payload);
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<InvokeOpenRPAResponse>, I>>(base?: I): InvokeOpenRPAResponse {
+    return InvokeOpenRPAResponse.fromPartial(base ?? {});
+  },
+
+  fromPartial<I extends Exact<DeepPartial<InvokeOpenRPAResponse>, I>>(object: I): InvokeOpenRPAResponse {
+    const message = createBaseInvokeOpenRPAResponse();
+    message.payload = object.payload ?? "";
     return message;
   },
 };
