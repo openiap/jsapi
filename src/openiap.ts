@@ -104,8 +104,14 @@ export class openiap {
             // let we: WatchEvent = BLAHBLAH;
             let we:WatchEvent  = WatchEvent.decode(message.data.value);
             if (this.watchids[we.id]) {
-                this.onWatch(we.id, we.operation, we.document);
-                this.watchids[we.id](we.operation, we.document);
+                var doc = we.document;
+                try {
+                    if(typeof doc == "string") doc = JSON.parse(doc);
+                } catch (error) {
+                    
+                }
+                this.onWatch(we.id, we.operation, doc);
+                this.watchids[we.id](we.operation, doc);
             } else {
                 warn("Got watchevent for unknown id " + we.id);
             }

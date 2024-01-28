@@ -161,7 +161,7 @@ var openiap = /** @class */ (function () {
     };
     openiap.prototype.onMessage = function (client, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, command, BLAHBLAH, reply, rt, we, we, data, user_1, data, user, jwt, reply2, error_1;
+            var _a, command, BLAHBLAH, reply, rt, we, doc, we, data, user_1, data, user, jwt, reply2, error_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -175,8 +175,15 @@ var openiap = /** @class */ (function () {
                         if (!(message.command == "watchevent")) return [3 /*break*/, 2];
                         we = WatchEvent.decode(message.data.value);
                         if (this.watchids[we.id]) {
-                            this.onWatch(we.id, we.operation, we.document);
-                            this.watchids[we.id](we.operation, we.document);
+                            doc = we.document;
+                            try {
+                                if (typeof doc == "string")
+                                    doc = JSON.parse(doc);
+                            }
+                            catch (error) {
+                            }
+                            this.onWatch(we.id, we.operation, doc);
+                            this.watchids[we.id](we.operation, doc);
                         }
                         else {
                             warn("Got watchevent for unknown id " + we.id);
