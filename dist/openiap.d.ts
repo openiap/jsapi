@@ -16,7 +16,7 @@ export declare class openiap {
     Close(): void;
     onConnected(client: client): Promise<void>;
     onDisconnected(client: client, error: Error): void;
-    onWatch(operation: string, document: any): void;
+    onWatch(id: string, operation: string, document: any): void;
     static GetUniqueIdentifier(): string;
     onMessage(client: client, message: Envelope): Promise<any>;
     Ping(): Promise<void>;

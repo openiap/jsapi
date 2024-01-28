@@ -1,11 +1,12 @@
 import * as _m0 from "protobufjs/minimal";
 import { Observable } from "rxjs";
+import { DeleteAgentPodRequest, DeleteAgentPodResponse, DeleteAgentRequest, DeleteAgentResponse, GetAgentLogRequest, GetAgentLogResponse, GetAgentPodsRequest, GetAgentPodsResponse, StartAgentRequest, StartAgentResponse, StopAgentRequest, StopAgentResponse } from "./agent";
 import { Any } from "./google/protobuf/any";
 import { AggregateRequest, AggregateResponse, CountRequest, CountResponse, CreateCollectionRequest, CreateCollectionResponse, DeleteManyRequest, DeleteManyResponse, DeleteOneRequest, DeleteOneResponse, DropCollectionRequest, DropCollectionResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, InsertManyRequest, InsertManyResponse, InsertOneRequest, InsertOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, ListCollectionsRequest, ListCollectionsResponse, QueryRequest, QueryResponse, UpdateDocumentRequest, UpdateDocumentResponse, UpdateOneRequest, UpdateOneResponse } from "./querys";
-import { QueueMessageRequest, QueueMessageResponse, RegisterExchangeRequest, RegisterExchangeResponse, RegisterQueueRequest, RegisterQueueResponse, UnRegisterQueueRequest, UnRegisterQueueResponse } from "./queues";
+import { InvokeOpenRPARequest, InvokeOpenRPAResponse, QueueMessageRequest, QueueMessageResponse, RegisterExchangeRequest, RegisterExchangeResponse, RegisterQueueRequest, RegisterQueueResponse, UnRegisterQueueRequest, UnRegisterQueueResponse } from "./queues";
 import { StripeCustomer } from "./stripe";
 import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch";
-import { AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, PushWorkitemRequest, PushWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkitemRequest, UpdateWorkitemResponse } from "./workitems";
+import { AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkItemQueueRequest, DeleteWorkItemQueueResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, PushWorkitemRequest, PushWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkItemQueueRequest, UpdateWorkItemQueueResponse, UpdateWorkitemRequest, UpdateWorkitemResponse } from "./workitems";
 export declare const protobufPackage = "openiap";
 export interface Envelope {
     command: string;
@@ -47,6 +48,7 @@ export interface DownloadResponse {
 export interface UploadRequest {
     filename: string;
     mimetype: string;
+    metadata: string;
 }
 export interface UploadResponse {
     id: string;
@@ -162,6 +164,42 @@ export interface EnsureCustomerRequest {
 export interface EnsureCustomerResponse {
     customer: Customer | undefined;
     stripe: StripeCustomer | undefined;
+}
+export interface CreateIndexRequest {
+    /** Collection to create index on */
+    collectionname: string;
+    /** JSON string with indexes to create, for instance {"age": 1, "name": "text"} */
+    index: string;
+    /** optional JSON string with index option, for instance { unique: true } */
+    options: string;
+    /** Index name. Leave blank to let mongodb auto generate it */
+    name: string;
+}
+export interface CreateIndexResponse {
+    /** Index name */
+    result: string;
+}
+export interface GetIndexesRequest {
+    /** Collection to create index on */
+    collectionname: string;
+}
+export interface GetIndexesResponse {
+    /** List of indexes for collection */
+    results: string;
+}
+export interface DropIndexRequest {
+    /** Collection to create index on */
+    collectionname: string;
+    /** Index name */
+    name: string;
+}
+export interface DropIndexResponse {
+}
+export interface DeletePackageRequest {
+    /** id of package to delete,found in `agents` collection with {"_type": "package"} */
+    packageid: string;
+}
+export interface DeletePackageResponse {
 }
 export declare const Envelope: {
     encode(message: Envelope, writer?: _m0.Writer): _m0.Writer;
@@ -361,16 +399,20 @@ export declare const UploadRequest: {
     create<I extends {
         filename?: string;
         mimetype?: string;
+        metadata?: string;
     } & {
         filename?: string;
         mimetype?: string;
+        metadata?: string;
     } & { [K in Exclude<keyof I, keyof UploadRequest>]: never; }>(base?: I): UploadRequest;
     fromPartial<I_1 extends {
         filename?: string;
         mimetype?: string;
+        metadata?: string;
     } & {
         filename?: string;
         mimetype?: string;
+        metadata?: string;
     } & { [K_1 in Exclude<keyof I_1, keyof UploadRequest>]: never; }>(object: I_1): UploadRequest;
 };
 export declare const UploadResponse: {
@@ -13303,40 +13345,408 @@ export declare const EnsureCustomerResponse: {
         } & { [K_210 in Exclude<keyof I_1["stripe"], keyof StripeCustomer>]: never; };
     } & { [K_211 in Exclude<keyof I_1, keyof EnsureCustomerResponse>]: never; }>(object: I_1): EnsureCustomerResponse;
 };
+export declare const CreateIndexRequest: {
+    encode(message: CreateIndexRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): CreateIndexRequest;
+    fromJSON(object: any): CreateIndexRequest;
+    toJSON(message: CreateIndexRequest): unknown;
+    create<I extends {
+        collectionname?: string;
+        index?: string;
+        options?: string;
+        name?: string;
+    } & {
+        collectionname?: string;
+        index?: string;
+        options?: string;
+        name?: string;
+    } & { [K in Exclude<keyof I, keyof CreateIndexRequest>]: never; }>(base?: I): CreateIndexRequest;
+    fromPartial<I_1 extends {
+        collectionname?: string;
+        index?: string;
+        options?: string;
+        name?: string;
+    } & {
+        collectionname?: string;
+        index?: string;
+        options?: string;
+        name?: string;
+    } & { [K_1 in Exclude<keyof I_1, keyof CreateIndexRequest>]: never; }>(object: I_1): CreateIndexRequest;
+};
+export declare const CreateIndexResponse: {
+    encode(message: CreateIndexResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): CreateIndexResponse;
+    fromJSON(object: any): CreateIndexResponse;
+    toJSON(message: CreateIndexResponse): unknown;
+    create<I extends {
+        result?: string;
+    } & {
+        result?: string;
+    } & { [K in Exclude<keyof I, "result">]: never; }>(base?: I): CreateIndexResponse;
+    fromPartial<I_1 extends {
+        result?: string;
+    } & {
+        result?: string;
+    } & { [K_1 in Exclude<keyof I_1, "result">]: never; }>(object: I_1): CreateIndexResponse;
+};
+export declare const GetIndexesRequest: {
+    encode(message: GetIndexesRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): GetIndexesRequest;
+    fromJSON(object: any): GetIndexesRequest;
+    toJSON(message: GetIndexesRequest): unknown;
+    create<I extends {
+        collectionname?: string;
+    } & {
+        collectionname?: string;
+    } & { [K in Exclude<keyof I, "collectionname">]: never; }>(base?: I): GetIndexesRequest;
+    fromPartial<I_1 extends {
+        collectionname?: string;
+    } & {
+        collectionname?: string;
+    } & { [K_1 in Exclude<keyof I_1, "collectionname">]: never; }>(object: I_1): GetIndexesRequest;
+};
+export declare const GetIndexesResponse: {
+    encode(message: GetIndexesResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): GetIndexesResponse;
+    fromJSON(object: any): GetIndexesResponse;
+    toJSON(message: GetIndexesResponse): unknown;
+    create<I extends {
+        results?: string;
+    } & {
+        results?: string;
+    } & { [K in Exclude<keyof I, "results">]: never; }>(base?: I): GetIndexesResponse;
+    fromPartial<I_1 extends {
+        results?: string;
+    } & {
+        results?: string;
+    } & { [K_1 in Exclude<keyof I_1, "results">]: never; }>(object: I_1): GetIndexesResponse;
+};
+export declare const DropIndexRequest: {
+    encode(message: DropIndexRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DropIndexRequest;
+    fromJSON(object: any): DropIndexRequest;
+    toJSON(message: DropIndexRequest): unknown;
+    create<I extends {
+        collectionname?: string;
+        name?: string;
+    } & {
+        collectionname?: string;
+        name?: string;
+    } & { [K in Exclude<keyof I, keyof DropIndexRequest>]: never; }>(base?: I): DropIndexRequest;
+    fromPartial<I_1 extends {
+        collectionname?: string;
+        name?: string;
+    } & {
+        collectionname?: string;
+        name?: string;
+    } & { [K_1 in Exclude<keyof I_1, keyof DropIndexRequest>]: never; }>(object: I_1): DropIndexRequest;
+};
+export declare const DropIndexResponse: {
+    encode(_: DropIndexResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DropIndexResponse;
+    fromJSON(_: any): DropIndexResponse;
+    toJSON(_: DropIndexResponse): unknown;
+    create<I extends {} & {} & { [K in Exclude<keyof I, never>]: never; }>(base?: I): DropIndexResponse;
+    fromPartial<I_1 extends {} & {} & { [K_1 in Exclude<keyof I_1, never>]: never; }>(_: I_1): DropIndexResponse;
+};
+export declare const DeletePackageRequest: {
+    encode(message: DeletePackageRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DeletePackageRequest;
+    fromJSON(object: any): DeletePackageRequest;
+    toJSON(message: DeletePackageRequest): unknown;
+    create<I extends {
+        packageid?: string;
+    } & {
+        packageid?: string;
+    } & { [K in Exclude<keyof I, "packageid">]: never; }>(base?: I): DeletePackageRequest;
+    fromPartial<I_1 extends {
+        packageid?: string;
+    } & {
+        packageid?: string;
+    } & { [K_1 in Exclude<keyof I_1, "packageid">]: never; }>(object: I_1): DeletePackageRequest;
+};
+export declare const DeletePackageResponse: {
+    encode(_: DeletePackageResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DeletePackageResponse;
+    fromJSON(_: any): DeletePackageResponse;
+    toJSON(_: DeletePackageResponse): unknown;
+    create<I extends {} & {} & { [K in Exclude<keyof I, never>]: never; }>(base?: I): DeletePackageResponse;
+    fromPartial<I_1 extends {} & {} & { [K_1 in Exclude<keyof I_1, never>]: never; }>(_: I_1): DeletePackageResponse;
+};
+/** Service for managing OpenIAP Flow (OpenFlow) */
 export interface FlowService {
+    /**
+     * Establishes a bidirectional streaming connection for sending and receiving Envelopes.
+     * This method is used to set up a real-time data stream for communication.
+     * Returns a bidirectional stream of Envelopes.
+     */
     SetupStream(request: Observable<Envelope>): Observable<Envelope>;
+    /**
+     * Signs in a user with the provided SigninRequest and returns a SigninResponse.
+     * This method authenticates a user and provides access to the OpenFlow system.
+     * Returns a SigninResponse containing authentication details.
+     */
     Signin(request: SigninRequest): Promise<SigninResponse>;
+    /**
+     * Downloads a file from OpenFlow
+     * This method retrieves files from the OpenFlow system based on the specified criteria.
+     * This will initiaize a DownLoad stream, and once completed send send a DownloadResponse
+     */
     Download(request: DownloadRequest): Promise<DownloadResponse>;
+    /**
+     * Uploads data based on the provided UploadRequest and returns an UploadResponse.
+     * This method allows users to upload data to the OpenFlow system.
+     * Returns an UploadResponse confirming the successful upload.
+     */
     Upload(request: UploadRequest): Promise<UploadResponse>;
+    /**
+     * Executes a custom command in OpenIAP Flow.
+     * This method enables the execution of custom commands within the OpenFlow system.
+     * Returns a CustomCommandResponse with the result of the command execution.
+     */
     CustomCommand(request: CustomCommandRequest): Promise<CustomCommandResponse>;
+    /**
+     * Lists all MongoDB collections the user has access to.
+     * This method provides a list of collections that the user can interact with in the MongoDB database.
+     * Returns a ListCollectionsResponse containing collection names.
+     */
     ListCollections(request: ListCollectionsRequest): Promise<ListCollectionsResponse>;
+    /**
+     * Drops a MongoDB Collection, requires user is a member of admins role.
+     * This method allows administrators to delete a MongoDB collection.
+     * Returns a DropCollectionResponse confirming the deletion.
+     */
     DropCollection(request: DropCollectionRequest): Promise<DropCollectionResponse>;
+    /**
+     * Creates a new MongoDB collection, useful if you need to create with parameters like creating a TimeSeries Collection.
+     * This method creates a new MongoDB collection with optional parameters.
+     * Returns a CreateCollectionResponse indicating the success of collection creation.
+     */
     CreateCollection(request: CreateCollectionRequest): Promise<CreateCollectionResponse>;
+    /**
+     * Performs a query using QueryRequest and returns a QueryResponse.
+     * This method executes a query operation in the MongoDB database.
+     * Returns a QueryResponse with query results.
+     */
     Query(request: QueryRequest): Promise<QueryResponse>;
+    /**
+     * Retrieves a document's version using GetDocumentVersionRequest and returns a GetDocumentVersionResponse.
+     * This method retrieves a specific version of a document.
+     * Returns a GetDocumentVersionResponse with the requested document version.
+     */
     GetDocumentVersion(request: GetDocumentVersionRequest): Promise<GetDocumentVersionResponse>;
+    /**
+     * Aggregates data based on AggregateRequest and returns an AggregateResponse.
+     * This method performs data aggregation operations on the MongoDB database.
+     * Returns an AggregateResponse with the aggregated data.
+     */
     Aggregate(request: AggregateRequest): Promise<AggregateResponse>;
+    /**
+     * Counts documents based on CountRequest and returns a CountResponse.
+     * This method counts documents in the MongoDB database based on specified criteria.
+     * Returns a CountResponse with the count result.
+     */
     Count(request: CountRequest): Promise<CountResponse>;
+    /**
+     * Inserts a single document using InsertOneRequest and returns an InsertOneResponse.
+     * This method inserts a single document into the MongoDB database.
+     * Returns an InsertOneResponse confirming the insertion.
+     */
     InsertOne(request: InsertOneRequest): Promise<InsertOneResponse>;
+    /**
+     * Inserts multiple documents using InsertManyRequest and returns an InsertManyResponse.
+     * This method inserts multiple documents into the MongoDB database.
+     * Returns an InsertManyResponse confirming the insertions.
+     */
     InsertMany(request: InsertManyRequest): Promise<InsertManyResponse>;
+    /**
+     * Updates a single document using UpdateOneRequest and returns an UpdateOneResponse.
+     * This method updates a single document in the MongoDB database.
+     * Returns an UpdateOneResponse confirming the update.
+     */
     UpdateOne(request: UpdateOneRequest): Promise<UpdateOneResponse>;
+    /**
+     * Updates documents using UpdateDocumentRequest and returns an UpdateDocumentResponse.
+     * This method updates multiple documents in the MongoDB database.
+     * Returns an UpdateDocumentResponse confirming the updates.
+     */
     UpdateDocument(request: UpdateDocumentRequest): Promise<UpdateDocumentResponse>;
+    /**
+     * Inserts or updates a single document using InsertOrUpdateOneRequest and returns an InsertOrUpdateOneResponse.
+     * This method either inserts or updates a single document in the MongoDB database.
+     * Returns an InsertOrUpdateOneResponse confirming the operation.
+     */
     InsertOrUpdateOne(request: InsertOrUpdateOneRequest): Promise<InsertOrUpdateOneResponse>;
+    /**
+     * Inserts or updates multiple documents using InsertOrUpdateManyRequest and returns an InsertOrUpdateManyResponse.
+     * This method either inserts or updates multiple documents in the MongoDB database.
+     * Returns an InsertOrUpdateManyResponse confirming the operation.
+     */
     InsertOrUpdateMany(request: InsertOrUpdateManyRequest): Promise<InsertOrUpdateManyResponse>;
+    /**
+     * Deletes a single document using DeleteOneRequest and returns a DeleteOneResponse.
+     * This method deletes a single document from the MongoDB database.
+     * Returns a DeleteOneResponse confirming the deletion.
+     */
     DeleteOne(request: DeleteOneRequest): Promise<DeleteOneResponse>;
+    /**
+     * Deletes multiple documents using DeleteManyRequest and returns a DeleteManyResponse.
+     * This method deletes multiple documents from the MongoDB database.
+     * Returns a DeleteManyResponse confirming the deletions.
+     */
     DeleteMany(request: DeleteManyRequest): Promise<DeleteManyResponse>;
+    /**
+     * Registers a queue using RegisterQueueRequest and returns a RegisterQueueResponse.
+     * This method registers and starts consuming a queue for message routing using AMQP
+     * Returns a RegisterQueueResponse confirming the registration.
+     */
     RegisterQueue(request: RegisterQueueRequest): Promise<RegisterQueueResponse>;
+    /**
+     * Registers an exchange using RegisterExchangeRequest and returns a RegisterExchangeResponse.
+     * This method registers an exchange and start consuming if for message routing using AMQP
+     * Returns a RegisterExchangeResponse confirming the registration.
+     */
     RegisterExchange(request: RegisterExchangeRequest): Promise<RegisterExchangeResponse>;
+    /**
+     * Sends a message to a queue using QueueMessageRequest and returns a QueueMessageResponse.
+     * This method sends a message to a registered queue for processing.
+     * Returns a QueueMessageResponse confirming the message transmission.
+     */
     QueueMessage(request: QueueMessageRequest): Promise<QueueMessageResponse>;
+    /**
+     * Unregisters a queue using UnRegisterQueueRequest and returns an UnRegisterQueueResponse.
+     * This method unregisters a previously registered queue or Exchange.
+     * Returns an UnRegisterQueueResponse confirming the unregistration.
+     */
     UnRegisterQueue(request: UnRegisterQueueRequest): Promise<UnRegisterQueueResponse>;
+    /**
+     * Watches for changes using WatchRequest and returns a WatchResponse.
+     * This method enables clients to watch for changes in a MongoDB collections, use paths (JSONQuerys) to limit what documents to wath.
+     * Returns a WatchResponse with relevant notifications.
+     */
     Watch(request: WatchRequest): Promise<WatchResponse>;
+    /**
+     * Stops watching for changes using UnWatchRequest and returns an UnWatchResponse.
+     * This method stops the client from watching for changes formerly registered using Watch
+     * Returns an UnWatchResponse confirming the cessation of watching.
+     */
     UnWatch(request: UnWatchRequest): Promise<UnWatchResponse>;
+    /**
+     * This method pushes (adds) a `Workitem` to a 'WorkItemQueue'
+     * Returns a PushWorkitemResponse confirming the operation.
+     */
     PushWorkitem(request: PushWorkitemRequest): Promise<PushWorkitemResponse>;
+    /**
+     * Pushes multiple `Workitem`s using PushWorkitemsRequest and returns a PushWorkitemsResponse.
+     * This method pushes multiple `Workitem`s to a 'WorkItemQueue'.
+     * Returns a PushWorkitemsResponse confirming the operation.
+     */
     PushWorkitems(request: PushWorkitemsRequest): Promise<PushWorkitemsResponse>;
+    /**
+     * Updates a `Workitem` using UpdateWorkitemRequest and returns an UpdateWorkitemResponse.
+     * This method updates a `Workitem` in the 'WorkItemQueue'.
+     * Returns an UpdateWorkitemResponse confirming the update.
+     */
     UpdateWorkitem(request: UpdateWorkitemRequest): Promise<UpdateWorkitemResponse>;
+    /**
+     * Pops a `Workitem` using PopWorkitemRequest and returns a PopWorkitemResponse.
+     * This method pops a `Workitem` from the 'WorkItemQueue' for execution.
+     * Returns a PopWorkitemResponse with the popped `Workitem`.
+     */
     PopWorkitem(request: PopWorkitemRequest): Promise<PopWorkitemResponse>;
+    /**
+     * Deletes a `Workitem` using DeleteWorkitemRequest and returns a DeleteWorkitemResponse.
+     * This method deletes a `Workitem` from the 'WorkItemQueue'.
+     * Returns a DeleteWorkitemResponse confirming the deletion.
+     */
     DeleteWorkitem(request: DeleteWorkitemRequest): Promise<DeleteWorkitemResponse>;
+    /**
+     * This Created a new `WorkitemQueue'. These Queues can store `Workitem`s
+     * Returns an AddWorkItemQueueResponse confirming the addition.
+     */
     AddWorkItemQueue(request: AddWorkItemQueueRequest): Promise<AddWorkItemQueueResponse>;
+    /**
+     * Updates an existing `WorkitemQueue'
+     * This method updates the configuration of a `WorkitemQueue'.
+     * Will also deleted all associated `Workitem`s if purge is enabled.
+     * Returns an UpdateWorkItemQueueResponse confirming the update.
+     */
+    UpdateWorkItemQueue(request: UpdateWorkItemQueueRequest): Promise<UpdateWorkItemQueueResponse>;
+    /**
+     * Deletes a `WorkitemQueue'
+     * This method deletes a `WorkitemQueue' queue. Will also deleted all associated `Workitem`s if purge is enabled.
+     * Returns a DeleteWorkItemQueueResponse confirming the deletion.
+     */
+    DeleteWorkItemQueue(request: DeleteWorkItemQueueRequest): Promise<DeleteWorkItemQueueResponse>;
+    /**
+     * Ensures the existence of a customer using EnsureCustomerRequest and returns an EnsureCustomerResponse.
+     * This method ensures that a customer exists in the system and performs necessary actions.
+     * Returns an EnsureCustomerResponse confirming the operation.
+     */
     EnsureCustomer(request: EnsureCustomerRequest): Promise<EnsureCustomerResponse>;
+    /** Execute a workflow on a OpenRPA robot. If rpc is true, will wait for reply and return reply ( this can take a long time !) */
+    InvokeOpenRPA(request: InvokeOpenRPARequest): Promise<InvokeOpenRPAResponse>;
+    /**
+     * Start an agent inside Docker or Kubernetes
+     * agentid is the _id of an agent from the agents collection
+     * Requires invoke permission on agent
+     */
+    StartAgent(request: StartAgentRequest): Promise<StartAgentResponse>;
+    /**
+     * Stop an agent running inside Docker or Kubernetes
+     * agentid is the _id of an agent from the agents collection
+     * Requires invoke permission on agent
+     */
+    StopAgent(request: StopAgentRequest): Promise<StopAgentResponse>;
+    /**
+     * Return the console output of an running agent, can be in docker, kubernetes or running remote.
+     * agentid is the _id of an agent from the agents collection
+     * Requires invoke permission on agent
+     */
+    GetAgentLog(request: GetAgentLogRequest): Promise<GetAgentLogResponse>;
+    /**
+     * Return a list of pods for an running agent. Docker and Kubernetes only.
+     * agentid is the _id of an agent from the agents collection
+     * Requires invoke permission on agent
+     */
+    GetAgentPods(request: GetAgentPodsRequest): Promise<GetAgentPodsResponse>;
+    /**
+     * Remove an agent pod, found with GetAgentPods. Docker and Kubernetes only.
+     * On kubernetes this will restart it, on Docker this will kill it
+     * agentid is the _id of an agent from the agents collection
+     * Requires invoke permission on agent
+     */
+    DeleteAgentPod(request: DeleteAgentPodRequest): Promise<DeleteAgentPodResponse>;
+    /**
+     * Remove an agent if running. Docker and Kubernetes only.
+     * Removes instance on docker, remove deployment, ingress and other resources on Kubernetes
+     * agentid is the _id of an agent from the agents collection
+     * Requires delete permission on agent
+     */
+    DeleteAgent(request: DeleteAgentRequest): Promise<DeleteAgentResponse>;
+    /**
+     * Create an Index on a MongoDB Collection
+     * Will not fail if exists, but will fail if spec is different from existing.
+     * Require admins rights
+     */
+    CreateIndex(request: CreateIndexRequest): Promise<CreateIndexResponse>;
+    /**
+     * Create an Index on a MongoDB Collection
+     * Will not fail if exists, but will fail if spec is different from existing.
+     * Require admins rights
+     */
+    GetIndexes(request: GetIndexesRequest): Promise<GetIndexesResponse>;
+    /**
+     * Delete an Index from a MongoDB Collection
+     * Require admins rights
+     */
+    DropIndex(request: DropIndexRequest): Promise<DropIndexResponse>;
+    /**
+     * Delete an agent Package.
+     * Removes the associated file and then delete te package from the agents collection.
+     * Requires delete permission on the Package
+     */
+    DeletePackage(request: DeletePackageRequest): Promise<DeletePackageResponse>;
 }
 export declare class FlowServiceClientImpl implements FlowService {
     private readonly rpc;
@@ -13376,7 +13786,20 @@ export declare class FlowServiceClientImpl implements FlowService {
     PopWorkitem(request: PopWorkitemRequest): Promise<PopWorkitemResponse>;
     DeleteWorkitem(request: DeleteWorkitemRequest): Promise<DeleteWorkitemResponse>;
     AddWorkItemQueue(request: AddWorkItemQueueRequest): Promise<AddWorkItemQueueResponse>;
+    UpdateWorkItemQueue(request: UpdateWorkItemQueueRequest): Promise<UpdateWorkItemQueueResponse>;
+    DeleteWorkItemQueue(request: DeleteWorkItemQueueRequest): Promise<DeleteWorkItemQueueResponse>;
     EnsureCustomer(request: EnsureCustomerRequest): Promise<EnsureCustomerResponse>;
+    InvokeOpenRPA(request: InvokeOpenRPARequest): Promise<InvokeOpenRPAResponse>;
+    StartAgent(request: StartAgentRequest): Promise<StartAgentResponse>;
+    StopAgent(request: StopAgentRequest): Promise<StopAgentResponse>;
+    GetAgentLog(request: GetAgentLogRequest): Promise<GetAgentLogResponse>;
+    GetAgentPods(request: GetAgentPodsRequest): Promise<GetAgentPodsResponse>;
+    DeleteAgentPod(request: DeleteAgentPodRequest): Promise<DeleteAgentPodResponse>;
+    DeleteAgent(request: DeleteAgentRequest): Promise<DeleteAgentResponse>;
+    CreateIndex(request: CreateIndexRequest): Promise<CreateIndexResponse>;
+    GetIndexes(request: GetIndexesRequest): Promise<GetIndexesResponse>;
+    DropIndex(request: DropIndexRequest): Promise<DropIndexResponse>;
+    DeletePackage(request: DeletePackageRequest): Promise<DeletePackageResponse>;
 }
 interface Rpc {
     request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;

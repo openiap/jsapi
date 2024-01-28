@@ -1,13 +1,14 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
 import { map } from "rxjs/operators";
+import { DeleteAgentPodRequest, DeleteAgentPodResponse, DeleteAgentRequest, DeleteAgentResponse, GetAgentLogRequest, GetAgentLogResponse, GetAgentPodsRequest, GetAgentPodsResponse, StartAgentRequest, StartAgentResponse, StopAgentRequest, StopAgentResponse, } from "./agent";
 import { Any } from "./google/protobuf/any";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { AggregateRequest, AggregateResponse, CountRequest, CountResponse, CreateCollectionRequest, CreateCollectionResponse, DeleteManyRequest, DeleteManyResponse, DeleteOneRequest, DeleteOneResponse, DropCollectionRequest, DropCollectionResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, InsertManyRequest, InsertManyResponse, InsertOneRequest, InsertOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, ListCollectionsRequest, ListCollectionsResponse, QueryRequest, QueryResponse, UpdateDocumentRequest, UpdateDocumentResponse, UpdateOneRequest, UpdateOneResponse, } from "./querys";
-import { QueueMessageRequest, QueueMessageResponse, RegisterExchangeRequest, RegisterExchangeResponse, RegisterQueueRequest, RegisterQueueResponse, UnRegisterQueueRequest, UnRegisterQueueResponse, } from "./queues";
+import { InvokeOpenRPARequest, InvokeOpenRPAResponse, QueueMessageRequest, QueueMessageResponse, RegisterExchangeRequest, RegisterExchangeResponse, RegisterQueueRequest, RegisterQueueResponse, UnRegisterQueueRequest, UnRegisterQueueResponse, } from "./queues";
 import { StripeCustomer } from "./stripe";
 import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch";
-import { AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, PushWorkitemRequest, PushWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, } from "./workitems";
+import { AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkItemQueueRequest, DeleteWorkItemQueueResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, PushWorkitemRequest, PushWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkItemQueueRequest, UpdateWorkItemQueueResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, } from "./workitems";
 export var protobufPackage = "openiap";
 function createBaseEnvelope() {
     return { command: "", priority: 0, seq: 0, id: "", rid: "", data: undefined, jwt: "", traceid: "", spanid: "" };
@@ -522,7 +523,7 @@ export var DownloadResponse = {
     },
 };
 function createBaseUploadRequest() {
-    return { filename: "", mimetype: "" };
+    return { filename: "", mimetype: "", metadata: "" };
 }
 export var UploadRequest = {
     encode: function (message, writer) {
@@ -532,6 +533,9 @@ export var UploadRequest = {
         }
         if (message.mimetype !== "") {
             writer.uint32(18).string(message.mimetype);
+        }
+        if (message.metadata !== "") {
+            writer.uint32(26).string(message.metadata);
         }
         return writer;
     },
@@ -548,6 +552,9 @@ export var UploadRequest = {
                 case 2:
                     message.mimetype = reader.string();
                     break;
+                case 3:
+                    message.metadata = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -559,22 +566,25 @@ export var UploadRequest = {
         return {
             filename: isSet(object.filename) ? String(object.filename) : "",
             mimetype: isSet(object.mimetype) ? String(object.mimetype) : "",
+            metadata: isSet(object.metadata) ? String(object.metadata) : "",
         };
     },
     toJSON: function (message) {
         var obj = {};
         message.filename !== undefined && (obj.filename = message.filename);
         message.mimetype !== undefined && (obj.mimetype = message.mimetype);
+        message.metadata !== undefined && (obj.metadata = message.metadata);
         return obj;
     },
     create: function (base) {
         return UploadRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b;
+        var _a, _b, _c;
         var message = createBaseUploadRequest();
         message.filename = (_a = object.filename) !== null && _a !== void 0 ? _a : "";
         message.mimetype = (_b = object.mimetype) !== null && _b !== void 0 ? _b : "";
+        message.metadata = (_c = object.metadata) !== null && _c !== void 0 ? _c : "";
         return message;
     },
 };
@@ -1994,6 +2004,396 @@ export var EnsureCustomerResponse = {
         return message;
     },
 };
+function createBaseCreateIndexRequest() {
+    return { collectionname: "", index: "", options: "", name: "" };
+}
+export var CreateIndexRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.collectionname !== "") {
+            writer.uint32(10).string(message.collectionname);
+        }
+        if (message.index !== "") {
+            writer.uint32(18).string(message.index);
+        }
+        if (message.options !== "") {
+            writer.uint32(26).string(message.options);
+        }
+        if (message.name !== "") {
+            writer.uint32(34).string(message.name);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCreateIndexRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.collectionname = reader.string();
+                    break;
+                case 2:
+                    message.index = reader.string();
+                    break;
+                case 3:
+                    message.options = reader.string();
+                    break;
+                case 4:
+                    message.name = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
+            index: isSet(object.index) ? String(object.index) : "",
+            options: isSet(object.options) ? String(object.options) : "",
+            name: isSet(object.name) ? String(object.name) : "",
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.collectionname !== undefined && (obj.collectionname = message.collectionname);
+        message.index !== undefined && (obj.index = message.index);
+        message.options !== undefined && (obj.options = message.options);
+        message.name !== undefined && (obj.name = message.name);
+        return obj;
+    },
+    create: function (base) {
+        return CreateIndexRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseCreateIndexRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.index = (_b = object.index) !== null && _b !== void 0 ? _b : "";
+        message.options = (_c = object.options) !== null && _c !== void 0 ? _c : "";
+        message.name = (_d = object.name) !== null && _d !== void 0 ? _d : "";
+        return message;
+    },
+};
+function createBaseCreateIndexResponse() {
+    return { result: "" };
+}
+export var CreateIndexResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.result !== "") {
+            writer.uint32(10).string(message.result);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCreateIndexResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return { result: isSet(object.result) ? String(object.result) : "" };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.result !== undefined && (obj.result = message.result);
+        return obj;
+    },
+    create: function (base) {
+        return CreateIndexResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseCreateIndexResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
+        return message;
+    },
+};
+function createBaseGetIndexesRequest() {
+    return { collectionname: "" };
+}
+export var GetIndexesRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.collectionname !== "") {
+            writer.uint32(10).string(message.collectionname);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetIndexesRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.collectionname = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return { collectionname: isSet(object.collectionname) ? String(object.collectionname) : "" };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.collectionname !== undefined && (obj.collectionname = message.collectionname);
+        return obj;
+    },
+    create: function (base) {
+        return GetIndexesRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseGetIndexesRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        return message;
+    },
+};
+function createBaseGetIndexesResponse() {
+    return { results: "" };
+}
+export var GetIndexesResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.results !== "") {
+            writer.uint32(10).string(message.results);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetIndexesResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.results = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return { results: isSet(object.results) ? String(object.results) : "" };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.results !== undefined && (obj.results = message.results);
+        return obj;
+    },
+    create: function (base) {
+        return GetIndexesResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseGetIndexesResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
+        return message;
+    },
+};
+function createBaseDropIndexRequest() {
+    return { collectionname: "", name: "" };
+}
+export var DropIndexRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.collectionname !== "") {
+            writer.uint32(10).string(message.collectionname);
+        }
+        if (message.name !== "") {
+            writer.uint32(18).string(message.name);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDropIndexRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.collectionname = reader.string();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
+            name: isSet(object.name) ? String(object.name) : "",
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.collectionname !== undefined && (obj.collectionname = message.collectionname);
+        message.name !== undefined && (obj.name = message.name);
+        return obj;
+    },
+    create: function (base) {
+        return DropIndexRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b;
+        var message = createBaseDropIndexRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.name = (_b = object.name) !== null && _b !== void 0 ? _b : "";
+        return message;
+    },
+};
+function createBaseDropIndexResponse() {
+    return {};
+}
+export var DropIndexResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDropIndexResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (_) {
+        return {};
+    },
+    toJSON: function (_) {
+        var obj = {};
+        return obj;
+    },
+    create: function (base) {
+        return DropIndexResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (_) {
+        var message = createBaseDropIndexResponse();
+        return message;
+    },
+};
+function createBaseDeletePackageRequest() {
+    return { packageid: "" };
+}
+export var DeletePackageRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.packageid !== "") {
+            writer.uint32(10).string(message.packageid);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeletePackageRequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.packageid = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return { packageid: isSet(object.packageid) ? String(object.packageid) : "" };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.packageid !== undefined && (obj.packageid = message.packageid);
+        return obj;
+    },
+    create: function (base) {
+        return DeletePackageRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDeletePackageRequest();
+        message.packageid = (_a = object.packageid) !== null && _a !== void 0 ? _a : "";
+        return message;
+    },
+};
+function createBaseDeletePackageResponse() {
+    return {};
+}
+export var DeletePackageResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeletePackageResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (_) {
+        return {};
+    },
+    toJSON: function (_) {
+        var obj = {};
+        return obj;
+    },
+    create: function (base) {
+        return DeletePackageResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (_) {
+        var message = createBaseDeletePackageResponse();
+        return message;
+    },
+};
 var FlowServiceClientImpl = /** @class */ (function () {
     function FlowServiceClientImpl(rpc, opts) {
         this.service = (opts === null || opts === void 0 ? void 0 : opts.service) || "openiap.FlowService";
@@ -2030,7 +2430,20 @@ var FlowServiceClientImpl = /** @class */ (function () {
         this.PopWorkitem = this.PopWorkitem.bind(this);
         this.DeleteWorkitem = this.DeleteWorkitem.bind(this);
         this.AddWorkItemQueue = this.AddWorkItemQueue.bind(this);
+        this.UpdateWorkItemQueue = this.UpdateWorkItemQueue.bind(this);
+        this.DeleteWorkItemQueue = this.DeleteWorkItemQueue.bind(this);
         this.EnsureCustomer = this.EnsureCustomer.bind(this);
+        this.InvokeOpenRPA = this.InvokeOpenRPA.bind(this);
+        this.StartAgent = this.StartAgent.bind(this);
+        this.StopAgent = this.StopAgent.bind(this);
+        this.GetAgentLog = this.GetAgentLog.bind(this);
+        this.GetAgentPods = this.GetAgentPods.bind(this);
+        this.DeleteAgentPod = this.DeleteAgentPod.bind(this);
+        this.DeleteAgent = this.DeleteAgent.bind(this);
+        this.CreateIndex = this.CreateIndex.bind(this);
+        this.GetIndexes = this.GetIndexes.bind(this);
+        this.DropIndex = this.DropIndex.bind(this);
+        this.DeletePackage = this.DeletePackage.bind(this);
     }
     FlowServiceClientImpl.prototype.SetupStream = function (request) {
         var data = request.pipe(map(function (request) { return Envelope.encode(request).finish(); }));
@@ -2192,10 +2605,75 @@ var FlowServiceClientImpl = /** @class */ (function () {
         var promise = this.rpc.request(this.service, "AddWorkItemQueue", data);
         return promise.then(function (data) { return AddWorkItemQueueResponse.decode(new _m0.Reader(data)); });
     };
+    FlowServiceClientImpl.prototype.UpdateWorkItemQueue = function (request) {
+        var data = UpdateWorkItemQueueRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "UpdateWorkItemQueue", data);
+        return promise.then(function (data) { return UpdateWorkItemQueueResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.DeleteWorkItemQueue = function (request) {
+        var data = DeleteWorkItemQueueRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "DeleteWorkItemQueue", data);
+        return promise.then(function (data) { return DeleteWorkItemQueueResponse.decode(new _m0.Reader(data)); });
+    };
     FlowServiceClientImpl.prototype.EnsureCustomer = function (request) {
         var data = EnsureCustomerRequest.encode(request).finish();
         var promise = this.rpc.request(this.service, "EnsureCustomer", data);
         return promise.then(function (data) { return EnsureCustomerResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.InvokeOpenRPA = function (request) {
+        var data = InvokeOpenRPARequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "InvokeOpenRPA", data);
+        return promise.then(function (data) { return InvokeOpenRPAResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.StartAgent = function (request) {
+        var data = StartAgentRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "StartAgent", data);
+        return promise.then(function (data) { return StartAgentResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.StopAgent = function (request) {
+        var data = StopAgentRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "StopAgent", data);
+        return promise.then(function (data) { return StopAgentResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.GetAgentLog = function (request) {
+        var data = GetAgentLogRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "GetAgentLog", data);
+        return promise.then(function (data) { return GetAgentLogResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.GetAgentPods = function (request) {
+        var data = GetAgentPodsRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "GetAgentPods", data);
+        return promise.then(function (data) { return GetAgentPodsResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.DeleteAgentPod = function (request) {
+        var data = DeleteAgentPodRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "DeleteAgentPod", data);
+        return promise.then(function (data) { return DeleteAgentPodResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.DeleteAgent = function (request) {
+        var data = DeleteAgentRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "DeleteAgent", data);
+        return promise.then(function (data) { return DeleteAgentResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.CreateIndex = function (request) {
+        var data = CreateIndexRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "CreateIndex", data);
+        return promise.then(function (data) { return CreateIndexResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.GetIndexes = function (request) {
+        var data = GetIndexesRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "GetIndexes", data);
+        return promise.then(function (data) { return GetIndexesResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.DropIndex = function (request) {
+        var data = DropIndexRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "DropIndex", data);
+        return promise.then(function (data) { return DropIndexResponse.decode(new _m0.Reader(data)); });
+    };
+    FlowServiceClientImpl.prototype.DeletePackage = function (request) {
+        var data = DeletePackageRequest.encode(request).finish();
+        var promise = this.rpc.request(this.service, "DeletePackage", data);
+        return promise.then(function (data) { return DeletePackageResponse.decode(new _m0.Reader(data)); });
     };
     return FlowServiceClientImpl;
 }());

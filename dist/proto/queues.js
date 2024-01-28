@@ -742,6 +742,127 @@ export var CreateWorkflowInstanceResponse = {
         return message;
     },
 };
+function createBaseInvokeOpenRPARequest() {
+    return { robotid: "", workflowid: "", rpc: false, payload: "" };
+}
+export var InvokeOpenRPARequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.robotid !== "") {
+            writer.uint32(10).string(message.robotid);
+        }
+        if (message.workflowid !== "") {
+            writer.uint32(18).string(message.workflowid);
+        }
+        if (message.rpc === true) {
+            writer.uint32(24).bool(message.rpc);
+        }
+        if (message.payload !== "") {
+            writer.uint32(34).string(message.payload);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInvokeOpenRPARequest();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.robotid = reader.string();
+                    break;
+                case 2:
+                    message.workflowid = reader.string();
+                    break;
+                case 3:
+                    message.rpc = reader.bool();
+                    break;
+                case 4:
+                    message.payload = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return {
+            robotid: isSet(object.robotid) ? String(object.robotid) : "",
+            workflowid: isSet(object.workflowid) ? String(object.workflowid) : "",
+            rpc: isSet(object.rpc) ? Boolean(object.rpc) : false,
+            payload: isSet(object.payload) ? String(object.payload) : "",
+        };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.robotid !== undefined && (obj.robotid = message.robotid);
+        message.workflowid !== undefined && (obj.workflowid = message.workflowid);
+        message.rpc !== undefined && (obj.rpc = message.rpc);
+        message.payload !== undefined && (obj.payload = message.payload);
+        return obj;
+    },
+    create: function (base) {
+        return InvokeOpenRPARequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseInvokeOpenRPARequest();
+        message.robotid = (_a = object.robotid) !== null && _a !== void 0 ? _a : "";
+        message.workflowid = (_b = object.workflowid) !== null && _b !== void 0 ? _b : "";
+        message.rpc = (_c = object.rpc) !== null && _c !== void 0 ? _c : false;
+        message.payload = (_d = object.payload) !== null && _d !== void 0 ? _d : "";
+        return message;
+    },
+};
+function createBaseInvokeOpenRPAResponse() {
+    return { payload: "" };
+}
+export var InvokeOpenRPAResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        if (message.payload !== "") {
+            writer.uint32(10).string(message.payload);
+        }
+        return writer;
+    },
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInvokeOpenRPAResponse();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.payload = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON: function (object) {
+        return { payload: isSet(object.payload) ? String(object.payload) : "" };
+    },
+    toJSON: function (message) {
+        var obj = {};
+        message.payload !== undefined && (obj.payload = message.payload);
+        return obj;
+    },
+    create: function (base) {
+        return InvokeOpenRPAResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseInvokeOpenRPAResponse();
+        message.payload = (_a = object.payload) !== null && _a !== void 0 ? _a : "";
+        return message;
+    },
+};
 function isSet(value) {
     return value !== null && value !== undefined;
 }

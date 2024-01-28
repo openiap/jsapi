@@ -57,6 +57,19 @@ export interface CreateWorkflowInstanceRequest {
 export interface CreateWorkflowInstanceResponse {
     instanceid: string;
 }
+export interface InvokeOpenRPARequest {
+    /** _id from either a {"_type": "role", "rparole": true} role or {"_type": "user"} from the users colletion. */
+    robotid: string;
+    /** _id from a {"_type": "workflow"} from the openrpa collection. The Parameters property will show what arguments the workflow takes and returns. (in/inout/out) */
+    workflowid: string;
+    /** if true will not return a result until the robot has completed the run, if false will simply query the reqesut */
+    rpc: boolean;
+    /** a JSON string with each of the arguments to send to the workflow ( each value must corrospond with a `in` or `inout` Parameter found on the workflow ) */
+    payload: string;
+}
+export interface InvokeOpenRPAResponse {
+    payload: string;
+}
 export declare const RegisterQueueRequest: {
     encode(message: RegisterQueueRequest, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): RegisterQueueRequest;
@@ -324,6 +337,50 @@ export declare const CreateWorkflowInstanceResponse: {
     } & {
         instanceid?: string;
     } & { [K_1 in Exclude<keyof I_1, "instanceid">]: never; }>(object: I_1): CreateWorkflowInstanceResponse;
+};
+export declare const InvokeOpenRPARequest: {
+    encode(message: InvokeOpenRPARequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): InvokeOpenRPARequest;
+    fromJSON(object: any): InvokeOpenRPARequest;
+    toJSON(message: InvokeOpenRPARequest): unknown;
+    create<I extends {
+        robotid?: string;
+        workflowid?: string;
+        rpc?: boolean;
+        payload?: string;
+    } & {
+        robotid?: string;
+        workflowid?: string;
+        rpc?: boolean;
+        payload?: string;
+    } & { [K in Exclude<keyof I, keyof InvokeOpenRPARequest>]: never; }>(base?: I): InvokeOpenRPARequest;
+    fromPartial<I_1 extends {
+        robotid?: string;
+        workflowid?: string;
+        rpc?: boolean;
+        payload?: string;
+    } & {
+        robotid?: string;
+        workflowid?: string;
+        rpc?: boolean;
+        payload?: string;
+    } & { [K_1 in Exclude<keyof I_1, keyof InvokeOpenRPARequest>]: never; }>(object: I_1): InvokeOpenRPARequest;
+};
+export declare const InvokeOpenRPAResponse: {
+    encode(message: InvokeOpenRPAResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): InvokeOpenRPAResponse;
+    fromJSON(object: any): InvokeOpenRPAResponse;
+    toJSON(message: InvokeOpenRPAResponse): unknown;
+    create<I extends {
+        payload?: string;
+    } & {
+        payload?: string;
+    } & { [K in Exclude<keyof I, "payload">]: never; }>(base?: I): InvokeOpenRPAResponse;
+    fromPartial<I_1 extends {
+        payload?: string;
+    } & {
+        payload?: string;
+    } & { [K_1 in Exclude<keyof I_1, "payload">]: never; }>(object: I_1): InvokeOpenRPAResponse;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {

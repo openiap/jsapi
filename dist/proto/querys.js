@@ -529,7 +529,7 @@ export var CreateCollectionResponse = {
     },
 };
 function createBaseQueryRequest() {
-    return { query: "", collectionname: "", projection: "", top: 0, skip: 0, orderby: "", queryas: "" };
+    return { query: "", collectionname: "", projection: "", top: 0, skip: 0, orderby: "", queryas: "", explain: false };
 }
 export var QueryRequest = {
     encode: function (message, writer) {
@@ -554,6 +554,9 @@ export var QueryRequest = {
         }
         if (message.queryas !== "") {
             writer.uint32(58).string(message.queryas);
+        }
+        if (message.explain === true) {
+            writer.uint32(64).bool(message.explain);
         }
         return writer;
     },
@@ -585,6 +588,9 @@ export var QueryRequest = {
                 case 7:
                     message.queryas = reader.string();
                     break;
+                case 8:
+                    message.explain = reader.bool();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -601,6 +607,7 @@ export var QueryRequest = {
             skip: isSet(object.skip) ? Number(object.skip) : 0,
             orderby: isSet(object.orderby) ? String(object.orderby) : "",
             queryas: isSet(object.queryas) ? String(object.queryas) : "",
+            explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
     toJSON: function (message) {
@@ -612,13 +619,14 @@ export var QueryRequest = {
         message.skip !== undefined && (obj.skip = Math.round(message.skip));
         message.orderby !== undefined && (obj.orderby = message.orderby);
         message.queryas !== undefined && (obj.queryas = message.queryas);
+        message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
     create: function (base) {
         return QueryRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         var message = createBaseQueryRequest();
         message.query = (_a = object.query) !== null && _a !== void 0 ? _a : "";
         message.collectionname = (_b = object.collectionname) !== null && _b !== void 0 ? _b : "";
@@ -627,6 +635,7 @@ export var QueryRequest = {
         message.skip = (_e = object.skip) !== null && _e !== void 0 ? _e : 0;
         message.orderby = (_f = object.orderby) !== null && _f !== void 0 ? _f : "";
         message.queryas = (_g = object.queryas) !== null && _g !== void 0 ? _g : "";
+        message.explain = (_h = object.explain) !== null && _h !== void 0 ? _h : false;
         return message;
     },
 };
@@ -798,7 +807,7 @@ export var GetDocumentVersionResponse = {
     },
 };
 function createBaseAggregateRequest() {
-    return { collectionname: "", aggregates: "", queryas: "", hint: "" };
+    return { collectionname: "", aggregates: "", queryas: "", hint: "", explain: false };
 }
 export var AggregateRequest = {
     encode: function (message, writer) {
@@ -814,6 +823,9 @@ export var AggregateRequest = {
         }
         if (message.hint !== "") {
             writer.uint32(34).string(message.hint);
+        }
+        if (message.explain === true) {
+            writer.uint32(40).bool(message.explain);
         }
         return writer;
     },
@@ -836,6 +848,9 @@ export var AggregateRequest = {
                 case 4:
                     message.hint = reader.string();
                     break;
+                case 5:
+                    message.explain = reader.bool();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -849,6 +864,7 @@ export var AggregateRequest = {
             aggregates: isSet(object.aggregates) ? String(object.aggregates) : "",
             queryas: isSet(object.queryas) ? String(object.queryas) : "",
             hint: isSet(object.hint) ? String(object.hint) : "",
+            explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
     toJSON: function (message) {
@@ -857,18 +873,20 @@ export var AggregateRequest = {
         message.aggregates !== undefined && (obj.aggregates = message.aggregates);
         message.queryas !== undefined && (obj.queryas = message.queryas);
         message.hint !== undefined && (obj.hint = message.hint);
+        message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
     create: function (base) {
         return AggregateRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         var message = createBaseAggregateRequest();
         message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
         message.aggregates = (_b = object.aggregates) !== null && _b !== void 0 ? _b : "";
         message.queryas = (_c = object.queryas) !== null && _c !== void 0 ? _c : "";
         message.hint = (_d = object.hint) !== null && _d !== void 0 ? _d : "";
+        message.explain = (_e = object.explain) !== null && _e !== void 0 ? _e : false;
         return message;
     },
 };
@@ -919,7 +937,7 @@ export var AggregateResponse = {
     },
 };
 function createBaseCountRequest() {
-    return { collectionname: "", query: "", queryas: "" };
+    return { collectionname: "", query: "", queryas: "", explain: false };
 }
 export var CountRequest = {
     encode: function (message, writer) {
@@ -932,6 +950,9 @@ export var CountRequest = {
         }
         if (message.queryas !== "") {
             writer.uint32(26).string(message.queryas);
+        }
+        if (message.explain === true) {
+            writer.uint32(32).bool(message.explain);
         }
         return writer;
     },
@@ -951,6 +972,9 @@ export var CountRequest = {
                 case 3:
                     message.queryas = reader.string();
                     break;
+                case 4:
+                    message.explain = reader.bool();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -963,6 +987,7 @@ export var CountRequest = {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             query: isSet(object.query) ? String(object.query) : "",
             queryas: isSet(object.queryas) ? String(object.queryas) : "",
+            explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
     toJSON: function (message) {
@@ -970,17 +995,19 @@ export var CountRequest = {
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.query !== undefined && (obj.query = message.query);
         message.queryas !== undefined && (obj.queryas = message.queryas);
+        message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
     create: function (base) {
         return CountRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         var message = createBaseCountRequest();
         message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
         message.query = (_b = object.query) !== null && _b !== void 0 ? _b : "";
         message.queryas = (_c = object.queryas) !== null && _c !== void 0 ? _c : "";
+        message.explain = (_d = object.explain) !== null && _d !== void 0 ? _d : false;
         return message;
     },
 };
@@ -1031,7 +1058,7 @@ export var CountResponse = {
     },
 };
 function createBaseDistinctRequest() {
-    return { collectionname: "", field: "", query: "", queryas: "", options: "" };
+    return { collectionname: "", field: "", query: "", queryas: "", options: "", explain: false };
 }
 export var DistinctRequest = {
     encode: function (message, writer) {
@@ -1050,6 +1077,9 @@ export var DistinctRequest = {
         }
         if (message.options !== "") {
             writer.uint32(50).string(message.options);
+        }
+        if (message.explain === true) {
+            writer.uint32(56).bool(message.explain);
         }
         return writer;
     },
@@ -1075,6 +1105,9 @@ export var DistinctRequest = {
                 case 6:
                     message.options = reader.string();
                     break;
+                case 7:
+                    message.explain = reader.bool();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1089,6 +1122,7 @@ export var DistinctRequest = {
             query: isSet(object.query) ? String(object.query) : "",
             queryas: isSet(object.queryas) ? String(object.queryas) : "",
             options: isSet(object.options) ? String(object.options) : "",
+            explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
     toJSON: function (message) {
@@ -1098,19 +1132,21 @@ export var DistinctRequest = {
         message.query !== undefined && (obj.query = message.query);
         message.queryas !== undefined && (obj.queryas = message.queryas);
         message.options !== undefined && (obj.options = message.options);
+        message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
     create: function (base) {
         return DistinctRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f;
         var message = createBaseDistinctRequest();
         message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
         message.field = (_b = object.field) !== null && _b !== void 0 ? _b : "";
         message.query = (_c = object.query) !== null && _c !== void 0 ? _c : "";
         message.queryas = (_d = object.queryas) !== null && _d !== void 0 ? _d : "";
         message.options = (_e = object.options) !== null && _e !== void 0 ? _e : "";
+        message.explain = (_f = object.explain) !== null && _f !== void 0 ? _f : false;
         return message;
     },
 };

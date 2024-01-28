@@ -87,8 +87,8 @@ export class openiap {
         }
         this.connect(false);
     }
-    onWatch(operation:string, document: any) {
-        info("watchevent " + operation + " " + document._id);
+    onWatch(id: string, operation:string, document: any) {
+        // info("watchevent " + operation + " " + document._id);
     }
     public static GetUniqueIdentifier(): string {
         return Math.random().toString(36).substring(2, 11);
@@ -101,9 +101,11 @@ export class openiap {
             this.client.user = rt.user;
             return null;
         } else if (message.command == "watchevent") {
-            let we: WatchEvent = BLAHBLAH;
+            // let we: WatchEvent = BLAHBLAH;
+            let we:WatchEvent  = WatchEvent.decode(message.data.value);
             if (this.watchids[we.id]) {
-                this.onWatch(we.operation, we.document);                
+                this.onWatch(we.id, we.operation, we.document);
+                this.watchids[we.id](we.operation, we.document);
             } else {
                 warn("Got watchevent for unknown id " + we.id);
             }

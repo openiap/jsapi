@@ -41,7 +41,7 @@ import { Any } from "./proto/google/protobuf/any";
 import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken } from "./proto/base";
 import { ListCollectionsRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues";
-import { WatchRequest, WatchResponse, UnWatchRequest } from "./proto/watch";
+import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch";
 import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems";
 var openiap = /** @class */ (function () {
     function openiap(url, jwt) {
@@ -153,8 +153,8 @@ var openiap = /** @class */ (function () {
         }
         this.connect(false);
     };
-    openiap.prototype.onWatch = function (operation, document) {
-        info("watchevent " + operation + " " + document._id);
+    openiap.prototype.onWatch = function (id, operation, document) {
+        // info("watchevent " + operation + " " + document._id);
     };
     openiap.GetUniqueIdentifier = function () {
         return Math.random().toString(36).substring(2, 11);
@@ -173,9 +173,10 @@ var openiap = /** @class */ (function () {
                         return [2 /*return*/, null];
                     case 1:
                         if (!(message.command == "watchevent")) return [3 /*break*/, 2];
-                        we = BLAHBLAH;
+                        we = WatchEvent.decode(message.data.value);
                         if (this.watchids[we.id]) {
-                            this.onWatch(we.operation, we.document);
+                            this.onWatch(we.id, we.operation, we.document);
+                            this.watchids[we.id](we.operation, we.document);
                         }
                         else {
                             warn("Got watchevent for unknown id " + we.id);

@@ -103,24 +103,29 @@ export interface WorkItemQueue {
     _modifiedby: string;
     _modified: Date | undefined;
     _version: number;
+    packageid: string;
 }
 export interface AddWorkItemQueueRequest {
-    name: string;
-    robotqueue: string;
-    amqpqueue: string;
-    projectid: string;
+    workitemqueue: WorkItemQueue | undefined;
     skiprole: boolean;
-    maxretries: number;
-    initialdelay: number;
-    retrydelay: number;
-    success_wiqid: string;
-    failed_wiqid: string;
-    success_wiq: string;
-    failed_wiq: string;
-    _acl: Ace[];
 }
 export interface AddWorkItemQueueResponse {
     workitemqueue: WorkItemQueue | undefined;
+}
+export interface UpdateWorkItemQueueRequest {
+    workitemqueue: WorkItemQueue | undefined;
+    skiprole: boolean;
+    purge: boolean;
+}
+export interface UpdateWorkItemQueueResponse {
+    workitemqueue: WorkItemQueue | undefined;
+}
+export interface DeleteWorkItemQueueRequest {
+    wiq: string;
+    wiqid: string;
+    purge: boolean;
+}
+export interface DeleteWorkItemQueueResponse {
 }
 export declare const Workitem: {
     encode(message: Workitem, writer?: _m0.Writer): _m0.Writer;
@@ -1944,6 +1949,7 @@ export declare const WorkItemQueue: {
         _modifiedby?: string;
         _modified?: Date | undefined;
         _version?: number;
+        packageid?: string;
     } & {
         workflowid?: string;
         robotqueue?: string;
@@ -1983,6 +1989,7 @@ export declare const WorkItemQueue: {
         _modifiedby?: string;
         _modified?: Date | undefined;
         _version?: number;
+        packageid?: string;
     } & { [K_2 in Exclude<keyof I, keyof WorkItemQueue>]: never; }>(base?: I): WorkItemQueue;
     fromPartial<I_1 extends {
         workflowid?: string;
@@ -2011,6 +2018,7 @@ export declare const WorkItemQueue: {
         _modifiedby?: string;
         _modified?: Date | undefined;
         _version?: number;
+        packageid?: string;
     } & {
         workflowid?: string;
         robotqueue?: string;
@@ -2050,6 +2058,7 @@ export declare const WorkItemQueue: {
         _modifiedby?: string;
         _modified?: Date | undefined;
         _version?: number;
+        packageid?: string;
     } & { [K_5 in Exclude<keyof I_1, keyof WorkItemQueue>]: never; }>(object: I_1): WorkItemQueue;
 };
 export declare const AddWorkItemQueueRequest: {
@@ -2058,110 +2067,6 @@ export declare const AddWorkItemQueueRequest: {
     fromJSON(object: any): AddWorkItemQueueRequest;
     toJSON(message: AddWorkItemQueueRequest): unknown;
     create<I extends {
-        name?: string;
-        robotqueue?: string;
-        amqpqueue?: string;
-        projectid?: string;
-        skiprole?: boolean;
-        maxretries?: number;
-        initialdelay?: number;
-        retrydelay?: number;
-        success_wiqid?: string;
-        failed_wiqid?: string;
-        success_wiq?: string;
-        failed_wiq?: string;
-        _acl?: {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        }[];
-    } & {
-        name?: string;
-        robotqueue?: string;
-        amqpqueue?: string;
-        projectid?: string;
-        skiprole?: boolean;
-        maxretries?: number;
-        initialdelay?: number;
-        retrydelay?: number;
-        success_wiqid?: string;
-        failed_wiqid?: string;
-        success_wiq?: string;
-        failed_wiq?: string;
-        _acl?: {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        }[] & ({
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        } & {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        } & { [K in Exclude<keyof I["_acl"][number], keyof Ace>]: never; })[] & { [K_1 in Exclude<keyof I["_acl"], keyof {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        }[]>]: never; };
-    } & { [K_2 in Exclude<keyof I, keyof AddWorkItemQueueRequest>]: never; }>(base?: I): AddWorkItemQueueRequest;
-    fromPartial<I_1 extends {
-        name?: string;
-        robotqueue?: string;
-        amqpqueue?: string;
-        projectid?: string;
-        skiprole?: boolean;
-        maxretries?: number;
-        initialdelay?: number;
-        retrydelay?: number;
-        success_wiqid?: string;
-        failed_wiqid?: string;
-        success_wiq?: string;
-        failed_wiq?: string;
-        _acl?: {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        }[];
-    } & {
-        name?: string;
-        robotqueue?: string;
-        amqpqueue?: string;
-        projectid?: string;
-        skiprole?: boolean;
-        maxretries?: number;
-        initialdelay?: number;
-        retrydelay?: number;
-        success_wiqid?: string;
-        failed_wiqid?: string;
-        success_wiq?: string;
-        failed_wiq?: string;
-        _acl?: {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        }[] & ({
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        } & {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        } & { [K_3 in Exclude<keyof I_1["_acl"][number], keyof Ace>]: never; })[] & { [K_4 in Exclude<keyof I_1["_acl"], keyof {
-            _id?: string;
-            deny?: boolean;
-            rights?: number;
-        }[]>]: never; };
-    } & { [K_5 in Exclude<keyof I_1, keyof AddWorkItemQueueRequest>]: never; }>(object: I_1): AddWorkItemQueueRequest;
-};
-export declare const AddWorkItemQueueResponse: {
-    encode(message: AddWorkItemQueueResponse, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): AddWorkItemQueueResponse;
-    fromJSON(object: any): AddWorkItemQueueResponse;
-    toJSON(message: AddWorkItemQueueResponse): unknown;
-    create<I extends {
         workitemqueue?: {
             workflowid?: string;
             robotqueue?: string;
@@ -2189,7 +2094,9 @@ export declare const AddWorkItemQueueResponse: {
             _modifiedby?: string;
             _modified?: Date | undefined;
             _version?: number;
+            packageid?: string;
         };
+        skiprole?: boolean;
     } & {
         workitemqueue?: {
             workflowid?: string;
@@ -2218,6 +2125,7 @@ export declare const AddWorkItemQueueResponse: {
             _modifiedby?: string;
             _modified?: Date | undefined;
             _version?: number;
+            packageid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2257,8 +2165,10 @@ export declare const AddWorkItemQueueResponse: {
             _modifiedby?: string;
             _modified?: Date | undefined;
             _version?: number;
+            packageid?: string;
         } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
-    } & { [K_3 in Exclude<keyof I, "workitemqueue">]: never; }>(base?: I): AddWorkItemQueueResponse;
+        skiprole?: boolean;
+    } & { [K_3 in Exclude<keyof I, keyof AddWorkItemQueueRequest>]: never; }>(base?: I): AddWorkItemQueueRequest;
     fromPartial<I_1 extends {
         workitemqueue?: {
             workflowid?: string;
@@ -2287,7 +2197,9 @@ export declare const AddWorkItemQueueResponse: {
             _modifiedby?: string;
             _modified?: Date | undefined;
             _version?: number;
+            packageid?: string;
         };
+        skiprole?: boolean;
     } & {
         workitemqueue?: {
             workflowid?: string;
@@ -2316,6 +2228,7 @@ export declare const AddWorkItemQueueResponse: {
             _modifiedby?: string;
             _modified?: Date | undefined;
             _version?: number;
+            packageid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2355,8 +2268,674 @@ export declare const AddWorkItemQueueResponse: {
             _modifiedby?: string;
             _modified?: Date | undefined;
             _version?: number;
+            packageid?: string;
+        } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
+        skiprole?: boolean;
+    } & { [K_7 in Exclude<keyof I_1, keyof AddWorkItemQueueRequest>]: never; }>(object: I_1): AddWorkItemQueueRequest;
+};
+export declare const AddWorkItemQueueResponse: {
+    encode(message: AddWorkItemQueueResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): AddWorkItemQueueResponse;
+    fromJSON(object: any): AddWorkItemQueueResponse;
+    toJSON(message: AddWorkItemQueueResponse): unknown;
+    create<I extends {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        };
+    } & {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[] & ({
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & { [K in Exclude<keyof I["workitemqueue"]["_acl"][number], keyof Ace>]: never; })[] & { [K_1 in Exclude<keyof I["workitemqueue"]["_acl"], keyof {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[]>]: never; };
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
+    } & { [K_3 in Exclude<keyof I, "workitemqueue">]: never; }>(base?: I): AddWorkItemQueueResponse;
+    fromPartial<I_1 extends {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        };
+    } & {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[] & ({
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & { [K_4 in Exclude<keyof I_1["workitemqueue"]["_acl"][number], keyof Ace>]: never; })[] & { [K_5 in Exclude<keyof I_1["workitemqueue"]["_acl"], keyof {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[]>]: never; };
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
     } & { [K_7 in Exclude<keyof I_1, "workitemqueue">]: never; }>(object: I_1): AddWorkItemQueueResponse;
+};
+export declare const UpdateWorkItemQueueRequest: {
+    encode(message: UpdateWorkItemQueueRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): UpdateWorkItemQueueRequest;
+    fromJSON(object: any): UpdateWorkItemQueueRequest;
+    toJSON(message: UpdateWorkItemQueueRequest): unknown;
+    create<I extends {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        };
+        skiprole?: boolean;
+        purge?: boolean;
+    } & {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[] & ({
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & { [K in Exclude<keyof I["workitemqueue"]["_acl"][number], keyof Ace>]: never; })[] & { [K_1 in Exclude<keyof I["workitemqueue"]["_acl"], keyof {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[]>]: never; };
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
+        skiprole?: boolean;
+        purge?: boolean;
+    } & { [K_3 in Exclude<keyof I, keyof UpdateWorkItemQueueRequest>]: never; }>(base?: I): UpdateWorkItemQueueRequest;
+    fromPartial<I_1 extends {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        };
+        skiprole?: boolean;
+        purge?: boolean;
+    } & {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[] & ({
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & { [K_4 in Exclude<keyof I_1["workitemqueue"]["_acl"][number], keyof Ace>]: never; })[] & { [K_5 in Exclude<keyof I_1["workitemqueue"]["_acl"], keyof {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[]>]: never; };
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
+        skiprole?: boolean;
+        purge?: boolean;
+    } & { [K_7 in Exclude<keyof I_1, keyof UpdateWorkItemQueueRequest>]: never; }>(object: I_1): UpdateWorkItemQueueRequest;
+};
+export declare const UpdateWorkItemQueueResponse: {
+    encode(message: UpdateWorkItemQueueResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): UpdateWorkItemQueueResponse;
+    fromJSON(object: any): UpdateWorkItemQueueResponse;
+    toJSON(message: UpdateWorkItemQueueResponse): unknown;
+    create<I extends {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        };
+    } & {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[] & ({
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & { [K in Exclude<keyof I["workitemqueue"]["_acl"][number], keyof Ace>]: never; })[] & { [K_1 in Exclude<keyof I["workitemqueue"]["_acl"], keyof {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[]>]: never; };
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
+    } & { [K_3 in Exclude<keyof I, "workitemqueue">]: never; }>(base?: I): UpdateWorkItemQueueResponse;
+    fromPartial<I_1 extends {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        };
+    } & {
+        workitemqueue?: {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[];
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & {
+            workflowid?: string;
+            robotqueue?: string;
+            amqpqueue?: string;
+            projectid?: string;
+            usersrole?: string;
+            maxretries?: number;
+            retrydelay?: number;
+            initialdelay?: number;
+            success_wiqid?: string;
+            failed_wiqid?: string;
+            success_wiq?: string;
+            failed_wiq?: string;
+            _id?: string;
+            _acl?: {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[] & ({
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            } & { [K_4 in Exclude<keyof I_1["workitemqueue"]["_acl"][number], keyof Ace>]: never; })[] & { [K_5 in Exclude<keyof I_1["workitemqueue"]["_acl"], keyof {
+                _id?: string;
+                deny?: boolean;
+                rights?: number;
+            }[]>]: never; };
+            name?: string;
+            _createdbyid?: string;
+            _createdby?: string;
+            _created?: Date | undefined;
+            _modifiedbyid?: string;
+            _modifiedby?: string;
+            _modified?: Date | undefined;
+            _version?: number;
+            packageid?: string;
+        } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
+    } & { [K_7 in Exclude<keyof I_1, "workitemqueue">]: never; }>(object: I_1): UpdateWorkItemQueueResponse;
+};
+export declare const DeleteWorkItemQueueRequest: {
+    encode(message: DeleteWorkItemQueueRequest, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DeleteWorkItemQueueRequest;
+    fromJSON(object: any): DeleteWorkItemQueueRequest;
+    toJSON(message: DeleteWorkItemQueueRequest): unknown;
+    create<I extends {
+        wiq?: string;
+        wiqid?: string;
+        purge?: boolean;
+    } & {
+        wiq?: string;
+        wiqid?: string;
+        purge?: boolean;
+    } & { [K in Exclude<keyof I, keyof DeleteWorkItemQueueRequest>]: never; }>(base?: I): DeleteWorkItemQueueRequest;
+    fromPartial<I_1 extends {
+        wiq?: string;
+        wiqid?: string;
+        purge?: boolean;
+    } & {
+        wiq?: string;
+        wiqid?: string;
+        purge?: boolean;
+    } & { [K_1 in Exclude<keyof I_1, keyof DeleteWorkItemQueueRequest>]: never; }>(object: I_1): DeleteWorkItemQueueRequest;
+};
+export declare const DeleteWorkItemQueueResponse: {
+    encode(_: DeleteWorkItemQueueResponse, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DeleteWorkItemQueueResponse;
+    fromJSON(_: any): DeleteWorkItemQueueResponse;
+    toJSON(_: DeleteWorkItemQueueResponse): unknown;
+    create<I extends {} & {} & { [K in Exclude<keyof I, never>]: never; }>(base?: I): DeleteWorkItemQueueResponse;
+    fromPartial<I_1 extends {} & {} & { [K_1 in Exclude<keyof I_1, never>]: never; }>(_: I_1): DeleteWorkItemQueueResponse;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends Array<infer U> ? Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {

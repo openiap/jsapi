@@ -38,14 +38,27 @@ export interface CreateCollectionRequest {
 }
 export interface CreateCollectionResponse {
 }
+/** MongoDB Query Request. */
 export interface QueryRequest {
+    /** MongoDB Query to execute. This field is required. */
     query: string;
+    /** MongoDB Collection to query. This field is required. */
     collectionname: string;
+    /** MongoDB Query projection. This field is optional. */
     projection: string;
+    /** MongoDB Maximum number of documents to return. This field is optional with a default of 100. */
     top: number;
+    /** MongoDB Number of documents to skip, used for paging on the same query. This field is optional with a default of 0. */
     skip: number;
+    /**
+     * MongoDB order by. This field is optional with a default of {"_id": 1}.
+     * You can specify "timestamp" as a string or an object like {"timestamp": -1}.
+     */
     orderby: string;
+    /** Query as if you were this _id. (_id can be a user, role, or customer from the users collection) */
     queryas: string;
+    /** Enabling explain will provides information on the execution of the query */
+    explain: boolean;
 }
 export interface QueryResponse {
     results: string;
@@ -64,6 +77,8 @@ export interface AggregateRequest {
     aggregates: string;
     queryas: string;
     hint: string;
+    /** Enabling explain will provides information on the execution of the pipelines */
+    explain: boolean;
 }
 export interface AggregateResponse {
     results: string;
@@ -72,6 +87,8 @@ export interface CountRequest {
     collectionname: string;
     query: string;
     queryas: string;
+    /** Enabling explain will provides information on the execution of the count */
+    explain: boolean;
 }
 export interface CountResponse {
     result: number;
@@ -82,6 +99,8 @@ export interface DistinctRequest {
     query: string;
     queryas: string;
     options: string;
+    /** Enabling explain will provides information on the execution of the distinct */
+    explain: boolean;
 }
 export interface DistinctResponse {
     results: string[];
@@ -436,6 +455,7 @@ export declare const QueryRequest: {
         skip?: number;
         orderby?: string;
         queryas?: string;
+        explain?: boolean;
     } & {
         query?: string;
         collectionname?: string;
@@ -444,6 +464,7 @@ export declare const QueryRequest: {
         skip?: number;
         orderby?: string;
         queryas?: string;
+        explain?: boolean;
     } & { [K in Exclude<keyof I, keyof QueryRequest>]: never; }>(base?: I): QueryRequest;
     fromPartial<I_1 extends {
         query?: string;
@@ -453,6 +474,7 @@ export declare const QueryRequest: {
         skip?: number;
         orderby?: string;
         queryas?: string;
+        explain?: boolean;
     } & {
         query?: string;
         collectionname?: string;
@@ -461,6 +483,7 @@ export declare const QueryRequest: {
         skip?: number;
         orderby?: string;
         queryas?: string;
+        explain?: boolean;
     } & { [K_1 in Exclude<keyof I_1, keyof QueryRequest>]: never; }>(object: I_1): QueryRequest;
 };
 export declare const QueryResponse: {
@@ -533,22 +556,26 @@ export declare const AggregateRequest: {
         aggregates?: string;
         queryas?: string;
         hint?: string;
+        explain?: boolean;
     } & {
         collectionname?: string;
         aggregates?: string;
         queryas?: string;
         hint?: string;
+        explain?: boolean;
     } & { [K in Exclude<keyof I, keyof AggregateRequest>]: never; }>(base?: I): AggregateRequest;
     fromPartial<I_1 extends {
         collectionname?: string;
         aggregates?: string;
         queryas?: string;
         hint?: string;
+        explain?: boolean;
     } & {
         collectionname?: string;
         aggregates?: string;
         queryas?: string;
         hint?: string;
+        explain?: boolean;
     } & { [K_1 in Exclude<keyof I_1, keyof AggregateRequest>]: never; }>(object: I_1): AggregateRequest;
 };
 export declare const AggregateResponse: {
@@ -576,19 +603,23 @@ export declare const CountRequest: {
         collectionname?: string;
         query?: string;
         queryas?: string;
+        explain?: boolean;
     } & {
         collectionname?: string;
         query?: string;
         queryas?: string;
+        explain?: boolean;
     } & { [K in Exclude<keyof I, keyof CountRequest>]: never; }>(base?: I): CountRequest;
     fromPartial<I_1 extends {
         collectionname?: string;
         query?: string;
         queryas?: string;
+        explain?: boolean;
     } & {
         collectionname?: string;
         query?: string;
         queryas?: string;
+        explain?: boolean;
     } & { [K_1 in Exclude<keyof I_1, keyof CountRequest>]: never; }>(object: I_1): CountRequest;
 };
 export declare const CountResponse: {
@@ -618,12 +649,14 @@ export declare const DistinctRequest: {
         query?: string;
         queryas?: string;
         options?: string;
+        explain?: boolean;
     } & {
         collectionname?: string;
         field?: string;
         query?: string;
         queryas?: string;
         options?: string;
+        explain?: boolean;
     } & { [K in Exclude<keyof I, keyof DistinctRequest>]: never; }>(base?: I): DistinctRequest;
     fromPartial<I_1 extends {
         collectionname?: string;
@@ -631,12 +664,14 @@ export declare const DistinctRequest: {
         query?: string;
         queryas?: string;
         options?: string;
+        explain?: boolean;
     } & {
         collectionname?: string;
         field?: string;
         query?: string;
         queryas?: string;
         options?: string;
+        explain?: boolean;
     } & { [K_1 in Exclude<keyof I_1, keyof DistinctRequest>]: never; }>(object: I_1): DistinctRequest;
 };
 export declare const DistinctResponse: {

@@ -134,6 +134,7 @@ export interface DownloadResponse {
 export interface UploadRequest {
   filename: string;
   mimetype: string;
+  metadata: string;
 }
 
 export interface UploadResponse {
@@ -871,7 +872,7 @@ export const DownloadResponse = {
 };
 
 function createBaseUploadRequest(): UploadRequest {
-  return { filename: "", mimetype: "" };
+  return { filename: "", mimetype: "", metadata: "" };
 }
 
 export const UploadRequest = {
@@ -881,6 +882,9 @@ export const UploadRequest = {
     }
     if (message.mimetype !== "") {
       writer.uint32(18).string(message.mimetype);
+    }
+    if (message.metadata !== "") {
+      writer.uint32(26).string(message.metadata);
     }
     return writer;
   },
@@ -898,6 +902,9 @@ export const UploadRequest = {
         case 2:
           message.mimetype = reader.string();
           break;
+        case 3:
+          message.metadata = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -910,6 +917,7 @@ export const UploadRequest = {
     return {
       filename: isSet(object.filename) ? String(object.filename) : "",
       mimetype: isSet(object.mimetype) ? String(object.mimetype) : "",
+      metadata: isSet(object.metadata) ? String(object.metadata) : "",
     };
   },
 
@@ -917,6 +925,7 @@ export const UploadRequest = {
     const obj: any = {};
     message.filename !== undefined && (obj.filename = message.filename);
     message.mimetype !== undefined && (obj.mimetype = message.mimetype);
+    message.metadata !== undefined && (obj.metadata = message.metadata);
     return obj;
   },
 
@@ -928,6 +937,7 @@ export const UploadRequest = {
     const message = createBaseUploadRequest();
     message.filename = object.filename ?? "";
     message.mimetype = object.mimetype ?? "";
+    message.metadata = object.metadata ?? "";
     return message;
   },
 };
