@@ -123,6 +123,7 @@ export interface GetElementResponse {
 export interface DownloadRequest {
   id: string;
   filename: string;
+  collectionname: string;
 }
 
 export interface DownloadResponse {
@@ -739,7 +740,7 @@ export const GetElementResponse = {
 };
 
 function createBaseDownloadRequest(): DownloadRequest {
-  return { id: "", filename: "" };
+  return { id: "", filename: "", collectionname: "" };
 }
 
 export const DownloadRequest = {
@@ -749,6 +750,9 @@ export const DownloadRequest = {
     }
     if (message.filename !== "") {
       writer.uint32(18).string(message.filename);
+    }
+    if (message.collectionname !== "") {
+      writer.uint32(26).string(message.collectionname);
     }
     return writer;
   },
@@ -766,6 +770,9 @@ export const DownloadRequest = {
         case 2:
           message.filename = reader.string();
           break;
+        case 3:
+          message.collectionname = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -778,6 +785,7 @@ export const DownloadRequest = {
     return {
       id: isSet(object.id) ? String(object.id) : "",
       filename: isSet(object.filename) ? String(object.filename) : "",
+      collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
     };
   },
 
@@ -785,6 +793,7 @@ export const DownloadRequest = {
     const obj: any = {};
     message.id !== undefined && (obj.id = message.id);
     message.filename !== undefined && (obj.filename = message.filename);
+    message.collectionname !== undefined && (obj.collectionname = message.collectionname);
     return obj;
   },
 
@@ -796,6 +805,7 @@ export const DownloadRequest = {
     const message = createBaseDownloadRequest();
     message.id = object.id ?? "";
     message.filename = object.filename ?? "";
+    message.collectionname = object.collectionname ?? "";
     return message;
   },
 };

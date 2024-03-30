@@ -369,7 +369,7 @@ export class openiap {
     }
     async DownloadFile(options: DownloadFileOptions): Promise<DownloadResponse> {
         const opt: DownloadFileOptions = Object.assign(new DownloadFileDefaults(), options)
-        return await protowrap.DownloadFile(this.client, opt.id, opt.filename);
+        return await protowrap.DownloadFile(this.client, opt.id, opt.collectionname, opt.filename);
     }
     async UploadFile(filename:string, mimetype: string, content:Uint8Array): Promise<string> {
         return protowrap.UploadFile(this.client, filename, mimetype, content);
@@ -700,6 +700,7 @@ class UnWatchDefaults {
 }
 export type DownloadFileOptions = {
     id?: string;
+    collectionname?: string;
     filename?: string;
     jwt?: string;
 }

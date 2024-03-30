@@ -417,18 +417,20 @@ var protowrap = /** @class */ (function () {
         client.streams[rid] = { stream: stream, chunks: 0, bytes: 0 };
         return client.streams[rid];
     };
-    protowrap.DownloadFile = function (client, id, filename) {
+    protowrap.DownloadFile = function (client, id, collectionname, filename) {
         var _this = this;
         return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
             var msg, data, payload, _a, rid, promise, ws, s;
             var _this = this;
             return __generator(this, function (_b) {
                 try {
-                    msg = { id: id, filename: filename };
+                    msg = { id: id, filename: filename, collectionname: collectionname };
                     if (msg.id == null)
                         msg.id = "";
                     if (msg.filename == null)
                         msg.filename = "";
+                    if (msg.collectionname == null)
+                        msg.collectionname = "";
                     data = Any.create({ "typeUrl": "type.googleapis.com/openiap.DownloadRequest", "value": DownloadRequest.encode(msg).finish() });
                     payload = Envelope.create({ command: "download", data: data });
                     _a = this._RPC(client, payload), rid = _a[0], promise = _a[1];

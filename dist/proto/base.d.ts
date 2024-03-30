@@ -39,6 +39,7 @@ export interface GetElementResponse {
 export interface DownloadRequest {
     id: string;
     filename: string;
+    collectionname: string;
 }
 export interface DownloadResponse {
     id: string;
@@ -355,16 +356,20 @@ export declare const DownloadRequest: {
     create<I extends {
         id?: string;
         filename?: string;
+        collectionname?: string;
     } & {
         id?: string;
         filename?: string;
+        collectionname?: string;
     } & { [K in Exclude<keyof I, keyof DownloadRequest>]: never; }>(base?: I): DownloadRequest;
     fromPartial<I_1 extends {
         id?: string;
         filename?: string;
+        collectionname?: string;
     } & {
         id?: string;
         filename?: string;
+        collectionname?: string;
     } & { [K_1 in Exclude<keyof I_1, keyof DownloadRequest>]: never; }>(object: I_1): DownloadRequest;
 };
 export declare const DownloadResponse: {

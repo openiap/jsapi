@@ -9,7 +9,7 @@ export declare class protowrap {
     static RPC(client: client, payload: Envelope): Promise<any>;
     static _RPC(client: client, payload: Envelope): [string, Promise<any>];
     static SetStream(client: client, stream: any, rid: string): any;
-    static DownloadFile(client: client, id: string, filename: string): Promise<any>;
+    static DownloadFile(client: client, id: string, collectionname: string, filename: string): Promise<any>;
     static UploadFile(client: client, filename: string, mimetype: string, content: Uint8Array): Promise<string>;
 }
 export declare class ServerError extends Error {

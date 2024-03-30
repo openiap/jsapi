@@ -708,7 +708,7 @@ var openiap = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         opt = Object.assign(new DownloadFileDefaults(), options);
-                        return [4 /*yield*/, protowrap.DownloadFile(this.client, opt.id, opt.filename)];
+                        return [4 /*yield*/, protowrap.DownloadFile(this.client, opt.id, opt.collectionname, opt.filename)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });

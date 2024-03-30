@@ -400,7 +400,7 @@ export var GetElementResponse = {
     },
 };
 function createBaseDownloadRequest() {
-    return { id: "", filename: "" };
+    return { id: "", filename: "", collectionname: "" };
 }
 export var DownloadRequest = {
     encode: function (message, writer) {
@@ -410,6 +410,9 @@ export var DownloadRequest = {
         }
         if (message.filename !== "") {
             writer.uint32(18).string(message.filename);
+        }
+        if (message.collectionname !== "") {
+            writer.uint32(26).string(message.collectionname);
         }
         return writer;
     },
@@ -426,6 +429,9 @@ export var DownloadRequest = {
                 case 2:
                     message.filename = reader.string();
                     break;
+                case 3:
+                    message.collectionname = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -437,22 +443,25 @@ export var DownloadRequest = {
         return {
             id: isSet(object.id) ? String(object.id) : "",
             filename: isSet(object.filename) ? String(object.filename) : "",
+            collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
         };
     },
     toJSON: function (message) {
         var obj = {};
         message.id !== undefined && (obj.id = message.id);
         message.filename !== undefined && (obj.filename = message.filename);
+        message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         return obj;
     },
     create: function (base) {
         return DownloadRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial: function (object) {
-        var _a, _b;
+        var _a, _b, _c;
         var message = createBaseDownloadRequest();
         message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
         message.filename = (_b = object.filename) !== null && _b !== void 0 ? _b : "";
+        message.collectionname = (_c = object.collectionname) !== null && _c !== void 0 ? _c : "";
         return message;
     },
 };

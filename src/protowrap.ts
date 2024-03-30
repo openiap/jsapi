@@ -319,12 +319,13 @@ export class protowrap {
         client.streams[rid] = { stream, chunks: 0, bytes: 0 };
         return client.streams[rid];
     }
-    static DownloadFile(client: client, id:string, filename:string) {
+    static DownloadFile(client: client, id:string, collectionname:string, filename:string) {
         return new Promise<any>(async (resolve, reject) => {
             try {
-                var msg = { id, filename }
+                var msg = { id, filename, collectionname }
                 if(msg.id == null) msg.id = "";
                 if(msg.filename == null) msg.filename = "";
+                if(msg.collectionname == null) msg.collectionname = "";
 
                 const data = Any.create<any>({"typeUrl": "type.googleapis.com/openiap.DownloadRequest", "value": DownloadRequest.encode(msg).finish()})
                 const payload: Envelope = Envelope.create({ command: "download", data });
