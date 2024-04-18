@@ -40,9 +40,9 @@ export class openiap {
         if (this.client && this.client.Close) this.client.Close();
     }
     async onConnected(client:client) {
-        info("Connected to server");
-        this.reconnectms = 100;
         var u = new URL(this.url);
+        info("Connected to server " + u.hostname);
+        this.reconnectms = 100;
         var _jwt = "";
         if(client.jwt != null && client.jwt != "") _jwt = client.jwt;
         if(this.jwt != null && this.jwt != "") _jwt = this.jwt;

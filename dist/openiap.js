@@ -91,9 +91,9 @@ var openiap = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        info("Connected to server");
-                        this.reconnectms = 100;
                         u = new URL(this.url);
+                        info("Connected to server " + u.hostname);
+                        this.reconnectms = 100;
                         _jwt = "";
                         if (client.jwt != null && client.jwt != "")
                             _jwt = client.jwt;
