@@ -94,7 +94,7 @@ var openiap = /** @class */ (function () {
                         info("Connected to server");
                         this.reconnectms = 100;
                         u = new URL(this.url);
-                        _jwt = process.env.jwt;
+                        _jwt = "";
                         if (client.jwt != null && client.jwt != "")
                             _jwt = client.jwt;
                         if (this.jwt != null && this.jwt != "")

@@ -43,7 +43,7 @@ export class openiap {
         info("Connected to server");
         this.reconnectms = 100;
         var u = new URL(this.url);
-        var _jwt = process.env.jwt
+        var _jwt = "";
         if(client.jwt != null && client.jwt != "") _jwt = client.jwt;
         if(this.jwt != null && this.jwt != "") _jwt = this.jwt;
         var _username = u.username;
