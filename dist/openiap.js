@@ -65,12 +65,12 @@ var openiap = /** @class */ (function () {
                         setTimeout(function () {
                             try {
                                 _this.client = protowrap.connect(_this.url);
-                                _this.client.onConnected = _this.onConnected.bind(_this);
-                                _this.client.onDisconnected = _this.onDisconnected.bind(_this);
-                                _this.client.onMessage = _this.onMessage.bind(_this);
+                                _this.client.onConnected = _this.cliOnConnected.bind(_this);
+                                _this.client.onDisconnected = _this.cliOnDisconnected.bind(_this);
+                                _this.client.onMessage = _this.cliOnMessage.bind(_this);
                             }
                             catch (error) {
-                                _this.onDisconnected(_this.client, error);
+                                _this.cliOnDisconnected(_this.client, error);
                             }
                         }, _this.reconnectms);
                     })];
@@ -87,7 +87,14 @@ var openiap = /** @class */ (function () {
     };
     openiap.prototype.onConnected = function (client) {
         return __awaiter(this, void 0, void 0, function () {
-            var u, _jwt, _username, _password, user, user;
+            return __generator(this, function (_a) {
+                return [2 /*return*/];
+            });
+        });
+    };
+    openiap.prototype.cliOnConnected = function (client) {
+        return __awaiter(this, void 0, void 0, function () {
+            var u, _jwt, _username, _password, user, user, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -115,7 +122,7 @@ var openiap = /** @class */ (function () {
                             this.loginresolve(user);
                             this.loginresolve = null;
                         }
-                        return [2 /*return*/];
+                        return [3 /*break*/, 4];
                     case 2:
                         if (!(_jwt != "")) return [3 /*break*/, 4];
                         return [4 /*yield*/, this.Signin({ jwt: _jwt, ping: config.settings.DoPing })];
@@ -125,8 +132,19 @@ var openiap = /** @class */ (function () {
                             this.loginresolve(user);
                             this.loginresolve = null;
                         }
-                        return [2 /*return*/];
+                        _a.label = 4;
                     case 4:
+                        _a.trys.push([4, 6, , 7]);
+                        this.reconnectms = 100;
+                        return [4 /*yield*/, this.onConnected(client)];
+                    case 5:
+                        _a.sent();
+                        return [3 /*break*/, 7];
+                    case 6:
+                        error_1 = _a.sent();
+                        err(error_1);
+                        return [3 /*break*/, 7];
+                    case 7:
                         if (this.loginresolve != null) {
                             this.loginresolve(null);
                             this.loginresolve = null;
@@ -137,6 +155,13 @@ var openiap = /** @class */ (function () {
         });
     };
     openiap.prototype.onDisconnected = function (client, error) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/];
+            });
+        });
+    };
+    openiap.prototype.cliOnDisconnected = function (client, error) {
         this.reconnectms += 100;
         this.signedin = false;
         if (this.reconnectms > 30000)
@@ -151,6 +176,12 @@ var openiap = /** @class */ (function () {
         else {
             info("Disconnected from server");
         }
+        try {
+            this.onDisconnected(client, error);
+        }
+        catch (error) {
+            err(error);
+        }
         this.connect(false);
     };
     openiap.prototype.onWatch = function (id, operation, document) {
@@ -159,9 +190,11 @@ var openiap = /** @class */ (function () {
     openiap.GetUniqueIdentifier = function () {
         return Math.random().toString(36).substring(2, 11);
     };
-    openiap.prototype.onMessage = function (client, message) {
+    // async onMessage(client: client, message: Envelope): Promise<any> {
+    // }
+    openiap.prototype.cliOnMessage = function (client, message) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, command, BLAHBLAH, reply, rt, we, doc, we, data, user_1, data, user, jwt, reply2, error_1;
+            var _a, command, BLAHBLAH, reply, rt, we, doc, we, data, user_1, data, user, jwt, reply2, error_2;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -229,8 +262,8 @@ var openiap = /** @class */ (function () {
                         _b.label = 7;
                     case 7: return [3 /*break*/, 9];
                     case 8:
-                        error_1 = _b.sent();
-                        err(error_1);
+                        error_2 = _b.sent();
+                        err(error_2);
                         return [3 /*break*/, 9];
                     case 9: return [3 /*break*/, 11];
                     case 10:
@@ -801,7 +834,7 @@ var openiap = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-                        var opt, _a, message, data, payload, result, error_2;
+                        var opt, _a, message, data, payload, result, error_3;
                         return __generator(this, function (_b) {
                             switch (_b.label) {
                                 case 0:
@@ -842,8 +875,8 @@ var openiap = /** @class */ (function () {
                                         resolve(null);
                                     return [3 /*break*/, 6];
                                 case 5:
-                                    error_2 = _b.sent();
-                                    reject(error_2);
+                                    error_3 = _b.sent();
+                                    reject(error_3);
                                     return [3 /*break*/, 6];
                                 case 6: return [2 /*return*/];
                             }

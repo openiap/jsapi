@@ -22,12 +22,12 @@ export class openiap {
             if (this.loginresolve == null) this.loginresolve = resolve;
             setTimeout(() => {
                 try {
-                    this.client = protowrap.connect(this.url)
-                    this.client.onConnected = this.onConnected.bind(this);
-                    this.client.onDisconnected = this.onDisconnected.bind(this);
-                    this.client.onMessage = this.onMessage.bind(this);
+                    this.client = protowrap.connect(this.url);
+                    this.client.onConnected = this.cliOnConnected.bind(this);
+                    this.client.onDisconnected = this.cliOnDisconnected.bind(this);
+                    this.client.onMessage = this.cliOnMessage.bind(this);
                 } catch (error) {
-                    this.onDisconnected(this.client, error);
+                    this.cliOnDisconnected(this.client, error);
                 }
             }, this.reconnectms);
         });
@@ -40,6 +40,8 @@ export class openiap {
         if (this.client && this.client.Close) this.client.Close();
     }
     async onConnected(client:client) {
+    }
+    private async cliOnConnected(client:client) {
         var u = new URL(this.url);
         info("Connected to server " + u.hostname);
         this.reconnectms = 100;
@@ -58,21 +60,28 @@ export class openiap {
                 this.loginresolve(user);
                 this.loginresolve = null;
             }
-            return;
         } else if (_jwt != "") {
             var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing })
             if (this.loginresolve != null) {
                 this.loginresolve(user);
                 this.loginresolve = null;
             }
-            return;
+        }
+        try {
+            this.reconnectms = 100;
+            await this.onConnected(client);
+        } catch (error) {
+            err(error)
         }
         if (this.loginresolve != null) {
             this.loginresolve(null);
             this.loginresolve = null;
         }
     }
-    onDisconnected(client:client, error: Error) {
+    
+    async onDisconnected(client:client, error: Error) {
+    }
+    cliOnDisconnected(client:client, error: Error) {
         this.reconnectms += 100;
         this.signedin = false;
         if (this.reconnectms > 30000) this.reconnectms = 30000;
@@ -85,6 +94,11 @@ export class openiap {
         } else {
             info("Disconnected from server");
         }
+        try {
+            this.onDisconnected(client, error);
+        } catch (error) {
+            err(error)
+        }
         this.connect(false);
     }
     onWatch(id: string, operation:string, document: any) {
@@ -93,7 +107,9 @@ export class openiap {
     public static GetUniqueIdentifier(): string {
         return Math.random().toString(36).substring(2, 11);
     }
-    async onMessage(client: client, message: Envelope): Promise<any> {
+    // async onMessage(client: client, message: Envelope): Promise<any> {
+    // }
+    private async cliOnMessage(client: client, message: Envelope): Promise<any> {
         const [command, BLAHBLAH, reply] = protowrap.unpack(message);
         if (message.command == "refreshtoken") {
             let rt: RefreshToken = RefreshToken.decode(message.data.value);

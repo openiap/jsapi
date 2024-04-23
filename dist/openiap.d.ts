@@ -1,5 +1,5 @@
 import { client } from "./client";
-import { User, SigninResponse, Envelope, DownloadResponse } from "./proto/base";
+import { User, SigninResponse, DownloadResponse } from "./proto/base";
 import { UpdateResult } from "./proto/querys";
 import { QueueEvent } from "./proto/queues";
 import { Workitem } from "./proto/workitems";
@@ -15,10 +15,12 @@ export declare class openiap {
     connect(first: boolean): Promise<User>;
     Close(): void;
     onConnected(client: client): Promise<void>;
-    onDisconnected(client: client, error: Error): void;
+    private cliOnConnected;
+    onDisconnected(client: client, error: Error): Promise<void>;
+    cliOnDisconnected(client: client, error: Error): void;
     onWatch(id: string, operation: string, document: any): void;
     static GetUniqueIdentifier(): string;
-    onMessage(client: client, message: Envelope): Promise<any>;
+    private cliOnMessage;
     Ping(): Promise<void>;
     stringify(object: any): string;
     Signin(options: SigninOptions): Promise<SigninResponse>;
