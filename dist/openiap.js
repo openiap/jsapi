@@ -1025,6 +1025,7 @@ var QueryDefaults = /** @class */ (function () {
         this.query = {};
         this.top = 100;
         this.skip = 0;
+        this.explain = false;
     }
     return QueryDefaults;
 }());
@@ -1054,6 +1055,7 @@ var AggregateDefaults = /** @class */ (function () {
     function AggregateDefaults() {
         this.collectionname = "entities";
         this.aggregates = [];
+        this.explain = false;
     }
     return AggregateDefaults;
 }());

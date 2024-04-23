@@ -84,6 +84,7 @@ export type QueryOptions = {
     skip?: number;
     orderby?: Object | string;
     queryas?: string;
+    explain?: boolean;
     jwt?: string;
 };
 export type GetDocumentVersionOptions = {
@@ -113,6 +114,7 @@ export type AggregateOptions = {
     collectionname?: string;
     aggregates?: object[];
     queryas?: string;
+    explain?: boolean;
     jwt?: string;
 };
 export type InsertOneOptions = {

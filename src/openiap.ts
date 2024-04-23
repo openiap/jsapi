@@ -547,6 +547,7 @@ export type QueryOptions = {
     skip?: number;
     orderby?: Object | string;
     queryas?: string;
+    explain?: boolean;
     jwt?: string;
 }
 class QueryDefaults {
@@ -554,6 +555,7 @@ class QueryDefaults {
     query: object = {};
     top: number = 100;
     skip: number = 0;
+    explain: boolean = false;
 }
 export type GetDocumentVersionOptions = {
     collectionname?: string;
@@ -595,11 +597,13 @@ export type AggregateOptions = {
     collectionname?: string;
     aggregates?: object[];
     queryas?: string;
+    explain?: boolean;
     jwt?: string;
 }
 class AggregateDefaults {
     collectionname: string = "entities";
     aggregates: object[] = [];
+    explain: boolean = false;
 }
 export type InsertOneOptions = {
     collectionname?: string;
