@@ -67,7 +67,7 @@ import { messageParser } from "./message-parser";
 import { FakeStream } from "./FakeStream";
 import { Any } from "./proto/google/protobuf/any";
 import { BeginStream, DownloadRequest, DownloadResponse, EndStream, Envelope, ErrorResponse, GetElementResponse, RefreshToken, SigninRequest, SigninResponse, Stream, UploadRequest, UploadResponse } from "./proto/base";
-import { AggregateResponse, CountResponse, DeleteManyResponse, DeleteOneResponse, DropCollectionResponse, GetDocumentVersionResponse, InsertManyResponse, InsertOneResponse, InsertOrUpdateOneResponse, ListCollectionsResponse, QueryResponse, UpdateDocumentResponse, UpdateOneResponse } from "./proto/querys";
+import { AggregateResponse, CountResponse, DeleteManyResponse, DeleteOneResponse, DropCollectionResponse, GetDocumentVersionResponse, InsertManyResponse, InsertOneResponse, InsertOrUpdateOneResponse, ListCollectionsResponse, CreateCollectionResponse, QueryResponse, UpdateDocumentResponse, UpdateOneResponse } from "./proto/querys";
 import { UnWatchResponse, WatchEvent, WatchResponse } from "./proto/watch";
 import { QueueEvent, QueueMessageResponse, RegisterExchangeResponse, RegisterQueueResponse, UnRegisterQueueResponse } from "./proto/queues";
 import { DeleteWorkitemResponse, PopWorkitemResponse, PushWorkitemResponse, UpdateWorkitemResponse } from "./proto/workitems";
@@ -165,6 +165,9 @@ var protowrap = /** @class */ (function () {
                     break;
                 case "listcollectionsreply":
                     msg = ListCollectionsResponse.decode(data);
+                    break;
+                case "createcollectionreply":
+                    msg = CreateCollectionResponse.decode(data);
                     break;
                 case "dropcollectionreply":
                     msg = DropCollectionResponse.decode(data);
