@@ -25,6 +25,12 @@ export declare class openiap {
     stringify(object: any): string;
     Signin(options: SigninOptions): Promise<SigninResponse>;
     ListCollections(options?: ListCollectionsOptions): Promise<any[]>;
+    /**
+ * Create a collection removing all data from the collection. Only users with admin rights can Create collections.
+ * @param options {@link CreateCollectionOptions}
+ * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+ */
+    CreateCollection(options: CreateCollectionOptions, priority?: number): Promise<void>;
     DropCollection(options: DropCollectionOptions): Promise<void>;
     Query<T>(options: QueryOptions): Promise<T[]>;
     GetDocumentVersion<T>(options: GetDocumentVersionOptions): Promise<T[]>;
@@ -73,6 +79,38 @@ export type SigninOptions = {
 export type ListCollectionsOptions = {
     includehist?: boolean;
     jwt?: string;
+};
+export type col_timeseries_granularity = "seconds" | "minutes" | "hours";
+export type col_validationLevel = "off" | "strict" | "moderate";
+export type col_validationAction = "error" | "warn";
+export type col_collation = {
+    locale?: string;
+    caseLevel?: boolean;
+    caseFirst?: string;
+    strength?: number;
+    numericOrdering?: boolean;
+    alternate?: string;
+    maxVariable?: string;
+    backwards?: boolean;
+};
+export type col_timeseries = {
+    timeField: string;
+    metaField?: string;
+    granularity?: col_timeseries_granularity;
+};
+export type CreateCollectionOptions = {
+    jwt?: string;
+    collectionname: string;
+    timeseries?: col_timeseries;
+    expireAfterSeconds?: number;
+    changeStreamPreAndPostImages?: boolean;
+    size?: number;
+    max?: number;
+    validator?: object;
+    validationLevel?: col_validationLevel;
+    validationAction?: col_validationAction;
+    collation?: col_collation;
+    capped?: boolean;
 };
 export type DropCollectionOptions = {
     collectionname: string;

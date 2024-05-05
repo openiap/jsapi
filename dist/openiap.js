@@ -39,7 +39,7 @@ import { config } from "./config";
 var info = config.info, err = config.err, warn = config.warn;
 import { Any } from "./proto/google/protobuf/any";
 import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken } from "./proto/base";
-import { ListCollectionsRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys";
+import { ListCollectionsRequest, CreateCollectionRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues";
 import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch";
 import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems";
@@ -367,6 +367,34 @@ var openiap = /** @class */ (function () {
                     case 1:
                         result = _b.apply(_a, [(_c.sent()).data.value]);
                         return [2 /*return*/, JSON.parse(result.results)];
+                }
+            });
+        });
+    };
+    /**
+ * Create a collection removing all data from the collection. Only users with admin rights can Create collections.
+ * @param options {@link CreateCollectionOptions}
+ * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+ */
+    openiap.prototype.CreateCollection = function (options, priority) {
+        if (priority === void 0) { priority = 2; }
+        return __awaiter(this, void 0, void 0, function () {
+            var opt, message, data, payload, result;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        // if (!this.connected) throw new Error("Not connected to server");
+                        if (!this.signedin)
+                            throw new Error("Not signed in to server");
+                        opt = Object.assign(new CreateCollectionDefaults(), options);
+                        message = CreateCollectionRequest.create(opt);
+                        data = Any.create({ type_url: "type.googleapis.com/openiap.CreateCollectionRequest", "value": CreateCollectionRequest.encode(message).finish() });
+                        payload = Envelope.create({ command: "createcollection", data: data, jwt: opt.jwt });
+                        payload.priority = priority;
+                        return [4 /*yield*/, protowrap.RPC(this.client, payload)];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
@@ -1046,6 +1074,11 @@ var ListCollectionsDefaults = /** @class */ (function () {
         this.includehist = false;
     }
     return ListCollectionsDefaults;
+}());
+var CreateCollectionDefaults = /** @class */ (function () {
+    function CreateCollectionDefaults() {
+    }
+    return CreateCollectionDefaults;
 }());
 var DropCollectionDefaults = /** @class */ (function () {
     function DropCollectionDefaults() {
