@@ -177,7 +177,6 @@ export class protowrap {
                     break;                    
                 case "error":
                     msg = ErrorResponse.decode(data);
-                    // console.error(msg);
                     break;
                 default:
 
@@ -199,8 +198,12 @@ export class protowrap {
                 if (resolve) {
                     try {
                         if (command == "error") {
-                            var er = new Error(msg.message);
-                            var error = new ServerError(msg.message, msg.stack);
+                            var _er = JSON.parse(JSON.stringify(msg));
+                            var error = new Error(_er.message);
+                            // @ts-ignore
+                            error.serverstack = _er.stack;
+                            // @ts-ignore
+                            error.code = _er.code;
                             reject(error);
                         } else {
                             resolve(payload);

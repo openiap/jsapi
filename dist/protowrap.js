@@ -255,7 +255,6 @@ var protowrap = /** @class */ (function () {
                     break;
                 case "error":
                     msg = ErrorResponse.decode(data);
-                    // console.error(msg);
                     break;
                 default:
                     console.error("Unknown reply type " + command);
@@ -277,8 +276,12 @@ var protowrap = /** @class */ (function () {
                 if (resolve) {
                     try {
                         if (command == "error") {
-                            var er = new Error(msg.message);
-                            var error = new ServerError(msg.message, msg.stack);
+                            var _er = JSON.parse(JSON.stringify(msg));
+                            var error = new Error(_er.message);
+                            // @ts-ignore
+                            error.serverstack = _er.stack;
+                            // @ts-ignore
+                            error.code = _er.code;
                             reject(error);
                         }
                         else {

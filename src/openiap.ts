@@ -164,7 +164,6 @@ export class openiap {
             }
         } else {
             info("Received message from server: ");
-            console.log(message);
         }
         return reply;
     }
