@@ -1,23 +1,22 @@
 /* eslint-disable */
 import * as _m0 from "protobufjs/minimal";
-export var protobufPackage = "openiap";
+export const protobufPackage = "openiap";
 function createBaseRegisterQueueRequest() {
     return { queuename: "" };
 }
-export var RegisterQueueRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const RegisterQueueRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseRegisterQueueRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseRegisterQueueRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -29,41 +28,39 @@ export var RegisterQueueRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { queuename: isSet(object.queuename) ? String(object.queuename) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         return obj;
     },
-    create: function (base) {
-        return RegisterQueueRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return RegisterQueueRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseRegisterQueueRequest();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseRegisterQueueRequest();
+        message.queuename = object.queuename ?? "";
         return message;
     },
 };
 function createBaseRegisterQueueResponse() {
     return { queuename: "" };
 }
-export var RegisterQueueResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const RegisterQueueResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseRegisterQueueResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseRegisterQueueResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -75,30 +72,28 @@ export var RegisterQueueResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { queuename: isSet(object.queuename) ? String(object.queuename) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         return obj;
     },
-    create: function (base) {
-        return RegisterQueueResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return RegisterQueueResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseRegisterQueueResponse();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseRegisterQueueResponse();
+        message.queuename = object.queuename ?? "";
         return message;
     },
 };
 function createBaseRegisterExchangeRequest() {
     return { exchangename: "", algorithm: "", routingkey: "", addqueue: false };
 }
-export var RegisterExchangeRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const RegisterExchangeRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.exchangename !== "") {
             writer.uint32(10).string(message.exchangename);
         }
@@ -113,12 +108,12 @@ export var RegisterExchangeRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseRegisterExchangeRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseRegisterExchangeRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.exchangename = reader.string();
@@ -139,7 +134,7 @@ export var RegisterExchangeRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             exchangename: isSet(object.exchangename) ? String(object.exchangename) : "",
             algorithm: isSet(object.algorithm) ? String(object.algorithm) : "",
@@ -147,44 +142,42 @@ export var RegisterExchangeRequest = {
             addqueue: isSet(object.addqueue) ? Boolean(object.addqueue) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.exchangename !== undefined && (obj.exchangename = message.exchangename);
         message.algorithm !== undefined && (obj.algorithm = message.algorithm);
         message.routingkey !== undefined && (obj.routingkey = message.routingkey);
         message.addqueue !== undefined && (obj.addqueue = message.addqueue);
         return obj;
     },
-    create: function (base) {
-        return RegisterExchangeRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return RegisterExchangeRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d;
-        var message = createBaseRegisterExchangeRequest();
-        message.exchangename = (_a = object.exchangename) !== null && _a !== void 0 ? _a : "";
-        message.algorithm = (_b = object.algorithm) !== null && _b !== void 0 ? _b : "";
-        message.routingkey = (_c = object.routingkey) !== null && _c !== void 0 ? _c : "";
-        message.addqueue = (_d = object.addqueue) !== null && _d !== void 0 ? _d : false;
+    fromPartial(object) {
+        const message = createBaseRegisterExchangeRequest();
+        message.exchangename = object.exchangename ?? "";
+        message.algorithm = object.algorithm ?? "";
+        message.routingkey = object.routingkey ?? "";
+        message.addqueue = object.addqueue ?? false;
         return message;
     },
 };
 function createBaseRegisterExchangeResponse() {
     return { queuename: "" };
 }
-export var RegisterExchangeResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const RegisterExchangeResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseRegisterExchangeResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseRegisterExchangeResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -196,21 +189,20 @@ export var RegisterExchangeResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { queuename: isSet(object.queuename) ? String(object.queuename) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         return obj;
     },
-    create: function (base) {
-        return RegisterExchangeResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return RegisterExchangeResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseRegisterExchangeResponse();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseRegisterExchangeResponse();
+        message.queuename = object.queuename ?? "";
         return message;
     },
 };
@@ -226,9 +218,8 @@ function createBaseQueueMessageRequest() {
         expiration: 0,
     };
 }
-export var QueueMessageRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const QueueMessageRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
@@ -255,12 +246,12 @@ export var QueueMessageRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseQueueMessageRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseQueueMessageRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -293,7 +284,7 @@ export var QueueMessageRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             queuename: isSet(object.queuename) ? String(object.queuename) : "",
             correlationId: isSet(object.correlationId) ? String(object.correlationId) : "",
@@ -305,8 +296,8 @@ export var QueueMessageRequest = {
             expiration: isSet(object.expiration) ? Number(object.expiration) : 0,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         message.correlationId !== undefined && (obj.correlationId = message.correlationId);
         message.replyto !== undefined && (obj.replyto = message.replyto);
@@ -317,29 +308,27 @@ export var QueueMessageRequest = {
         message.expiration !== undefined && (obj.expiration = Math.round(message.expiration));
         return obj;
     },
-    create: function (base) {
-        return QueueMessageRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return QueueMessageRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
-        var message = createBaseQueueMessageRequest();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
-        message.correlationId = (_b = object.correlationId) !== null && _b !== void 0 ? _b : "";
-        message.replyto = (_c = object.replyto) !== null && _c !== void 0 ? _c : "";
-        message.routingkey = (_d = object.routingkey) !== null && _d !== void 0 ? _d : "";
-        message.exchangename = (_e = object.exchangename) !== null && _e !== void 0 ? _e : "";
-        message.data = (_f = object.data) !== null && _f !== void 0 ? _f : "";
-        message.striptoken = (_g = object.striptoken) !== null && _g !== void 0 ? _g : false;
-        message.expiration = (_h = object.expiration) !== null && _h !== void 0 ? _h : 0;
+    fromPartial(object) {
+        const message = createBaseQueueMessageRequest();
+        message.queuename = object.queuename ?? "";
+        message.correlationId = object.correlationId ?? "";
+        message.replyto = object.replyto ?? "";
+        message.routingkey = object.routingkey ?? "";
+        message.exchangename = object.exchangename ?? "";
+        message.data = object.data ?? "";
+        message.striptoken = object.striptoken ?? false;
+        message.expiration = object.expiration ?? 0;
         return message;
     },
 };
 function createBaseQueueMessageResponse() {
     return { queuename: "", correlationId: "", replyto: "", routingkey: "", exchangename: "", data: "" };
 }
-export var QueueMessageResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const QueueMessageResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
@@ -360,12 +349,12 @@ export var QueueMessageResponse = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseQueueMessageResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseQueueMessageResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -392,7 +381,7 @@ export var QueueMessageResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             queuename: isSet(object.queuename) ? String(object.queuename) : "",
             correlationId: isSet(object.correlationId) ? String(object.correlationId) : "",
@@ -402,8 +391,8 @@ export var QueueMessageResponse = {
             data: isSet(object.data) ? String(object.data) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         message.correlationId !== undefined && (obj.correlationId = message.correlationId);
         message.replyto !== undefined && (obj.replyto = message.replyto);
@@ -412,27 +401,25 @@ export var QueueMessageResponse = {
         message.data !== undefined && (obj.data = message.data);
         return obj;
     },
-    create: function (base) {
-        return QueueMessageResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return QueueMessageResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f;
-        var message = createBaseQueueMessageResponse();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
-        message.correlationId = (_b = object.correlationId) !== null && _b !== void 0 ? _b : "";
-        message.replyto = (_c = object.replyto) !== null && _c !== void 0 ? _c : "";
-        message.routingkey = (_d = object.routingkey) !== null && _d !== void 0 ? _d : "";
-        message.exchangename = (_e = object.exchangename) !== null && _e !== void 0 ? _e : "";
-        message.data = (_f = object.data) !== null && _f !== void 0 ? _f : "";
+    fromPartial(object) {
+        const message = createBaseQueueMessageResponse();
+        message.queuename = object.queuename ?? "";
+        message.correlationId = object.correlationId ?? "";
+        message.replyto = object.replyto ?? "";
+        message.routingkey = object.routingkey ?? "";
+        message.exchangename = object.exchangename ?? "";
+        message.data = object.data ?? "";
         return message;
     },
 };
 function createBaseQueueEvent() {
     return { queuename: "", correlationId: "", replyto: "", routingkey: "", exchangename: "", data: "" };
 }
-export var QueueEvent = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const QueueEvent = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
@@ -453,12 +440,12 @@ export var QueueEvent = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseQueueEvent();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseQueueEvent();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -485,7 +472,7 @@ export var QueueEvent = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             queuename: isSet(object.queuename) ? String(object.queuename) : "",
             correlationId: isSet(object.correlationId) ? String(object.correlationId) : "",
@@ -495,8 +482,8 @@ export var QueueEvent = {
             data: isSet(object.data) ? String(object.data) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         message.correlationId !== undefined && (obj.correlationId = message.correlationId);
         message.replyto !== undefined && (obj.replyto = message.replyto);
@@ -505,38 +492,36 @@ export var QueueEvent = {
         message.data !== undefined && (obj.data = message.data);
         return obj;
     },
-    create: function (base) {
-        return QueueEvent.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return QueueEvent.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f;
-        var message = createBaseQueueEvent();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
-        message.correlationId = (_b = object.correlationId) !== null && _b !== void 0 ? _b : "";
-        message.replyto = (_c = object.replyto) !== null && _c !== void 0 ? _c : "";
-        message.routingkey = (_d = object.routingkey) !== null && _d !== void 0 ? _d : "";
-        message.exchangename = (_e = object.exchangename) !== null && _e !== void 0 ? _e : "";
-        message.data = (_f = object.data) !== null && _f !== void 0 ? _f : "";
+    fromPartial(object) {
+        const message = createBaseQueueEvent();
+        message.queuename = object.queuename ?? "";
+        message.correlationId = object.correlationId ?? "";
+        message.replyto = object.replyto ?? "";
+        message.routingkey = object.routingkey ?? "";
+        message.exchangename = object.exchangename ?? "";
+        message.data = object.data ?? "";
         return message;
     },
 };
 function createBaseUnRegisterQueueRequest() {
     return { queuename: "" };
 }
-export var UnRegisterQueueRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UnRegisterQueueRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.queuename !== "") {
             writer.uint32(10).string(message.queuename);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUnRegisterQueueRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUnRegisterQueueRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.queuename = reader.string();
@@ -548,38 +533,36 @@ export var UnRegisterQueueRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { queuename: isSet(object.queuename) ? String(object.queuename) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.queuename !== undefined && (obj.queuename = message.queuename);
         return obj;
     },
-    create: function (base) {
-        return UnRegisterQueueRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UnRegisterQueueRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseUnRegisterQueueRequest();
-        message.queuename = (_a = object.queuename) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseUnRegisterQueueRequest();
+        message.queuename = object.queuename ?? "";
         return message;
     },
 };
 function createBaseUnRegisterQueueResponse() {
     return {};
 }
-export var UnRegisterQueueResponse = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UnRegisterQueueResponse = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUnRegisterQueueResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUnRegisterQueueResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -588,27 +571,26 @@ export var UnRegisterQueueResponse = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return UnRegisterQueueResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UnRegisterQueueResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseUnRegisterQueueResponse();
+    fromPartial(_) {
+        const message = createBaseUnRegisterQueueResponse();
         return message;
     },
 };
 function createBaseCreateWorkflowInstanceRequest() {
     return { targetid: "", workflowid: "", name: "", resultqueue: "", data: "", initialrun: false };
 }
-export var CreateWorkflowInstanceRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const CreateWorkflowInstanceRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.targetid !== "") {
             writer.uint32(10).string(message.targetid);
         }
@@ -629,12 +611,12 @@ export var CreateWorkflowInstanceRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCreateWorkflowInstanceRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCreateWorkflowInstanceRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.targetid = reader.string();
@@ -661,7 +643,7 @@ export var CreateWorkflowInstanceRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             targetid: isSet(object.targetid) ? String(object.targetid) : "",
             workflowid: isSet(object.workflowid) ? String(object.workflowid) : "",
@@ -671,8 +653,8 @@ export var CreateWorkflowInstanceRequest = {
             initialrun: isSet(object.initialrun) ? Boolean(object.initialrun) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.targetid !== undefined && (obj.targetid = message.targetid);
         message.workflowid !== undefined && (obj.workflowid = message.workflowid);
         message.name !== undefined && (obj.name = message.name);
@@ -681,38 +663,36 @@ export var CreateWorkflowInstanceRequest = {
         message.initialrun !== undefined && (obj.initialrun = message.initialrun);
         return obj;
     },
-    create: function (base) {
-        return CreateWorkflowInstanceRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return CreateWorkflowInstanceRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f;
-        var message = createBaseCreateWorkflowInstanceRequest();
-        message.targetid = (_a = object.targetid) !== null && _a !== void 0 ? _a : "";
-        message.workflowid = (_b = object.workflowid) !== null && _b !== void 0 ? _b : "";
-        message.name = (_c = object.name) !== null && _c !== void 0 ? _c : "";
-        message.resultqueue = (_d = object.resultqueue) !== null && _d !== void 0 ? _d : "";
-        message.data = (_e = object.data) !== null && _e !== void 0 ? _e : "";
-        message.initialrun = (_f = object.initialrun) !== null && _f !== void 0 ? _f : false;
+    fromPartial(object) {
+        const message = createBaseCreateWorkflowInstanceRequest();
+        message.targetid = object.targetid ?? "";
+        message.workflowid = object.workflowid ?? "";
+        message.name = object.name ?? "";
+        message.resultqueue = object.resultqueue ?? "";
+        message.data = object.data ?? "";
+        message.initialrun = object.initialrun ?? false;
         return message;
     },
 };
 function createBaseCreateWorkflowInstanceResponse() {
     return { instanceid: "" };
 }
-export var CreateWorkflowInstanceResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const CreateWorkflowInstanceResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.instanceid !== "") {
             writer.uint32(10).string(message.instanceid);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCreateWorkflowInstanceResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCreateWorkflowInstanceResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.instanceid = reader.string();
@@ -724,30 +704,28 @@ export var CreateWorkflowInstanceResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { instanceid: isSet(object.instanceid) ? String(object.instanceid) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.instanceid !== undefined && (obj.instanceid = message.instanceid);
         return obj;
     },
-    create: function (base) {
-        return CreateWorkflowInstanceResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return CreateWorkflowInstanceResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseCreateWorkflowInstanceResponse();
-        message.instanceid = (_a = object.instanceid) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseCreateWorkflowInstanceResponse();
+        message.instanceid = object.instanceid ?? "";
         return message;
     },
 };
 function createBaseInvokeOpenRPARequest() {
     return { robotid: "", workflowid: "", rpc: false, payload: "" };
 }
-export var InvokeOpenRPARequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const InvokeOpenRPARequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.robotid !== "") {
             writer.uint32(10).string(message.robotid);
         }
@@ -762,12 +740,12 @@ export var InvokeOpenRPARequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseInvokeOpenRPARequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseInvokeOpenRPARequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.robotid = reader.string();
@@ -788,7 +766,7 @@ export var InvokeOpenRPARequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             robotid: isSet(object.robotid) ? String(object.robotid) : "",
             workflowid: isSet(object.workflowid) ? String(object.workflowid) : "",
@@ -796,44 +774,42 @@ export var InvokeOpenRPARequest = {
             payload: isSet(object.payload) ? String(object.payload) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.robotid !== undefined && (obj.robotid = message.robotid);
         message.workflowid !== undefined && (obj.workflowid = message.workflowid);
         message.rpc !== undefined && (obj.rpc = message.rpc);
         message.payload !== undefined && (obj.payload = message.payload);
         return obj;
     },
-    create: function (base) {
-        return InvokeOpenRPARequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return InvokeOpenRPARequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d;
-        var message = createBaseInvokeOpenRPARequest();
-        message.robotid = (_a = object.robotid) !== null && _a !== void 0 ? _a : "";
-        message.workflowid = (_b = object.workflowid) !== null && _b !== void 0 ? _b : "";
-        message.rpc = (_c = object.rpc) !== null && _c !== void 0 ? _c : false;
-        message.payload = (_d = object.payload) !== null && _d !== void 0 ? _d : "";
+    fromPartial(object) {
+        const message = createBaseInvokeOpenRPARequest();
+        message.robotid = object.robotid ?? "";
+        message.workflowid = object.workflowid ?? "";
+        message.rpc = object.rpc ?? false;
+        message.payload = object.payload ?? "";
         return message;
     },
 };
 function createBaseInvokeOpenRPAResponse() {
     return { payload: "" };
 }
-export var InvokeOpenRPAResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const InvokeOpenRPAResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.payload !== "") {
             writer.uint32(10).string(message.payload);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseInvokeOpenRPAResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseInvokeOpenRPAResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.payload = reader.string();
@@ -845,21 +821,20 @@ export var InvokeOpenRPAResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { payload: isSet(object.payload) ? String(object.payload) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.payload !== undefined && (obj.payload = message.payload);
         return obj;
     },
-    create: function (base) {
-        return InvokeOpenRPAResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return InvokeOpenRPAResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseInvokeOpenRPAResponse();
-        message.payload = (_a = object.payload) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseInvokeOpenRPAResponse();
+        message.payload = object.payload ?? "";
         return message;
     },
 };

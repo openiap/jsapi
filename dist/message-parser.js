@@ -1,8 +1,20 @@
 import { config } from "./config";
-var info = config.info, err = config.err, warn = config.warn;
+const { info, err, warn } = config;
 import { Envelope } from "./proto/base";
-var messageParser = /** @class */ (function () {
-    function messageParser() {
+export class messageParser {
+    seq;
+    buffer;
+    readPointer;
+    basebufferSize;
+    bufferSize;
+    bufferIncrement;
+    writePointer;
+    maxWritePointer;
+    lastDecreased;
+    DecreaseTimeCheck;
+    messages;
+    maxMessagesQueue;
+    constructor() {
         this.DecreaseTimeCheck = 60;
         this.basebufferSize = 5 * 1024 * 1024;
         this.bufferSize = this.basebufferSize;
@@ -17,24 +29,24 @@ var messageParser = /** @class */ (function () {
         this.lastDecreased = new Date();
         this.messages = [];
     }
-    messageParser.prototype.ondata = function (message) {
-    };
-    messageParser.prototype.onend = function () { };
-    messageParser.prototype.write = function (buffer) {
+    ondata(message) {
+    }
+    onend() { }
+    write(buffer) {
         if (buffer instanceof ArrayBuffer) {
             buffer = new Uint8Array(buffer);
         }
-        var newsize = this.calculateMaxBufferSize();
+        let newsize = this.calculateMaxBufferSize();
         // let newsize = this.writePointer + buffer.length;
         if (this.writePointer + buffer.length > newsize) {
             newsize = newsize + this.bufferIncrement;
         }
         if (newsize != this.buffer.length) {
-            var dir = "increased";
+            let dir = "increased";
             if (newsize < this.buffer.length)
                 dir = "decreased";
             this.bufferSize = newsize;
-            var newbuff = new Uint8Array(this.bufferSize);
+            const newbuff = new Uint8Array(this.bufferSize);
             newbuff.set(this.buffer);
             this.buffer = newbuff;
             // show warning as either byte, kilobyte or megabyte
@@ -56,7 +68,7 @@ var messageParser = /** @class */ (function () {
             if (datalen < 4) {
                 break;
             }
-            var size = (this.buffer[this.readPointer + 3] << 24) + (this.buffer[this.readPointer + 2] << 16) + (this.buffer[this.readPointer + 1] << 8) + this.buffer[this.readPointer];
+            const size = (this.buffer[this.readPointer + 3] << 24) + (this.buffer[this.readPointer + 2] << 16) + (this.buffer[this.readPointer + 1] << 8) + this.buffer[this.readPointer];
             if (datalen < size + 4) {
                 break;
             }
@@ -71,11 +83,11 @@ var messageParser = /** @class */ (function () {
                 throw new Error("Invalid size " + size);
             }
             // Decode the message 
-            var start = this.readPointer + 4;
-            var end = start + size;
-            var messagebuffer = new Uint8Array(size);
+            const start = this.readPointer + 4;
+            const end = start + size;
+            const messagebuffer = new Uint8Array(size);
             messagebuffer.set(this.buffer.slice(start, end));
-            var message = Envelope.decode(messagebuffer);
+            const message = Envelope.decode(messagebuffer);
             // buffer = buffer.subarray(size + 4);
             this.readPointer += size + 4;
             if (this.readPointer == this.writePointer) {
@@ -88,9 +100,9 @@ var messageParser = /** @class */ (function () {
             this.messages.push(message);
             // this.push(message);
         } while (true);
-        this.messages.sort(function (a, b) { return a.seq - b.seq; });
+        this.messages.sort((a, b) => a.seq - b.seq);
         while (this.messages.length > 0 && this.messages[0].seq == this.seq) {
-            var message = this.messages.shift();
+            const message = this.messages.shift();
             this.ondata(message);
             this.seq++;
         }
@@ -98,12 +110,12 @@ var messageParser = /** @class */ (function () {
             throw new Error("Too many messages in queue " + this.messages.length);
         }
         return;
-    };
-    messageParser.prototype.calculateMaxBufferSize = function () {
-        var now = new Date();
+    }
+    calculateMaxBufferSize() {
+        const now = new Date();
         // @ts-ignore
-        var diff = now - this.lastDecreased;
-        var result = this.buffer.length;
+        const diff = now - this.lastDecreased;
+        let result = this.buffer.length;
         if (diff > (this.DecreaseTimeCheck * 1000)) {
             this.lastDecreased = now;
             if (this.maxWritePointer > 0) {
@@ -115,8 +127,6 @@ var messageParser = /** @class */ (function () {
             }
         }
         return result;
-    };
-    return messageParser;
-}());
-export { messageParser };
+    }
+}
 //# sourceMappingURL=message-parser.js.map

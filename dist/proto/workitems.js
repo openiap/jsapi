@@ -2,7 +2,7 @@
 import * as _m0 from "protobufjs/minimal";
 import { Ace } from "./ace";
 import { Timestamp } from "./google/protobuf/timestamp";
-export var protobufPackage = "openiap";
+export const protobufPackage = "openiap";
 function createBaseWorkitem() {
     return {
         _id: "",
@@ -26,9 +26,8 @@ function createBaseWorkitem() {
         errortype: "",
     };
 }
-export var Workitem = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Workitem = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message._id !== "") {
             writer.uint32(10).string(message._id);
         }
@@ -47,8 +46,7 @@ export var Workitem = {
         if (message.lastrun !== undefined) {
             Timestamp.encode(toTimestamp(message.lastrun), writer.uint32(50).fork()).ldelim();
         }
-        for (var _i = 0, _a = message.files; _i < _a.length; _i++) {
-            var v = _a[_i];
+        for (const v of message.files) {
             WorkitemFile.encode(v, writer.uint32(58).fork()).ldelim();
         }
         if (message.state !== "") {
@@ -89,12 +87,12 @@ export var Workitem = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseWorkitem();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseWorkitem();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message._id = reader.string();
@@ -160,7 +158,7 @@ export var Workitem = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             _id: isSet(object._id) ? String(object._id) : "",
             name: isSet(object.name) ? String(object.name) : "",
@@ -168,7 +166,7 @@ export var Workitem = {
             priority: isSet(object.priority) ? Number(object.priority) : 0,
             nextrun: isSet(object.nextrun) ? fromJsonTimestamp(object.nextrun) : undefined,
             lastrun: isSet(object.lastrun) ? fromJsonTimestamp(object.lastrun) : undefined,
-            files: Array.isArray(object === null || object === void 0 ? void 0 : object.files) ? object.files.map(function (e) { return WorkitemFile.fromJSON(e); }) : [],
+            files: Array.isArray(object?.files) ? object.files.map((e) => WorkitemFile.fromJSON(e)) : [],
             state: isSet(object.state) ? String(object.state) : "",
             wiq: isSet(object.wiq) ? String(object.wiq) : "",
             wiqid: isSet(object.wiqid) ? String(object.wiqid) : "",
@@ -183,8 +181,8 @@ export var Workitem = {
             errortype: isSet(object.errortype) ? String(object.errortype) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message._id !== undefined && (obj._id = message._id);
         message.name !== undefined && (obj.name = message.name);
         message.payload !== undefined && (obj.payload = message.payload);
@@ -192,7 +190,7 @@ export var Workitem = {
         message.nextrun !== undefined && (obj.nextrun = message.nextrun.toISOString());
         message.lastrun !== undefined && (obj.lastrun = message.lastrun.toISOString());
         if (message.files) {
-            obj.files = message.files.map(function (e) { return e ? WorkitemFile.toJSON(e) : undefined; });
+            obj.files = message.files.map((e) => e ? WorkitemFile.toJSON(e) : undefined);
         }
         else {
             obj.files = [];
@@ -211,40 +209,38 @@ export var Workitem = {
         message.errortype !== undefined && (obj.errortype = message.errortype);
         return obj;
     },
-    create: function (base) {
-        return Workitem.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Workitem.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
-        var message = createBaseWorkitem();
-        message._id = (_a = object._id) !== null && _a !== void 0 ? _a : "";
-        message.name = (_b = object.name) !== null && _b !== void 0 ? _b : "";
-        message.payload = (_c = object.payload) !== null && _c !== void 0 ? _c : "";
-        message.priority = (_d = object.priority) !== null && _d !== void 0 ? _d : 0;
-        message.nextrun = (_e = object.nextrun) !== null && _e !== void 0 ? _e : undefined;
-        message.lastrun = (_f = object.lastrun) !== null && _f !== void 0 ? _f : undefined;
-        message.files = ((_g = object.files) === null || _g === void 0 ? void 0 : _g.map(function (e) { return WorkitemFile.fromPartial(e); })) || [];
-        message.state = (_h = object.state) !== null && _h !== void 0 ? _h : "";
-        message.wiq = (_j = object.wiq) !== null && _j !== void 0 ? _j : "";
-        message.wiqid = (_k = object.wiqid) !== null && _k !== void 0 ? _k : "";
-        message.retries = (_l = object.retries) !== null && _l !== void 0 ? _l : 0;
-        message.username = (_m = object.username) !== null && _m !== void 0 ? _m : "";
-        message.success_wiqid = (_o = object.success_wiqid) !== null && _o !== void 0 ? _o : "";
-        message.failed_wiqid = (_p = object.failed_wiqid) !== null && _p !== void 0 ? _p : "";
-        message.success_wiq = (_q = object.success_wiq) !== null && _q !== void 0 ? _q : "";
-        message.failed_wiq = (_r = object.failed_wiq) !== null && _r !== void 0 ? _r : "";
-        message.errormessage = (_s = object.errormessage) !== null && _s !== void 0 ? _s : "";
-        message.errorsource = (_t = object.errorsource) !== null && _t !== void 0 ? _t : "";
-        message.errortype = (_u = object.errortype) !== null && _u !== void 0 ? _u : "";
+    fromPartial(object) {
+        const message = createBaseWorkitem();
+        message._id = object._id ?? "";
+        message.name = object.name ?? "";
+        message.payload = object.payload ?? "";
+        message.priority = object.priority ?? 0;
+        message.nextrun = object.nextrun ?? undefined;
+        message.lastrun = object.lastrun ?? undefined;
+        message.files = object.files?.map((e) => WorkitemFile.fromPartial(e)) || [];
+        message.state = object.state ?? "";
+        message.wiq = object.wiq ?? "";
+        message.wiqid = object.wiqid ?? "";
+        message.retries = object.retries ?? 0;
+        message.username = object.username ?? "";
+        message.success_wiqid = object.success_wiqid ?? "";
+        message.failed_wiqid = object.failed_wiqid ?? "";
+        message.success_wiq = object.success_wiq ?? "";
+        message.failed_wiq = object.failed_wiq ?? "";
+        message.errormessage = object.errormessage ?? "";
+        message.errorsource = object.errorsource ?? "";
+        message.errortype = object.errortype ?? "";
         return message;
     },
 };
 function createBaseWorkitemFile() {
     return { filename: "", _id: "", compressed: false, file: new Uint8Array() };
 }
-export var WorkitemFile = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const WorkitemFile = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.filename !== "") {
             writer.uint32(10).string(message.filename);
         }
@@ -259,12 +255,12 @@ export var WorkitemFile = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseWorkitemFile();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseWorkitemFile();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.filename = reader.string();
@@ -285,7 +281,7 @@ export var WorkitemFile = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             filename: isSet(object.filename) ? String(object.filename) : "",
             _id: isSet(object._id) ? String(object._id) : "",
@@ -293,8 +289,8 @@ export var WorkitemFile = {
             file: isSet(object.file) ? bytesFromBase64(object.file) : new Uint8Array(),
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.filename !== undefined && (obj.filename = message.filename);
         message._id !== undefined && (obj._id = message._id);
         message.compressed !== undefined && (obj.compressed = message.compressed);
@@ -302,16 +298,15 @@ export var WorkitemFile = {
             (obj.file = base64FromBytes(message.file !== undefined ? message.file : new Uint8Array()));
         return obj;
     },
-    create: function (base) {
-        return WorkitemFile.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return WorkitemFile.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d;
-        var message = createBaseWorkitemFile();
-        message.filename = (_a = object.filename) !== null && _a !== void 0 ? _a : "";
-        message._id = (_b = object._id) !== null && _b !== void 0 ? _b : "";
-        message.compressed = (_c = object.compressed) !== null && _c !== void 0 ? _c : false;
-        message.file = (_d = object.file) !== null && _d !== void 0 ? _d : new Uint8Array();
+    fromPartial(object) {
+        const message = createBaseWorkitemFile();
+        message.filename = object.filename ?? "";
+        message._id = object._id ?? "";
+        message.compressed = object.compressed ?? false;
+        message.file = object.file ?? new Uint8Array();
         return message;
     },
 };
@@ -330,9 +325,8 @@ function createBasePushWorkitemRequest() {
         files: [],
     };
 }
-export var PushWorkitemRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PushWorkitemRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.wiq !== "") {
             writer.uint32(10).string(message.wiq);
         }
@@ -363,18 +357,17 @@ export var PushWorkitemRequest = {
         if (message.priority !== 0) {
             writer.uint32(80).int32(message.priority);
         }
-        for (var _i = 0, _a = message.files; _i < _a.length; _i++) {
-            var v = _a[_i];
+        for (const v of message.files) {
             WorkitemFile.encode(v, writer.uint32(90).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePushWorkitemRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePushWorkitemRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.wiq = reader.string();
@@ -416,7 +409,7 @@ export var PushWorkitemRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             wiq: isSet(object.wiq) ? String(object.wiq) : "",
             wiqid: isSet(object.wiqid) ? String(object.wiqid) : "",
@@ -428,11 +421,11 @@ export var PushWorkitemRequest = {
             success_wiq: isSet(object.success_wiq) ? String(object.success_wiq) : "",
             failed_wiq: isSet(object.failed_wiq) ? String(object.failed_wiq) : "",
             priority: isSet(object.priority) ? Number(object.priority) : 0,
-            files: Array.isArray(object === null || object === void 0 ? void 0 : object.files) ? object.files.map(function (e) { return WorkitemFile.fromJSON(e); }) : [],
+            files: Array.isArray(object?.files) ? object.files.map((e) => WorkitemFile.fromJSON(e)) : [],
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.wiq !== undefined && (obj.wiq = message.wiq);
         message.wiqid !== undefined && (obj.wiqid = message.wiqid);
         message.name !== undefined && (obj.name = message.name);
@@ -444,50 +437,48 @@ export var PushWorkitemRequest = {
         message.failed_wiq !== undefined && (obj.failed_wiq = message.failed_wiq);
         message.priority !== undefined && (obj.priority = Math.round(message.priority));
         if (message.files) {
-            obj.files = message.files.map(function (e) { return e ? WorkitemFile.toJSON(e) : undefined; });
+            obj.files = message.files.map((e) => e ? WorkitemFile.toJSON(e) : undefined);
         }
         else {
             obj.files = [];
         }
         return obj;
     },
-    create: function (base) {
-        return PushWorkitemRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PushWorkitemRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
-        var message = createBasePushWorkitemRequest();
-        message.wiq = (_a = object.wiq) !== null && _a !== void 0 ? _a : "";
-        message.wiqid = (_b = object.wiqid) !== null && _b !== void 0 ? _b : "";
-        message.name = (_c = object.name) !== null && _c !== void 0 ? _c : "";
-        message.payload = (_d = object.payload) !== null && _d !== void 0 ? _d : "";
-        message.nextrun = (_e = object.nextrun) !== null && _e !== void 0 ? _e : undefined;
-        message.success_wiqid = (_f = object.success_wiqid) !== null && _f !== void 0 ? _f : "";
-        message.failed_wiqid = (_g = object.failed_wiqid) !== null && _g !== void 0 ? _g : "";
-        message.success_wiq = (_h = object.success_wiq) !== null && _h !== void 0 ? _h : "";
-        message.failed_wiq = (_j = object.failed_wiq) !== null && _j !== void 0 ? _j : "";
-        message.priority = (_k = object.priority) !== null && _k !== void 0 ? _k : 0;
-        message.files = ((_l = object.files) === null || _l === void 0 ? void 0 : _l.map(function (e) { return WorkitemFile.fromPartial(e); })) || [];
+    fromPartial(object) {
+        const message = createBasePushWorkitemRequest();
+        message.wiq = object.wiq ?? "";
+        message.wiqid = object.wiqid ?? "";
+        message.name = object.name ?? "";
+        message.payload = object.payload ?? "";
+        message.nextrun = object.nextrun ?? undefined;
+        message.success_wiqid = object.success_wiqid ?? "";
+        message.failed_wiqid = object.failed_wiqid ?? "";
+        message.success_wiq = object.success_wiq ?? "";
+        message.failed_wiq = object.failed_wiq ?? "";
+        message.priority = object.priority ?? 0;
+        message.files = object.files?.map((e) => WorkitemFile.fromPartial(e)) || [];
         return message;
     },
 };
 function createBasePushWorkitemResponse() {
     return { workitem: undefined };
 }
-export var PushWorkitemResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PushWorkitemResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitem !== undefined) {
             Workitem.encode(message.workitem, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePushWorkitemResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePushWorkitemResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitem = Workitem.decode(reader, reader.uint32());
@@ -499,19 +490,19 @@ export var PushWorkitemResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { workitem: isSet(object.workitem) ? Workitem.fromJSON(object.workitem) : undefined };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitem !== undefined && (obj.workitem = message.workitem ? Workitem.toJSON(message.workitem) : undefined);
         return obj;
     },
-    create: function (base) {
-        return PushWorkitemResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PushWorkitemResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var message = createBasePushWorkitemResponse();
+    fromPartial(object) {
+        const message = createBasePushWorkitemResponse();
         message.workitem = (object.workitem !== undefined && object.workitem !== null)
             ? Workitem.fromPartial(object.workitem)
             : undefined;
@@ -531,9 +522,8 @@ function createBasePushWorkitemsRequest() {
         items: [],
     };
 }
-export var PushWorkitemsRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PushWorkitemsRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.wiq !== "") {
             writer.uint32(10).string(message.wiq);
         }
@@ -558,18 +548,17 @@ export var PushWorkitemsRequest = {
         if (message.priority !== 0) {
             writer.uint32(64).int32(message.priority);
         }
-        for (var _i = 0, _a = message.items; _i < _a.length; _i++) {
-            var v = _a[_i];
+        for (const v of message.items) {
             Workitem.encode(v, writer.uint32(74).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePushWorkitemsRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePushWorkitemsRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.wiq = reader.string();
@@ -605,7 +594,7 @@ export var PushWorkitemsRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             wiq: isSet(object.wiq) ? String(object.wiq) : "",
             wiqid: isSet(object.wiqid) ? String(object.wiqid) : "",
@@ -615,11 +604,11 @@ export var PushWorkitemsRequest = {
             success_wiq: isSet(object.success_wiq) ? String(object.success_wiq) : "",
             failed_wiq: isSet(object.failed_wiq) ? String(object.failed_wiq) : "",
             priority: isSet(object.priority) ? Number(object.priority) : 0,
-            items: Array.isArray(object === null || object === void 0 ? void 0 : object.items) ? object.items.map(function (e) { return Workitem.fromJSON(e); }) : [],
+            items: Array.isArray(object?.items) ? object.items.map((e) => Workitem.fromJSON(e)) : [],
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.wiq !== undefined && (obj.wiq = message.wiq);
         message.wiqid !== undefined && (obj.wiqid = message.wiqid);
         message.nextrun !== undefined && (obj.nextrun = message.nextrun.toISOString());
@@ -629,49 +618,46 @@ export var PushWorkitemsRequest = {
         message.failed_wiq !== undefined && (obj.failed_wiq = message.failed_wiq);
         message.priority !== undefined && (obj.priority = Math.round(message.priority));
         if (message.items) {
-            obj.items = message.items.map(function (e) { return e ? Workitem.toJSON(e) : undefined; });
+            obj.items = message.items.map((e) => e ? Workitem.toJSON(e) : undefined);
         }
         else {
             obj.items = [];
         }
         return obj;
     },
-    create: function (base) {
-        return PushWorkitemsRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PushWorkitemsRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-        var message = createBasePushWorkitemsRequest();
-        message.wiq = (_a = object.wiq) !== null && _a !== void 0 ? _a : "";
-        message.wiqid = (_b = object.wiqid) !== null && _b !== void 0 ? _b : "";
-        message.nextrun = (_c = object.nextrun) !== null && _c !== void 0 ? _c : undefined;
-        message.success_wiqid = (_d = object.success_wiqid) !== null && _d !== void 0 ? _d : "";
-        message.failed_wiqid = (_e = object.failed_wiqid) !== null && _e !== void 0 ? _e : "";
-        message.success_wiq = (_f = object.success_wiq) !== null && _f !== void 0 ? _f : "";
-        message.failed_wiq = (_g = object.failed_wiq) !== null && _g !== void 0 ? _g : "";
-        message.priority = (_h = object.priority) !== null && _h !== void 0 ? _h : 0;
-        message.items = ((_j = object.items) === null || _j === void 0 ? void 0 : _j.map(function (e) { return Workitem.fromPartial(e); })) || [];
+    fromPartial(object) {
+        const message = createBasePushWorkitemsRequest();
+        message.wiq = object.wiq ?? "";
+        message.wiqid = object.wiqid ?? "";
+        message.nextrun = object.nextrun ?? undefined;
+        message.success_wiqid = object.success_wiqid ?? "";
+        message.failed_wiqid = object.failed_wiqid ?? "";
+        message.success_wiq = object.success_wiq ?? "";
+        message.failed_wiq = object.failed_wiq ?? "";
+        message.priority = object.priority ?? 0;
+        message.items = object.items?.map((e) => Workitem.fromPartial(e)) || [];
         return message;
     },
 };
 function createBasePushWorkitemsResponse() {
     return { workitems: [] };
 }
-export var PushWorkitemsResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
-        for (var _i = 0, _a = message.workitems; _i < _a.length; _i++) {
-            var v = _a[_i];
+export const PushWorkitemsResponse = {
+    encode(message, writer = _m0.Writer.create()) {
+        for (const v of message.workitems) {
             Workitem.encode(v, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePushWorkitemsResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePushWorkitemsResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitems.push(Workitem.decode(reader, reader.uint32()));
@@ -683,55 +669,52 @@ export var PushWorkitemsResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
-            workitems: Array.isArray(object === null || object === void 0 ? void 0 : object.workitems) ? object.workitems.map(function (e) { return Workitem.fromJSON(e); }) : [],
+            workitems: Array.isArray(object?.workitems) ? object.workitems.map((e) => Workitem.fromJSON(e)) : [],
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         if (message.workitems) {
-            obj.workitems = message.workitems.map(function (e) { return e ? Workitem.toJSON(e) : undefined; });
+            obj.workitems = message.workitems.map((e) => e ? Workitem.toJSON(e) : undefined);
         }
         else {
             obj.workitems = [];
         }
         return obj;
     },
-    create: function (base) {
-        return PushWorkitemsResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PushWorkitemsResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBasePushWorkitemsResponse();
-        message.workitems = ((_a = object.workitems) === null || _a === void 0 ? void 0 : _a.map(function (e) { return Workitem.fromPartial(e); })) || [];
+    fromPartial(object) {
+        const message = createBasePushWorkitemsResponse();
+        message.workitems = object.workitems?.map((e) => Workitem.fromPartial(e)) || [];
         return message;
     },
 };
 function createBaseUpdateWorkitemRequest() {
     return { workitem: undefined, ignoremaxretries: false, files: [] };
 }
-export var UpdateWorkitemRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UpdateWorkitemRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitem !== undefined) {
             Workitem.encode(message.workitem, writer.uint32(10).fork()).ldelim();
         }
         if (message.ignoremaxretries === true) {
             writer.uint32(16).bool(message.ignoremaxretries);
         }
-        for (var _i = 0, _a = message.files; _i < _a.length; _i++) {
-            var v = _a[_i];
+        for (const v of message.files) {
             WorkitemFile.encode(v, writer.uint32(26).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUpdateWorkitemRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUpdateWorkitemRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitem = Workitem.decode(reader, reader.uint32());
@@ -749,56 +732,54 @@ export var UpdateWorkitemRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             workitem: isSet(object.workitem) ? Workitem.fromJSON(object.workitem) : undefined,
             ignoremaxretries: isSet(object.ignoremaxretries) ? Boolean(object.ignoremaxretries) : false,
-            files: Array.isArray(object === null || object === void 0 ? void 0 : object.files) ? object.files.map(function (e) { return WorkitemFile.fromJSON(e); }) : [],
+            files: Array.isArray(object?.files) ? object.files.map((e) => WorkitemFile.fromJSON(e)) : [],
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitem !== undefined && (obj.workitem = message.workitem ? Workitem.toJSON(message.workitem) : undefined);
         message.ignoremaxretries !== undefined && (obj.ignoremaxretries = message.ignoremaxretries);
         if (message.files) {
-            obj.files = message.files.map(function (e) { return e ? WorkitemFile.toJSON(e) : undefined; });
+            obj.files = message.files.map((e) => e ? WorkitemFile.toJSON(e) : undefined);
         }
         else {
             obj.files = [];
         }
         return obj;
     },
-    create: function (base) {
-        return UpdateWorkitemRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UpdateWorkitemRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseUpdateWorkitemRequest();
+    fromPartial(object) {
+        const message = createBaseUpdateWorkitemRequest();
         message.workitem = (object.workitem !== undefined && object.workitem !== null)
             ? Workitem.fromPartial(object.workitem)
             : undefined;
-        message.ignoremaxretries = (_a = object.ignoremaxretries) !== null && _a !== void 0 ? _a : false;
-        message.files = ((_b = object.files) === null || _b === void 0 ? void 0 : _b.map(function (e) { return WorkitemFile.fromPartial(e); })) || [];
+        message.ignoremaxretries = object.ignoremaxretries ?? false;
+        message.files = object.files?.map((e) => WorkitemFile.fromPartial(e)) || [];
         return message;
     },
 };
 function createBaseUpdateWorkitemResponse() {
     return { workitem: undefined };
 }
-export var UpdateWorkitemResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UpdateWorkitemResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitem !== undefined) {
             Workitem.encode(message.workitem, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUpdateWorkitemResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUpdateWorkitemResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitem = Workitem.decode(reader, reader.uint32());
@@ -810,19 +791,19 @@ export var UpdateWorkitemResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { workitem: isSet(object.workitem) ? Workitem.fromJSON(object.workitem) : undefined };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitem !== undefined && (obj.workitem = message.workitem ? Workitem.toJSON(message.workitem) : undefined);
         return obj;
     },
-    create: function (base) {
-        return UpdateWorkitemResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UpdateWorkitemResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var message = createBaseUpdateWorkitemResponse();
+    fromPartial(object) {
+        const message = createBaseUpdateWorkitemResponse();
         message.workitem = (object.workitem !== undefined && object.workitem !== null)
             ? Workitem.fromPartial(object.workitem)
             : undefined;
@@ -832,9 +813,8 @@ export var UpdateWorkitemResponse = {
 function createBasePopWorkitemRequest() {
     return { wiq: "", wiqid: "", includefiles: false, compressed: false };
 }
-export var PopWorkitemRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PopWorkitemRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.wiq !== "") {
             writer.uint32(10).string(message.wiq);
         }
@@ -849,12 +829,12 @@ export var PopWorkitemRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePopWorkitemRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePopWorkitemRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.wiq = reader.string();
@@ -875,7 +855,7 @@ export var PopWorkitemRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             wiq: isSet(object.wiq) ? String(object.wiq) : "",
             wiqid: isSet(object.wiqid) ? String(object.wiqid) : "",
@@ -883,44 +863,42 @@ export var PopWorkitemRequest = {
             compressed: isSet(object.compressed) ? Boolean(object.compressed) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.wiq !== undefined && (obj.wiq = message.wiq);
         message.wiqid !== undefined && (obj.wiqid = message.wiqid);
         message.includefiles !== undefined && (obj.includefiles = message.includefiles);
         message.compressed !== undefined && (obj.compressed = message.compressed);
         return obj;
     },
-    create: function (base) {
-        return PopWorkitemRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PopWorkitemRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d;
-        var message = createBasePopWorkitemRequest();
-        message.wiq = (_a = object.wiq) !== null && _a !== void 0 ? _a : "";
-        message.wiqid = (_b = object.wiqid) !== null && _b !== void 0 ? _b : "";
-        message.includefiles = (_c = object.includefiles) !== null && _c !== void 0 ? _c : false;
-        message.compressed = (_d = object.compressed) !== null && _d !== void 0 ? _d : false;
+    fromPartial(object) {
+        const message = createBasePopWorkitemRequest();
+        message.wiq = object.wiq ?? "";
+        message.wiqid = object.wiqid ?? "";
+        message.includefiles = object.includefiles ?? false;
+        message.compressed = object.compressed ?? false;
         return message;
     },
 };
 function createBasePopWorkitemResponse() {
     return { workitem: undefined };
 }
-export var PopWorkitemResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PopWorkitemResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitem !== undefined) {
             Workitem.encode(message.workitem, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePopWorkitemResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePopWorkitemResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitem = Workitem.decode(reader, reader.uint32());
@@ -932,19 +910,19 @@ export var PopWorkitemResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { workitem: isSet(object.workitem) ? Workitem.fromJSON(object.workitem) : undefined };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitem !== undefined && (obj.workitem = message.workitem ? Workitem.toJSON(message.workitem) : undefined);
         return obj;
     },
-    create: function (base) {
-        return PopWorkitemResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PopWorkitemResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var message = createBasePopWorkitemResponse();
+    fromPartial(object) {
+        const message = createBasePopWorkitemResponse();
         message.workitem = (object.workitem !== undefined && object.workitem !== null)
             ? Workitem.fromPartial(object.workitem)
             : undefined;
@@ -954,20 +932,19 @@ export var PopWorkitemResponse = {
 function createBaseDeleteWorkitemRequest() {
     return { _id: "" };
 }
-export var DeleteWorkitemRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DeleteWorkitemRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message._id !== "") {
             writer.uint32(10).string(message._id);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDeleteWorkitemRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDeleteWorkitemRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message._id = reader.string();
@@ -979,38 +956,36 @@ export var DeleteWorkitemRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { _id: isSet(object._id) ? String(object._id) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message._id !== undefined && (obj._id = message._id);
         return obj;
     },
-    create: function (base) {
-        return DeleteWorkitemRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DeleteWorkitemRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseDeleteWorkitemRequest();
-        message._id = (_a = object._id) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseDeleteWorkitemRequest();
+        message._id = object._id ?? "";
         return message;
     },
 };
 function createBaseDeleteWorkitemResponse() {
     return {};
 }
-export var DeleteWorkitemResponse = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DeleteWorkitemResponse = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDeleteWorkitemResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDeleteWorkitemResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -1019,18 +994,18 @@ export var DeleteWorkitemResponse = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return DeleteWorkitemResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DeleteWorkitemResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseDeleteWorkitemResponse();
+    fromPartial(_) {
+        const message = createBaseDeleteWorkitemResponse();
         return message;
     },
 };
@@ -1061,9 +1036,8 @@ function createBaseWorkItemQueue() {
         packageid: "",
     };
 }
-export var WorkItemQueue = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const WorkItemQueue = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workflowid !== "") {
             writer.uint32(10).string(message.workflowid);
         }
@@ -1103,8 +1077,7 @@ export var WorkItemQueue = {
         if (message._id !== "") {
             writer.uint32(106).string(message._id);
         }
-        for (var _i = 0, _a = message._acl; _i < _a.length; _i++) {
-            var v = _a[_i];
+        for (const v of message._acl) {
             Ace.encode(v, writer.uint32(114).fork()).ldelim();
         }
         if (message.name !== "") {
@@ -1136,12 +1109,12 @@ export var WorkItemQueue = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseWorkItemQueue();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseWorkItemQueue();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workflowid = reader.string();
@@ -1219,7 +1192,7 @@ export var WorkItemQueue = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             workflowid: isSet(object.workflowid) ? String(object.workflowid) : "",
             robotqueue: isSet(object.robotqueue) ? String(object.robotqueue) : "",
@@ -1234,7 +1207,7 @@ export var WorkItemQueue = {
             success_wiq: isSet(object.success_wiq) ? String(object.success_wiq) : "",
             failed_wiq: isSet(object.failed_wiq) ? String(object.failed_wiq) : "",
             _id: isSet(object._id) ? String(object._id) : "",
-            _acl: Array.isArray(object === null || object === void 0 ? void 0 : object._acl) ? object._acl.map(function (e) { return Ace.fromJSON(e); }) : [],
+            _acl: Array.isArray(object?._acl) ? object._acl.map((e) => Ace.fromJSON(e)) : [],
             name: isSet(object.name) ? String(object.name) : "",
             _createdbyid: isSet(object._createdbyid) ? String(object._createdbyid) : "",
             _createdby: isSet(object._createdby) ? String(object._createdby) : "",
@@ -1246,8 +1219,8 @@ export var WorkItemQueue = {
             packageid: isSet(object.packageid) ? String(object.packageid) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workflowid !== undefined && (obj.workflowid = message.workflowid);
         message.robotqueue !== undefined && (obj.robotqueue = message.robotqueue);
         message.amqpqueue !== undefined && (obj.amqpqueue = message.amqpqueue);
@@ -1262,7 +1235,7 @@ export var WorkItemQueue = {
         message.failed_wiq !== undefined && (obj.failed_wiq = message.failed_wiq);
         message._id !== undefined && (obj._id = message._id);
         if (message._acl) {
-            obj._acl = message._acl.map(function (e) { return e ? Ace.toJSON(e) : undefined; });
+            obj._acl = message._acl.map((e) => e ? Ace.toJSON(e) : undefined);
         }
         else {
             obj._acl = [];
@@ -1278,44 +1251,42 @@ export var WorkItemQueue = {
         message.packageid !== undefined && (obj.packageid = message.packageid);
         return obj;
     },
-    create: function (base) {
-        return WorkItemQueue.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return WorkItemQueue.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
-        var message = createBaseWorkItemQueue();
-        message.workflowid = (_a = object.workflowid) !== null && _a !== void 0 ? _a : "";
-        message.robotqueue = (_b = object.robotqueue) !== null && _b !== void 0 ? _b : "";
-        message.amqpqueue = (_c = object.amqpqueue) !== null && _c !== void 0 ? _c : "";
-        message.projectid = (_d = object.projectid) !== null && _d !== void 0 ? _d : "";
-        message.usersrole = (_e = object.usersrole) !== null && _e !== void 0 ? _e : "";
-        message.maxretries = (_f = object.maxretries) !== null && _f !== void 0 ? _f : 0;
-        message.retrydelay = (_g = object.retrydelay) !== null && _g !== void 0 ? _g : 0;
-        message.initialdelay = (_h = object.initialdelay) !== null && _h !== void 0 ? _h : 0;
-        message.success_wiqid = (_j = object.success_wiqid) !== null && _j !== void 0 ? _j : "";
-        message.failed_wiqid = (_k = object.failed_wiqid) !== null && _k !== void 0 ? _k : "";
-        message.success_wiq = (_l = object.success_wiq) !== null && _l !== void 0 ? _l : "";
-        message.failed_wiq = (_m = object.failed_wiq) !== null && _m !== void 0 ? _m : "";
-        message._id = (_o = object._id) !== null && _o !== void 0 ? _o : "";
-        message._acl = ((_p = object._acl) === null || _p === void 0 ? void 0 : _p.map(function (e) { return Ace.fromPartial(e); })) || [];
-        message.name = (_q = object.name) !== null && _q !== void 0 ? _q : "";
-        message._createdbyid = (_r = object._createdbyid) !== null && _r !== void 0 ? _r : "";
-        message._createdby = (_s = object._createdby) !== null && _s !== void 0 ? _s : "";
-        message._created = (_t = object._created) !== null && _t !== void 0 ? _t : undefined;
-        message._modifiedbyid = (_u = object._modifiedbyid) !== null && _u !== void 0 ? _u : "";
-        message._modifiedby = (_v = object._modifiedby) !== null && _v !== void 0 ? _v : "";
-        message._modified = (_w = object._modified) !== null && _w !== void 0 ? _w : undefined;
-        message._version = (_x = object._version) !== null && _x !== void 0 ? _x : 0;
-        message.packageid = (_y = object.packageid) !== null && _y !== void 0 ? _y : "";
+    fromPartial(object) {
+        const message = createBaseWorkItemQueue();
+        message.workflowid = object.workflowid ?? "";
+        message.robotqueue = object.robotqueue ?? "";
+        message.amqpqueue = object.amqpqueue ?? "";
+        message.projectid = object.projectid ?? "";
+        message.usersrole = object.usersrole ?? "";
+        message.maxretries = object.maxretries ?? 0;
+        message.retrydelay = object.retrydelay ?? 0;
+        message.initialdelay = object.initialdelay ?? 0;
+        message.success_wiqid = object.success_wiqid ?? "";
+        message.failed_wiqid = object.failed_wiqid ?? "";
+        message.success_wiq = object.success_wiq ?? "";
+        message.failed_wiq = object.failed_wiq ?? "";
+        message._id = object._id ?? "";
+        message._acl = object._acl?.map((e) => Ace.fromPartial(e)) || [];
+        message.name = object.name ?? "";
+        message._createdbyid = object._createdbyid ?? "";
+        message._createdby = object._createdby ?? "";
+        message._created = object._created ?? undefined;
+        message._modifiedbyid = object._modifiedbyid ?? "";
+        message._modifiedby = object._modifiedby ?? "";
+        message._modified = object._modified ?? undefined;
+        message._version = object._version ?? 0;
+        message.packageid = object.packageid ?? "";
         return message;
     },
 };
 function createBaseAddWorkItemQueueRequest() {
     return { workitemqueue: undefined, skiprole: false };
 }
-export var AddWorkItemQueueRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const AddWorkItemQueueRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitemqueue !== undefined) {
             WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
         }
@@ -1324,12 +1295,12 @@ export var AddWorkItemQueueRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseAddWorkItemQueueRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseAddWorkItemQueueRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
@@ -1344,49 +1315,47 @@ export var AddWorkItemQueueRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined,
             skiprole: isSet(object.skiprole) ? Boolean(object.skiprole) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitemqueue !== undefined &&
             (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
         message.skiprole !== undefined && (obj.skiprole = message.skiprole);
         return obj;
     },
-    create: function (base) {
-        return AddWorkItemQueueRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return AddWorkItemQueueRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseAddWorkItemQueueRequest();
+    fromPartial(object) {
+        const message = createBaseAddWorkItemQueueRequest();
         message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
             ? WorkItemQueue.fromPartial(object.workitemqueue)
             : undefined;
-        message.skiprole = (_a = object.skiprole) !== null && _a !== void 0 ? _a : false;
+        message.skiprole = object.skiprole ?? false;
         return message;
     },
 };
 function createBaseAddWorkItemQueueResponse() {
     return { workitemqueue: undefined };
 }
-export var AddWorkItemQueueResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const AddWorkItemQueueResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitemqueue !== undefined) {
             WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseAddWorkItemQueueResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseAddWorkItemQueueResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
@@ -1398,20 +1367,20 @@ export var AddWorkItemQueueResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitemqueue !== undefined &&
             (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
         return obj;
     },
-    create: function (base) {
-        return AddWorkItemQueueResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return AddWorkItemQueueResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var message = createBaseAddWorkItemQueueResponse();
+    fromPartial(object) {
+        const message = createBaseAddWorkItemQueueResponse();
         message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
             ? WorkItemQueue.fromPartial(object.workitemqueue)
             : undefined;
@@ -1421,9 +1390,8 @@ export var AddWorkItemQueueResponse = {
 function createBaseUpdateWorkItemQueueRequest() {
     return { workitemqueue: undefined, skiprole: false, purge: false };
 }
-export var UpdateWorkItemQueueRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UpdateWorkItemQueueRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitemqueue !== undefined) {
             WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
         }
@@ -1435,12 +1403,12 @@ export var UpdateWorkItemQueueRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUpdateWorkItemQueueRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUpdateWorkItemQueueRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
@@ -1458,52 +1426,50 @@ export var UpdateWorkItemQueueRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined,
             skiprole: isSet(object.skiprole) ? Boolean(object.skiprole) : false,
             purge: isSet(object.purge) ? Boolean(object.purge) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitemqueue !== undefined &&
             (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
         message.skiprole !== undefined && (obj.skiprole = message.skiprole);
         message.purge !== undefined && (obj.purge = message.purge);
         return obj;
     },
-    create: function (base) {
-        return UpdateWorkItemQueueRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UpdateWorkItemQueueRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseUpdateWorkItemQueueRequest();
+    fromPartial(object) {
+        const message = createBaseUpdateWorkItemQueueRequest();
         message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
             ? WorkItemQueue.fromPartial(object.workitemqueue)
             : undefined;
-        message.skiprole = (_a = object.skiprole) !== null && _a !== void 0 ? _a : false;
-        message.purge = (_b = object.purge) !== null && _b !== void 0 ? _b : false;
+        message.skiprole = object.skiprole ?? false;
+        message.purge = object.purge ?? false;
         return message;
     },
 };
 function createBaseUpdateWorkItemQueueResponse() {
     return { workitemqueue: undefined };
 }
-export var UpdateWorkItemQueueResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UpdateWorkItemQueueResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.workitemqueue !== undefined) {
             WorkItemQueue.encode(message.workitemqueue, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUpdateWorkItemQueueResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUpdateWorkItemQueueResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.workitemqueue = WorkItemQueue.decode(reader, reader.uint32());
@@ -1515,20 +1481,20 @@ export var UpdateWorkItemQueueResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { workitemqueue: isSet(object.workitemqueue) ? WorkItemQueue.fromJSON(object.workitemqueue) : undefined };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.workitemqueue !== undefined &&
             (obj.workitemqueue = message.workitemqueue ? WorkItemQueue.toJSON(message.workitemqueue) : undefined);
         return obj;
     },
-    create: function (base) {
-        return UpdateWorkItemQueueResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UpdateWorkItemQueueResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var message = createBaseUpdateWorkItemQueueResponse();
+    fromPartial(object) {
+        const message = createBaseUpdateWorkItemQueueResponse();
         message.workitemqueue = (object.workitemqueue !== undefined && object.workitemqueue !== null)
             ? WorkItemQueue.fromPartial(object.workitemqueue)
             : undefined;
@@ -1538,9 +1504,8 @@ export var UpdateWorkItemQueueResponse = {
 function createBaseDeleteWorkItemQueueRequest() {
     return { wiq: "", wiqid: "", purge: false };
 }
-export var DeleteWorkItemQueueRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DeleteWorkItemQueueRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.wiq !== "") {
             writer.uint32(10).string(message.wiq);
         }
@@ -1552,12 +1517,12 @@ export var DeleteWorkItemQueueRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDeleteWorkItemQueueRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDeleteWorkItemQueueRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.wiq = reader.string();
@@ -1575,46 +1540,44 @@ export var DeleteWorkItemQueueRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             wiq: isSet(object.wiq) ? String(object.wiq) : "",
             wiqid: isSet(object.wiqid) ? String(object.wiqid) : "",
             purge: isSet(object.purge) ? Boolean(object.purge) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.wiq !== undefined && (obj.wiq = message.wiq);
         message.wiqid !== undefined && (obj.wiqid = message.wiqid);
         message.purge !== undefined && (obj.purge = message.purge);
         return obj;
     },
-    create: function (base) {
-        return DeleteWorkItemQueueRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DeleteWorkItemQueueRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c;
-        var message = createBaseDeleteWorkItemQueueRequest();
-        message.wiq = (_a = object.wiq) !== null && _a !== void 0 ? _a : "";
-        message.wiqid = (_b = object.wiqid) !== null && _b !== void 0 ? _b : "";
-        message.purge = (_c = object.purge) !== null && _c !== void 0 ? _c : false;
+    fromPartial(object) {
+        const message = createBaseDeleteWorkItemQueueRequest();
+        message.wiq = object.wiq ?? "";
+        message.wiqid = object.wiqid ?? "";
+        message.purge = object.purge ?? false;
         return message;
     },
 };
 function createBaseDeleteWorkItemQueueResponse() {
     return {};
 }
-export var DeleteWorkItemQueueResponse = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DeleteWorkItemQueueResponse = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDeleteWorkItemQueueResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDeleteWorkItemQueueResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -1623,22 +1586,22 @@ export var DeleteWorkItemQueueResponse = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return DeleteWorkItemQueueResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DeleteWorkItemQueueResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseDeleteWorkItemQueueResponse();
+    fromPartial(_) {
+        const message = createBaseDeleteWorkItemQueueResponse();
         return message;
     },
 };
-var tsProtoGlobalThis = (function () {
+var tsProtoGlobalThis = (() => {
     if (typeof globalThis !== "undefined") {
         return globalThis;
     }
@@ -1658,9 +1621,9 @@ function bytesFromBase64(b64) {
         return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
     }
     else {
-        var bin = tsProtoGlobalThis.atob(b64);
-        var arr = new Uint8Array(bin.length);
-        for (var i = 0; i < bin.length; ++i) {
+        const bin = tsProtoGlobalThis.atob(b64);
+        const arr = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; ++i) {
             arr[i] = bin.charCodeAt(i);
         }
         return arr;
@@ -1671,21 +1634,21 @@ function base64FromBytes(arr) {
         return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
     }
     else {
-        var bin_1 = [];
-        arr.forEach(function (byte) {
-            bin_1.push(String.fromCharCode(byte));
+        const bin = [];
+        arr.forEach((byte) => {
+            bin.push(String.fromCharCode(byte));
         });
-        return tsProtoGlobalThis.btoa(bin_1.join(""));
+        return tsProtoGlobalThis.btoa(bin.join(""));
     }
 }
 function toTimestamp(date) {
-    var seconds = date.getTime() / 1000;
-    var nanos = (date.getTime() % 1000) * 1000000;
-    return { seconds: seconds, nanos: nanos };
+    const seconds = date.getTime() / 1_000;
+    const nanos = (date.getTime() % 1_000) * 1_000_000;
+    return { seconds, nanos };
 }
 function fromTimestamp(t) {
-    var millis = t.seconds * 1000;
-    millis += t.nanos / 1000000;
+    let millis = t.seconds * 1_000;
+    millis += t.nanos / 1_000_000;
     return new Date(millis);
 }
 function fromJsonTimestamp(o) {
