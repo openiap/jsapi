@@ -1,22 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DeleteAgentResponse = exports.DeleteAgentRequest = exports.DeleteAgentPodResponse = exports.DeleteAgentPodRequest = exports.GetAgentPodsResponse = exports.GetAgentPodsRequest = exports.GetAgentLogResponse = exports.GetAgentLogRequest = exports.StopAgentResponse = exports.StopAgentRequest = exports.StartAgentResponse = exports.StartAgentRequest = exports.protobufPackage = void 0;
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
-export const protobufPackage = "openiap";
+var _m0 = require("protobufjs/minimal");
+exports.protobufPackage = "openiap";
 function createBaseStartAgentRequest() {
     return { agentid: "" };
 }
-export const StartAgentRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.StartAgentRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.agentid !== "") {
             writer.uint32(10).string(message.agentid);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseStartAgentRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseStartAgentRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.agentid = reader.string();
@@ -28,36 +32,38 @@ export const StartAgentRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { agentid: isSet(object.agentid) ? String(object.agentid) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.agentid !== undefined && (obj.agentid = message.agentid);
         return obj;
     },
-    create(base) {
-        return StartAgentRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.StartAgentRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseStartAgentRequest();
-        message.agentid = object.agentid ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseStartAgentRequest();
+        message.agentid = (_a = object.agentid) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseStartAgentResponse() {
     return {};
 }
-export const StartAgentResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.StartAgentResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseStartAgentResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseStartAgentResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -66,37 +72,38 @@ export const StartAgentResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return StartAgentResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.StartAgentResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseStartAgentResponse();
+    fromPartial: function (_) {
+        var message = createBaseStartAgentResponse();
         return message;
     },
 };
 function createBaseStopAgentRequest() {
     return { agentid: "" };
 }
-export const StopAgentRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.StopAgentRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.agentid !== "") {
             writer.uint32(10).string(message.agentid);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseStopAgentRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseStopAgentRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.agentid = reader.string();
@@ -108,36 +115,38 @@ export const StopAgentRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { agentid: isSet(object.agentid) ? String(object.agentid) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.agentid !== undefined && (obj.agentid = message.agentid);
         return obj;
     },
-    create(base) {
-        return StopAgentRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.StopAgentRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseStopAgentRequest();
-        message.agentid = object.agentid ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseStopAgentRequest();
+        message.agentid = (_a = object.agentid) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseStopAgentResponse() {
     return {};
 }
-export const StopAgentResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.StopAgentResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseStopAgentResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseStopAgentResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -146,26 +155,27 @@ export const StopAgentResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return StopAgentResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.StopAgentResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseStopAgentResponse();
+    fromPartial: function (_) {
+        var message = createBaseStopAgentResponse();
         return message;
     },
 };
 function createBaseGetAgentLogRequest() {
     return { agentid: "", podname: "" };
 }
-export const GetAgentLogRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.GetAgentLogRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.agentid !== "") {
             writer.uint32(10).string(message.agentid);
         }
@@ -174,12 +184,12 @@ export const GetAgentLogRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseGetAgentLogRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetAgentLogRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.agentid = reader.string();
@@ -194,44 +204,46 @@ export const GetAgentLogRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             agentid: isSet(object.agentid) ? String(object.agentid) : "",
             podname: isSet(object.podname) ? String(object.podname) : "",
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.agentid !== undefined && (obj.agentid = message.agentid);
         message.podname !== undefined && (obj.podname = message.podname);
         return obj;
     },
-    create(base) {
-        return GetAgentLogRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.GetAgentLogRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseGetAgentLogRequest();
-        message.agentid = object.agentid ?? "";
-        message.podname = object.podname ?? "";
+    fromPartial: function (object) {
+        var _a, _b;
+        var message = createBaseGetAgentLogRequest();
+        message.agentid = (_a = object.agentid) !== null && _a !== void 0 ? _a : "";
+        message.podname = (_b = object.podname) !== null && _b !== void 0 ? _b : "";
         return message;
     },
 };
 function createBaseGetAgentLogResponse() {
     return { result: "" };
 }
-export const GetAgentLogResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.GetAgentLogResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseGetAgentLogResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetAgentLogResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -243,28 +255,30 @@ export const GetAgentLogResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create(base) {
-        return GetAgentLogResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.GetAgentLogResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseGetAgentLogResponse();
-        message.result = object.result ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseGetAgentLogResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseGetAgentPodsRequest() {
     return { agentid: "", stats: false };
 }
-export const GetAgentPodsRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.GetAgentPodsRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.agentid !== "") {
             writer.uint32(10).string(message.agentid);
         }
@@ -273,12 +287,12 @@ export const GetAgentPodsRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseGetAgentPodsRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetAgentPodsRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.agentid = reader.string();
@@ -293,44 +307,46 @@ export const GetAgentPodsRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             agentid: isSet(object.agentid) ? String(object.agentid) : "",
             stats: isSet(object.stats) ? Boolean(object.stats) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.agentid !== undefined && (obj.agentid = message.agentid);
         message.stats !== undefined && (obj.stats = message.stats);
         return obj;
     },
-    create(base) {
-        return GetAgentPodsRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.GetAgentPodsRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseGetAgentPodsRequest();
-        message.agentid = object.agentid ?? "";
-        message.stats = object.stats ?? false;
+    fromPartial: function (object) {
+        var _a, _b;
+        var message = createBaseGetAgentPodsRequest();
+        message.agentid = (_a = object.agentid) !== null && _a !== void 0 ? _a : "";
+        message.stats = (_b = object.stats) !== null && _b !== void 0 ? _b : false;
         return message;
     },
 };
 function createBaseGetAgentPodsResponse() {
     return { results: "" };
 }
-export const GetAgentPodsResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.GetAgentPodsResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseGetAgentPodsResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetAgentPodsResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -342,28 +358,30 @@ export const GetAgentPodsResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create(base) {
-        return GetAgentPodsResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.GetAgentPodsResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseGetAgentPodsResponse();
-        message.results = object.results ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseGetAgentPodsResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseDeleteAgentPodRequest() {
     return { agentid: "", podname: "" };
 }
-export const DeleteAgentPodRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DeleteAgentPodRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.agentid !== "") {
             writer.uint32(10).string(message.agentid);
         }
@@ -372,12 +390,12 @@ export const DeleteAgentPodRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteAgentPodRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteAgentPodRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.agentid = reader.string();
@@ -392,41 +410,43 @@ export const DeleteAgentPodRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             agentid: isSet(object.agentid) ? String(object.agentid) : "",
             podname: isSet(object.podname) ? String(object.podname) : "",
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.agentid !== undefined && (obj.agentid = message.agentid);
         message.podname !== undefined && (obj.podname = message.podname);
         return obj;
     },
-    create(base) {
-        return DeleteAgentPodRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteAgentPodRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDeleteAgentPodRequest();
-        message.agentid = object.agentid ?? "";
-        message.podname = object.podname ?? "";
+    fromPartial: function (object) {
+        var _a, _b;
+        var message = createBaseDeleteAgentPodRequest();
+        message.agentid = (_a = object.agentid) !== null && _a !== void 0 ? _a : "";
+        message.podname = (_b = object.podname) !== null && _b !== void 0 ? _b : "";
         return message;
     },
 };
 function createBaseDeleteAgentPodResponse() {
     return {};
 }
-export const DeleteAgentPodResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.DeleteAgentPodResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteAgentPodResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteAgentPodResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -435,37 +455,38 @@ export const DeleteAgentPodResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return DeleteAgentPodResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteAgentPodResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseDeleteAgentPodResponse();
+    fromPartial: function (_) {
+        var message = createBaseDeleteAgentPodResponse();
         return message;
     },
 };
 function createBaseDeleteAgentRequest() {
     return { agentid: "" };
 }
-export const DeleteAgentRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DeleteAgentRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.agentid !== "") {
             writer.uint32(10).string(message.agentid);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteAgentRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteAgentRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.agentid = reader.string();
@@ -477,36 +498,38 @@ export const DeleteAgentRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { agentid: isSet(object.agentid) ? String(object.agentid) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.agentid !== undefined && (obj.agentid = message.agentid);
         return obj;
     },
-    create(base) {
-        return DeleteAgentRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteAgentRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDeleteAgentRequest();
-        message.agentid = object.agentid ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDeleteAgentRequest();
+        message.agentid = (_a = object.agentid) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseDeleteAgentResponse() {
     return {};
 }
-export const DeleteAgentResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.DeleteAgentResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteAgentResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteAgentResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -515,18 +538,18 @@ export const DeleteAgentResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return DeleteAgentResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteAgentResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseDeleteAgentResponse();
+    fromPartial: function (_) {
+        var message = createBaseDeleteAgentResponse();
         return message;
     },
 };

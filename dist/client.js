@@ -1,87 +1,126 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.remoteip = exports.changestream = exports.client = void 0;
 // import * as net from "net";
 // import * as  grpc from "@grpc/grpc-js";
 // import * as  WebSocket from "ws";
-import { protowrap } from "./protowrap";
-import { config } from "./config";
-const { info, err, warn } = config;
-import { Envelope } from "./proto/base";
-export class client {
-    id = "";
-    seq = 0;
-    remoteip = "unknown";
-    agent;
-    protocol = "ws";
-    version = "0.0.1";
-    doping = false;
-    created = new Date();
-    lastheartbeat = new Date();
-    lastheartbeatstr = new Date().toISOString();
-    lastheartbeatsec = "0";
-    user; // User
-    jwt = "";
-    signedin = false;
-    connected = false;
-    connecting = false;
-    queues = []; // amqpqueue[]
-    exchanges = []; // amqpexchange[]
-    watches = [];
-    url = "";
-    ws; // WebSocket;
-    stream; // net.Socket;
-    grpc;
-    call;
-    SendStreamCall; //  grpc.ClientDuplexStream<any, any>;
-    ReceiveStreamCall; // grpc.ClientDuplexStream<any, any>;
-    replies;
-    streams;
-    async Initialize(ws, stream, call, req) {
-        try {
-            this.replies = {};
-            this.streams = {};
-            this.doping = config.settings.DoPing;
-            if (ws != null)
-                this.ws = ws;
-            if (stream != null)
-                this.stream = stream;
-            if (call != null)
-                this.call = call;
-            if (req != null)
-                this.remoteip = remoteip(req);
-        }
-        catch (error) {
-            err(error);
-        }
-        return true;
-        ;
+var protowrap_1 = require("./protowrap");
+var config_1 = require("./config");
+var info = config_1.config.info, err = config_1.config.err, warn = config_1.config.warn;
+var base_1 = require("./proto/base");
+var client = /** @class */ (function () {
+    function client() {
+        this.id = "";
+        this.seq = 0;
+        this.remoteip = "unknown";
+        this.protocol = "ws";
+        this.version = "0.0.1";
+        this.doping = false;
+        this.created = new Date();
+        this.lastheartbeat = new Date();
+        this.lastheartbeatstr = new Date().toISOString();
+        this.lastheartbeatsec = "0";
+        this.jwt = "";
+        this.signedin = false;
+        this.connected = false;
+        this.connecting = false;
+        this.queues = []; // amqpqueue[]
+        this.exchanges = []; // amqpexchange[]
+        this.watches = [];
+        this.url = "";
     }
-    onConnected(client) {
-    }
-    onDisconnected(client, error) {
+    client.prototype.Initialize = function (ws, stream, call, req) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                try {
+                    this.replies = {};
+                    this.streams = {};
+                    this.doping = config_1.config.settings.DoPing;
+                    if (ws != null)
+                        this.ws = ws;
+                    if (stream != null)
+                        this.stream = stream;
+                    if (call != null)
+                        this.call = call;
+                    if (req != null)
+                        this.remoteip = remoteip(req);
+                }
+                catch (error) {
+                    err(error);
+                }
+                return [2 /*return*/, true];
+            });
+        });
+    };
+    client.prototype.onConnected = function (client) {
+    };
+    client.prototype.onDisconnected = function (client, error) {
         info("close " + this.id + " " + this.protocol + " " + this.remoteip + " " + this.agent);
-    }
-    async onMessage(client, message) {
-        const reply = { command: message.command, rid: message.id, data: {} };
-        if (message.command == "ping") {
-            reply.command = "pong";
-        }
-        return reply;
-    }
-    ping(span) {
+    };
+    client.prototype.onMessage = function (client, message) {
+        return __awaiter(this, void 0, void 0, function () {
+            var reply;
+            return __generator(this, function (_a) {
+                reply = { command: message.command, rid: message.id, data: {} };
+                if (message.command == "ping") {
+                    reply.command = "pong";
+                }
+                return [2 /*return*/, reply];
+            });
+        });
+    };
+    client.prototype.ping = function (span) {
         if (this.doping) {
-            protowrap.sendMesssag(this, Envelope.create({ command: "ping" }), undefined, true);
+            protowrap_1.protowrap.sendMesssag(this, base_1.Envelope.create({ command: "ping" }), undefined, true);
         }
         else {
             this.lastheartbeat = new Date();
             this.lastheartbeatstr = this.lastheartbeat.toISOString();
             this.lastheartbeatsec = (this.lastheartbeat.getTime() / 1000).toString();
         }
-    }
-    queuecount() {
+    };
+    client.prototype.queuecount = function () {
         return this.queues.length;
-    }
-    SendWatch(watch, next, span) {
-    }
-    Close() {
+    };
+    client.prototype.SendWatch = function (watch, next, span) {
+    };
+    client.prototype.Close = function () {
         if (this.ws != null)
             this.ws.close();
         if (this.stream != null)
@@ -96,20 +135,20 @@ export class client {
         this.connected = false;
         this.connecting = false;
         // this.onDisconnected(this, null);
+    };
+    return client;
+}());
+exports.client = client;
+var changestream = /** @class */ (function () {
+    function changestream() {
     }
-}
-export class changestream {
-    // public stream: ChangeStream;
-    stream;
-    id;
-    callback;
-    aggregates;
-    collectionname;
-}
-export function remoteip(req) {
+    return changestream;
+}());
+exports.changestream = changestream;
+function remoteip(req) {
     if (req == null)
         return "unknown";
-    let remoteip = req.socket.remoteAddress;
+    var remoteip = req.socket.remoteAddress;
     if (req.headers["X-Forwarded-For"] != null)
         remoteip = req.headers["X-Forwarded-For"];
     if (req.headers["X-real-IP"] != null)
@@ -120,4 +159,5 @@ export function remoteip(req) {
         remoteip = req.headers["x-real-ip"];
     return remoteip;
 }
+exports.remoteip = remoteip;
 //# sourceMappingURL=client.js.map

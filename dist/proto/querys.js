@@ -1,22 +1,26 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DeleteManyResponse = exports.DeleteManyRequest = exports.DeleteOneResponse = exports.DeleteOneRequest = exports.InsertOrUpdateManyResponse = exports.InsertOrUpdateManyRequest = exports.InsertOrUpdateOneResponse = exports.InsertOrUpdateOneRequest = exports.UpdateDocumentResponse = exports.UpdateResult = exports.UpdateDocumentRequest = exports.UpdateOneResponse = exports.UpdateOneRequest = exports.InsertManyResponse = exports.InsertManyRequest = exports.InsertOneResponse = exports.InsertOneRequest = exports.DistinctResponse = exports.DistinctRequest = exports.CountResponse = exports.CountRequest = exports.AggregateResponse = exports.AggregateRequest = exports.GetDocumentVersionResponse = exports.GetDocumentVersionRequest = exports.QueryResponse = exports.QueryRequest = exports.CreateCollectionResponse = exports.CreateCollectionRequest = exports.col_collation = exports.col_timeseries = exports.DropCollectionResponse = exports.DropCollectionRequest = exports.ListCollectionsResponse = exports.ListCollectionsRequest = exports.protobufPackage = void 0;
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
-export const protobufPackage = "openiap";
+var _m0 = require("protobufjs/minimal");
+exports.protobufPackage = "openiap";
 function createBaseListCollectionsRequest() {
     return { includehist: false };
 }
-export const ListCollectionsRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.ListCollectionsRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.includehist === true) {
             writer.uint32(8).bool(message.includehist);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseListCollectionsRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseListCollectionsRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.includehist = reader.bool();
@@ -28,39 +32,41 @@ export const ListCollectionsRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { includehist: isSet(object.includehist) ? Boolean(object.includehist) : false };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.includehist !== undefined && (obj.includehist = message.includehist);
         return obj;
     },
-    create(base) {
-        return ListCollectionsRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.ListCollectionsRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseListCollectionsRequest();
-        message.includehist = object.includehist ?? false;
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseListCollectionsRequest();
+        message.includehist = (_a = object.includehist) !== null && _a !== void 0 ? _a : false;
         return message;
     },
 };
 function createBaseListCollectionsResponse() {
     return { results: "" };
 }
-export const ListCollectionsResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.ListCollectionsResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseListCollectionsResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseListCollectionsResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -72,39 +78,41 @@ export const ListCollectionsResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create(base) {
-        return ListCollectionsResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.ListCollectionsResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseListCollectionsResponse();
-        message.results = object.results ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseListCollectionsResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseDropCollectionRequest() {
     return { collectionname: "" };
 }
-export const DropCollectionRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DropCollectionRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDropCollectionRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDropCollectionRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -116,36 +124,38 @@ export const DropCollectionRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { collectionname: isSet(object.collectionname) ? String(object.collectionname) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         return obj;
     },
-    create(base) {
-        return DropCollectionRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DropCollectionRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDropCollectionRequest();
-        message.collectionname = object.collectionname ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDropCollectionRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseDropCollectionResponse() {
     return {};
 }
-export const DropCollectionResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.DropCollectionResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDropCollectionResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDropCollectionResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -154,26 +164,27 @@ export const DropCollectionResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return DropCollectionResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DropCollectionResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseDropCollectionResponse();
+    fromPartial: function (_) {
+        var message = createBaseDropCollectionResponse();
         return message;
     },
 };
 function createBasecol_timeseries() {
     return { timeField: "", metaField: "", granularity: "" };
 }
-export const col_timeseries = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.col_timeseries = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.timeField !== "") {
             writer.uint32(10).string(message.timeField);
         }
@@ -185,12 +196,12 @@ export const col_timeseries = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBasecol_timeseries();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBasecol_timeseries();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.timeField = reader.string();
@@ -208,28 +219,29 @@ export const col_timeseries = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             timeField: isSet(object.timeField) ? String(object.timeField) : "",
             metaField: isSet(object.metaField) ? String(object.metaField) : "",
             granularity: isSet(object.granularity) ? String(object.granularity) : "",
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.timeField !== undefined && (obj.timeField = message.timeField);
         message.metaField !== undefined && (obj.metaField = message.metaField);
         message.granularity !== undefined && (obj.granularity = message.granularity);
         return obj;
     },
-    create(base) {
-        return col_timeseries.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.col_timeseries.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBasecol_timeseries();
-        message.timeField = object.timeField ?? "";
-        message.metaField = object.metaField ?? "";
-        message.granularity = object.granularity ?? "";
+    fromPartial: function (object) {
+        var _a, _b, _c;
+        var message = createBasecol_timeseries();
+        message.timeField = (_a = object.timeField) !== null && _a !== void 0 ? _a : "";
+        message.metaField = (_b = object.metaField) !== null && _b !== void 0 ? _b : "";
+        message.granularity = (_c = object.granularity) !== null && _c !== void 0 ? _c : "";
         return message;
     },
 };
@@ -245,8 +257,9 @@ function createBasecol_collation() {
         backwards: false,
     };
 }
-export const col_collation = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.col_collation = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.locale !== "") {
             writer.uint32(10).string(message.locale);
         }
@@ -273,12 +286,12 @@ export const col_collation = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBasecol_collation();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBasecol_collation();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.locale = reader.string();
@@ -311,7 +324,7 @@ export const col_collation = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             locale: isSet(object.locale) ? String(object.locale) : "",
             caseLevel: isSet(object.caseLevel) ? Boolean(object.caseLevel) : false,
@@ -323,8 +336,8 @@ export const col_collation = {
             backwards: isSet(object.backwards) ? Boolean(object.backwards) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.locale !== undefined && (obj.locale = message.locale);
         message.caseLevel !== undefined && (obj.caseLevel = message.caseLevel);
         message.caseFirst !== undefined && (obj.caseFirst = message.caseFirst);
@@ -335,19 +348,20 @@ export const col_collation = {
         message.backwards !== undefined && (obj.backwards = message.backwards);
         return obj;
     },
-    create(base) {
-        return col_collation.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.col_collation.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBasecol_collation();
-        message.locale = object.locale ?? "";
-        message.caseLevel = object.caseLevel ?? false;
-        message.caseFirst = object.caseFirst ?? "";
-        message.strength = object.strength ?? 0;
-        message.numericOrdering = object.numericOrdering ?? false;
-        message.alternate = object.alternate ?? "";
-        message.maxVariable = object.maxVariable ?? "";
-        message.backwards = object.backwards ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var message = createBasecol_collation();
+        message.locale = (_a = object.locale) !== null && _a !== void 0 ? _a : "";
+        message.caseLevel = (_b = object.caseLevel) !== null && _b !== void 0 ? _b : false;
+        message.caseFirst = (_c = object.caseFirst) !== null && _c !== void 0 ? _c : "";
+        message.strength = (_d = object.strength) !== null && _d !== void 0 ? _d : 0;
+        message.numericOrdering = (_e = object.numericOrdering) !== null && _e !== void 0 ? _e : false;
+        message.alternate = (_f = object.alternate) !== null && _f !== void 0 ? _f : "";
+        message.maxVariable = (_g = object.maxVariable) !== null && _g !== void 0 ? _g : "";
+        message.backwards = (_h = object.backwards) !== null && _h !== void 0 ? _h : false;
         return message;
     },
 };
@@ -363,16 +377,17 @@ function createBaseCreateCollectionRequest() {
         size: 0,
     };
 }
-export const CreateCollectionRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.CreateCollectionRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
         if (message.collation !== undefined) {
-            col_collation.encode(message.collation, writer.uint32(18).fork()).ldelim();
+            exports.col_collation.encode(message.collation, writer.uint32(18).fork()).ldelim();
         }
         if (message.timeseries !== undefined) {
-            col_timeseries.encode(message.timeseries, writer.uint32(26).fork()).ldelim();
+            exports.col_timeseries.encode(message.timeseries, writer.uint32(26).fork()).ldelim();
         }
         if (message.expireAfterSeconds !== 0) {
             writer.uint32(32).int32(message.expireAfterSeconds);
@@ -391,21 +406,21 @@ export const CreateCollectionRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseCreateCollectionRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCreateCollectionRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
                     break;
                 case 2:
-                    message.collation = col_collation.decode(reader, reader.uint32());
+                    message.collation = exports.col_collation.decode(reader, reader.uint32());
                     break;
                 case 3:
-                    message.timeseries = col_timeseries.decode(reader, reader.uint32());
+                    message.timeseries = exports.col_timeseries.decode(reader, reader.uint32());
                     break;
                 case 4:
                     message.expireAfterSeconds = reader.int32();
@@ -429,11 +444,11 @@ export const CreateCollectionRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
-            collation: isSet(object.collation) ? col_collation.fromJSON(object.collation) : undefined,
-            timeseries: isSet(object.timeseries) ? col_timeseries.fromJSON(object.timeseries) : undefined,
+            collation: isSet(object.collation) ? exports.col_collation.fromJSON(object.collation) : undefined,
+            timeseries: isSet(object.timeseries) ? exports.col_timeseries.fromJSON(object.timeseries) : undefined,
             expireAfterSeconds: isSet(object.expireAfterSeconds) ? Number(object.expireAfterSeconds) : 0,
             changeStreamPreAndPostImages: isSet(object.changeStreamPreAndPostImages)
                 ? Boolean(object.changeStreamPreAndPostImages)
@@ -443,13 +458,13 @@ export const CreateCollectionRequest = {
             size: isSet(object.size) ? Number(object.size) : 0,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.collation !== undefined &&
-            (obj.collation = message.collation ? col_collation.toJSON(message.collation) : undefined);
+            (obj.collation = message.collation ? exports.col_collation.toJSON(message.collation) : undefined);
         message.timeseries !== undefined &&
-            (obj.timeseries = message.timeseries ? col_timeseries.toJSON(message.timeseries) : undefined);
+            (obj.timeseries = message.timeseries ? exports.col_timeseries.toJSON(message.timeseries) : undefined);
         message.expireAfterSeconds !== undefined && (obj.expireAfterSeconds = Math.round(message.expireAfterSeconds));
         message.changeStreamPreAndPostImages !== undefined &&
             (obj.changeStreamPreAndPostImages = message.changeStreamPreAndPostImages);
@@ -458,39 +473,41 @@ export const CreateCollectionRequest = {
         message.size !== undefined && (obj.size = Math.round(message.size));
         return obj;
     },
-    create(base) {
-        return CreateCollectionRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.CreateCollectionRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseCreateCollectionRequest();
-        message.collectionname = object.collectionname ?? "";
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f;
+        var message = createBaseCreateCollectionRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
         message.collation = (object.collation !== undefined && object.collation !== null)
-            ? col_collation.fromPartial(object.collation)
+            ? exports.col_collation.fromPartial(object.collation)
             : undefined;
         message.timeseries = (object.timeseries !== undefined && object.timeseries !== null)
-            ? col_timeseries.fromPartial(object.timeseries)
+            ? exports.col_timeseries.fromPartial(object.timeseries)
             : undefined;
-        message.expireAfterSeconds = object.expireAfterSeconds ?? 0;
-        message.changeStreamPreAndPostImages = object.changeStreamPreAndPostImages ?? false;
-        message.capped = object.capped ?? false;
-        message.max = object.max ?? 0;
-        message.size = object.size ?? 0;
+        message.expireAfterSeconds = (_b = object.expireAfterSeconds) !== null && _b !== void 0 ? _b : 0;
+        message.changeStreamPreAndPostImages = (_c = object.changeStreamPreAndPostImages) !== null && _c !== void 0 ? _c : false;
+        message.capped = (_d = object.capped) !== null && _d !== void 0 ? _d : false;
+        message.max = (_e = object.max) !== null && _e !== void 0 ? _e : 0;
+        message.size = (_f = object.size) !== null && _f !== void 0 ? _f : 0;
         return message;
     },
 };
 function createBaseCreateCollectionResponse() {
     return {};
 }
-export const CreateCollectionResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.CreateCollectionResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseCreateCollectionResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCreateCollectionResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -499,26 +516,27 @@ export const CreateCollectionResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return CreateCollectionResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.CreateCollectionResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseCreateCollectionResponse();
+    fromPartial: function (_) {
+        var message = createBaseCreateCollectionResponse();
         return message;
     },
 };
 function createBaseQueryRequest() {
     return { query: "", collectionname: "", projection: "", top: 0, skip: 0, orderby: "", queryas: "", explain: false };
 }
-export const QueryRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.QueryRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.query !== "") {
             writer.uint32(10).string(message.query);
         }
@@ -545,12 +563,12 @@ export const QueryRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseQueryRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseQueryRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.query = reader.string();
@@ -583,7 +601,7 @@ export const QueryRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             query: isSet(object.query) ? String(object.query) : "",
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
@@ -595,8 +613,8 @@ export const QueryRequest = {
             explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.query !== undefined && (obj.query = message.query);
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.projection !== undefined && (obj.projection = message.projection);
@@ -607,38 +625,40 @@ export const QueryRequest = {
         message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
-    create(base) {
-        return QueryRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.QueryRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseQueryRequest();
-        message.query = object.query ?? "";
-        message.collectionname = object.collectionname ?? "";
-        message.projection = object.projection ?? "";
-        message.top = object.top ?? 0;
-        message.skip = object.skip ?? 0;
-        message.orderby = object.orderby ?? "";
-        message.queryas = object.queryas ?? "";
-        message.explain = object.explain ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var message = createBaseQueryRequest();
+        message.query = (_a = object.query) !== null && _a !== void 0 ? _a : "";
+        message.collectionname = (_b = object.collectionname) !== null && _b !== void 0 ? _b : "";
+        message.projection = (_c = object.projection) !== null && _c !== void 0 ? _c : "";
+        message.top = (_d = object.top) !== null && _d !== void 0 ? _d : 0;
+        message.skip = (_e = object.skip) !== null && _e !== void 0 ? _e : 0;
+        message.orderby = (_f = object.orderby) !== null && _f !== void 0 ? _f : "";
+        message.queryas = (_g = object.queryas) !== null && _g !== void 0 ? _g : "";
+        message.explain = (_h = object.explain) !== null && _h !== void 0 ? _h : false;
         return message;
     },
 };
 function createBaseQueryResponse() {
     return { results: "" };
 }
-export const QueryResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.QueryResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseQueryResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseQueryResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -650,28 +670,30 @@ export const QueryResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create(base) {
-        return QueryResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.QueryResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseQueryResponse();
-        message.results = object.results ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseQueryResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseGetDocumentVersionRequest() {
     return { collectionname: "", id: "", version: 0, decrypt: false };
 }
-export const GetDocumentVersionRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.GetDocumentVersionRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -686,12 +708,12 @@ export const GetDocumentVersionRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseGetDocumentVersionRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetDocumentVersionRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -712,7 +734,7 @@ export const GetDocumentVersionRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             id: isSet(object.id) ? String(object.id) : "",
@@ -720,42 +742,44 @@ export const GetDocumentVersionRequest = {
             decrypt: isSet(object.decrypt) ? Boolean(object.decrypt) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.id !== undefined && (obj.id = message.id);
         message.version !== undefined && (obj.version = Math.round(message.version));
         message.decrypt !== undefined && (obj.decrypt = message.decrypt);
         return obj;
     },
-    create(base) {
-        return GetDocumentVersionRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.GetDocumentVersionRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseGetDocumentVersionRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.id = object.id ?? "";
-        message.version = object.version ?? 0;
-        message.decrypt = object.decrypt ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseGetDocumentVersionRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.id = (_b = object.id) !== null && _b !== void 0 ? _b : "";
+        message.version = (_c = object.version) !== null && _c !== void 0 ? _c : 0;
+        message.decrypt = (_d = object.decrypt) !== null && _d !== void 0 ? _d : false;
         return message;
     },
 };
 function createBaseGetDocumentVersionResponse() {
     return { result: "" };
 }
-export const GetDocumentVersionResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.GetDocumentVersionResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseGetDocumentVersionResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseGetDocumentVersionResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -767,28 +791,30 @@ export const GetDocumentVersionResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create(base) {
-        return GetDocumentVersionResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.GetDocumentVersionResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseGetDocumentVersionResponse();
-        message.result = object.result ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseGetDocumentVersionResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseAggregateRequest() {
     return { collectionname: "", aggregates: "", queryas: "", hint: "", explain: false };
 }
-export const AggregateRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.AggregateRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -806,12 +832,12 @@ export const AggregateRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseAggregateRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseAggregateRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -835,7 +861,7 @@ export const AggregateRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             aggregates: isSet(object.aggregates) ? String(object.aggregates) : "",
@@ -844,8 +870,8 @@ export const AggregateRequest = {
             explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.aggregates !== undefined && (obj.aggregates = message.aggregates);
         message.queryas !== undefined && (obj.queryas = message.queryas);
@@ -853,35 +879,37 @@ export const AggregateRequest = {
         message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
-    create(base) {
-        return AggregateRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.AggregateRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseAggregateRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.aggregates = object.aggregates ?? "";
-        message.queryas = object.queryas ?? "";
-        message.hint = object.hint ?? "";
-        message.explain = object.explain ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e;
+        var message = createBaseAggregateRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.aggregates = (_b = object.aggregates) !== null && _b !== void 0 ? _b : "";
+        message.queryas = (_c = object.queryas) !== null && _c !== void 0 ? _c : "";
+        message.hint = (_d = object.hint) !== null && _d !== void 0 ? _d : "";
+        message.explain = (_e = object.explain) !== null && _e !== void 0 ? _e : false;
         return message;
     },
 };
 function createBaseAggregateResponse() {
     return { results: "" };
 }
-export const AggregateResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.AggregateResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseAggregateResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseAggregateResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -893,28 +921,30 @@ export const AggregateResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create(base) {
-        return AggregateResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.AggregateResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseAggregateResponse();
-        message.results = object.results ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseAggregateResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseCountRequest() {
     return { collectionname: "", query: "", queryas: "", explain: false };
 }
-export const CountRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.CountRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -929,12 +959,12 @@ export const CountRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseCountRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCountRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -955,7 +985,7 @@ export const CountRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             query: isSet(object.query) ? String(object.query) : "",
@@ -963,42 +993,44 @@ export const CountRequest = {
             explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.query !== undefined && (obj.query = message.query);
         message.queryas !== undefined && (obj.queryas = message.queryas);
         message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
-    create(base) {
-        return CountRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.CountRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseCountRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.query = object.query ?? "";
-        message.queryas = object.queryas ?? "";
-        message.explain = object.explain ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseCountRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.query = (_b = object.query) !== null && _b !== void 0 ? _b : "";
+        message.queryas = (_c = object.queryas) !== null && _c !== void 0 ? _c : "";
+        message.explain = (_d = object.explain) !== null && _d !== void 0 ? _d : false;
         return message;
     },
 };
 function createBaseCountResponse() {
     return { result: 0 };
 }
-export const CountResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.CountResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.result !== 0) {
             writer.uint32(8).int32(message.result);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseCountResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseCountResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.int32();
@@ -1010,28 +1042,30 @@ export const CountResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { result: isSet(object.result) ? Number(object.result) : 0 };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.result !== undefined && (obj.result = Math.round(message.result));
         return obj;
     },
-    create(base) {
-        return CountResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.CountResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseCountResponse();
-        message.result = object.result ?? 0;
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseCountResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : 0;
         return message;
     },
 };
 function createBaseDistinctRequest() {
     return { collectionname: "", field: "", query: "", queryas: "", options: "", explain: false };
 }
-export const DistinctRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DistinctRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1052,12 +1086,12 @@ export const DistinctRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDistinctRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDistinctRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1084,7 +1118,7 @@ export const DistinctRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             field: isSet(object.field) ? String(object.field) : "",
@@ -1094,8 +1128,8 @@ export const DistinctRequest = {
             explain: isSet(object.explain) ? Boolean(object.explain) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.field !== undefined && (obj.field = message.field);
         message.query !== undefined && (obj.query = message.query);
@@ -1104,36 +1138,39 @@ export const DistinctRequest = {
         message.explain !== undefined && (obj.explain = message.explain);
         return obj;
     },
-    create(base) {
-        return DistinctRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DistinctRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDistinctRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.field = object.field ?? "";
-        message.query = object.query ?? "";
-        message.queryas = object.queryas ?? "";
-        message.options = object.options ?? "";
-        message.explain = object.explain ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f;
+        var message = createBaseDistinctRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.field = (_b = object.field) !== null && _b !== void 0 ? _b : "";
+        message.query = (_c = object.query) !== null && _c !== void 0 ? _c : "";
+        message.queryas = (_d = object.queryas) !== null && _d !== void 0 ? _d : "";
+        message.options = (_e = object.options) !== null && _e !== void 0 ? _e : "";
+        message.explain = (_f = object.explain) !== null && _f !== void 0 ? _f : false;
         return message;
     },
 };
 function createBaseDistinctResponse() {
     return { results: [] };
 }
-export const DistinctResponse = {
-    encode(message, writer = _m0.Writer.create()) {
-        for (const v of message.results) {
+exports.DistinctResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
+        for (var _i = 0, _a = message.results; _i < _a.length; _i++) {
+            var v = _a[_i];
             writer.uint32(10).string(v);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDistinctResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDistinctResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results.push(reader.string());
@@ -1145,33 +1182,35 @@ export const DistinctResponse = {
         }
         return message;
     },
-    fromJSON(object) {
-        return { results: Array.isArray(object?.results) ? object.results.map((e) => String(e)) : [] };
+    fromJSON: function (object) {
+        return { results: Array.isArray(object === null || object === void 0 ? void 0 : object.results) ? object.results.map(function (e) { return String(e); }) : [] };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         if (message.results) {
-            obj.results = message.results.map((e) => e);
+            obj.results = message.results.map(function (e) { return e; });
         }
         else {
             obj.results = [];
         }
         return obj;
     },
-    create(base) {
-        return DistinctResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DistinctResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDistinctResponse();
-        message.results = object.results?.map((e) => e) || [];
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDistinctResponse();
+        message.results = ((_a = object.results) === null || _a === void 0 ? void 0 : _a.map(function (e) { return e; })) || [];
         return message;
     },
 };
 function createBaseInsertOneRequest() {
     return { collectionname: "", item: "", w: 0, j: false };
 }
-export const InsertOneRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertOneRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1186,12 +1225,12 @@ export const InsertOneRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertOneRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertOneRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1212,7 +1251,7 @@ export const InsertOneRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             item: isSet(object.item) ? String(object.item) : "",
@@ -1220,42 +1259,44 @@ export const InsertOneRequest = {
             j: isSet(object.j) ? Boolean(object.j) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.item !== undefined && (obj.item = message.item);
         message.w !== undefined && (obj.w = Math.round(message.w));
         message.j !== undefined && (obj.j = message.j);
         return obj;
     },
-    create(base) {
-        return InsertOneRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertOneRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertOneRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.item = object.item ?? "";
-        message.w = object.w ?? 0;
-        message.j = object.j ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseInsertOneRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.item = (_b = object.item) !== null && _b !== void 0 ? _b : "";
+        message.w = (_c = object.w) !== null && _c !== void 0 ? _c : 0;
+        message.j = (_d = object.j) !== null && _d !== void 0 ? _d : false;
         return message;
     },
 };
 function createBaseInsertOneResponse() {
     return { result: "" };
 }
-export const InsertOneResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertOneResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertOneResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertOneResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -1267,28 +1308,30 @@ export const InsertOneResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create(base) {
-        return InsertOneResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertOneResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertOneResponse();
-        message.result = object.result ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseInsertOneResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseInsertManyRequest() {
     return { collectionname: "", items: "", w: 0, j: false, skipresults: false };
 }
-export const InsertManyRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertManyRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1306,12 +1349,12 @@ export const InsertManyRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertManyRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertManyRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1335,7 +1378,7 @@ export const InsertManyRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             items: isSet(object.items) ? String(object.items) : "",
@@ -1344,8 +1387,8 @@ export const InsertManyRequest = {
             skipresults: isSet(object.skipresults) ? Boolean(object.skipresults) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.items !== undefined && (obj.items = message.items);
         message.w !== undefined && (obj.w = Math.round(message.w));
@@ -1353,35 +1396,37 @@ export const InsertManyRequest = {
         message.skipresults !== undefined && (obj.skipresults = message.skipresults);
         return obj;
     },
-    create(base) {
-        return InsertManyRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertManyRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertManyRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.items = object.items ?? "";
-        message.w = object.w ?? 0;
-        message.j = object.j ?? false;
-        message.skipresults = object.skipresults ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e;
+        var message = createBaseInsertManyRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.items = (_b = object.items) !== null && _b !== void 0 ? _b : "";
+        message.w = (_c = object.w) !== null && _c !== void 0 ? _c : 0;
+        message.j = (_d = object.j) !== null && _d !== void 0 ? _d : false;
+        message.skipresults = (_e = object.skipresults) !== null && _e !== void 0 ? _e : false;
         return message;
     },
 };
 function createBaseInsertManyResponse() {
     return { results: "" };
 }
-export const InsertManyResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertManyResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertManyResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertManyResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -1393,28 +1438,30 @@ export const InsertManyResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create(base) {
-        return InsertManyResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertManyResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertManyResponse();
-        message.results = object.results ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseInsertManyResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseUpdateOneRequest() {
     return { collectionname: "", item: "", w: 0, j: false };
 }
-export const UpdateOneRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.UpdateOneRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1429,12 +1476,12 @@ export const UpdateOneRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUpdateOneRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUpdateOneRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1455,7 +1502,7 @@ export const UpdateOneRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             item: isSet(object.item) ? String(object.item) : "",
@@ -1463,42 +1510,44 @@ export const UpdateOneRequest = {
             j: isSet(object.j) ? Boolean(object.j) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.item !== undefined && (obj.item = message.item);
         message.w !== undefined && (obj.w = Math.round(message.w));
         message.j !== undefined && (obj.j = message.j);
         return obj;
     },
-    create(base) {
-        return UpdateOneRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UpdateOneRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseUpdateOneRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.item = object.item ?? "";
-        message.w = object.w ?? 0;
-        message.j = object.j ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseUpdateOneRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.item = (_b = object.item) !== null && _b !== void 0 ? _b : "";
+        message.w = (_c = object.w) !== null && _c !== void 0 ? _c : 0;
+        message.j = (_d = object.j) !== null && _d !== void 0 ? _d : false;
         return message;
     },
 };
 function createBaseUpdateOneResponse() {
     return { result: "" };
 }
-export const UpdateOneResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.UpdateOneResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUpdateOneResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUpdateOneResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -1510,28 +1559,30 @@ export const UpdateOneResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create(base) {
-        return UpdateOneResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UpdateOneResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseUpdateOneResponse();
-        message.result = object.result ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseUpdateOneResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseUpdateDocumentRequest() {
     return { collectionname: "", query: "", document: "", w: 0, j: false };
 }
-export const UpdateDocumentRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.UpdateDocumentRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1549,12 +1600,12 @@ export const UpdateDocumentRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUpdateDocumentRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUpdateDocumentRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1578,7 +1629,7 @@ export const UpdateDocumentRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             query: isSet(object.query) ? String(object.query) : "",
@@ -1587,8 +1638,8 @@ export const UpdateDocumentRequest = {
             j: isSet(object.j) ? Boolean(object.j) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.query !== undefined && (obj.query = message.query);
         message.document !== undefined && (obj.document = message.document);
@@ -1596,24 +1647,26 @@ export const UpdateDocumentRequest = {
         message.j !== undefined && (obj.j = message.j);
         return obj;
     },
-    create(base) {
-        return UpdateDocumentRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UpdateDocumentRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseUpdateDocumentRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.query = object.query ?? "";
-        message.document = object.document ?? "";
-        message.w = object.w ?? 0;
-        message.j = object.j ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e;
+        var message = createBaseUpdateDocumentRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.query = (_b = object.query) !== null && _b !== void 0 ? _b : "";
+        message.document = (_c = object.document) !== null && _c !== void 0 ? _c : "";
+        message.w = (_d = object.w) !== null && _d !== void 0 ? _d : 0;
+        message.j = (_e = object.j) !== null && _e !== void 0 ? _e : false;
         return message;
     },
 };
 function createBaseUpdateResult() {
     return { acknowledged: false, matchedCount: 0, modifiedCount: 0, upsertedCount: 0, upsertedId: "" };
 }
-export const UpdateResult = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.UpdateResult = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.acknowledged === true) {
             writer.uint32(8).bool(message.acknowledged);
         }
@@ -1631,12 +1684,12 @@ export const UpdateResult = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUpdateResult();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUpdateResult();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.acknowledged = reader.bool();
@@ -1660,7 +1713,7 @@ export const UpdateResult = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             acknowledged: isSet(object.acknowledged) ? Boolean(object.acknowledged) : false,
             matchedCount: isSet(object.matchedCount) ? Number(object.matchedCount) : 0,
@@ -1669,8 +1722,8 @@ export const UpdateResult = {
             upsertedId: isSet(object.upsertedId) ? String(object.upsertedId) : "",
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.acknowledged !== undefined && (obj.acknowledged = message.acknowledged);
         message.matchedCount !== undefined && (obj.matchedCount = Math.round(message.matchedCount));
         message.modifiedCount !== undefined && (obj.modifiedCount = Math.round(message.modifiedCount));
@@ -1678,38 +1731,40 @@ export const UpdateResult = {
         message.upsertedId !== undefined && (obj.upsertedId = message.upsertedId);
         return obj;
     },
-    create(base) {
-        return UpdateResult.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UpdateResult.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseUpdateResult();
-        message.acknowledged = object.acknowledged ?? false;
-        message.matchedCount = object.matchedCount ?? 0;
-        message.modifiedCount = object.modifiedCount ?? 0;
-        message.upsertedCount = object.upsertedCount ?? 0;
-        message.upsertedId = object.upsertedId ?? "";
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e;
+        var message = createBaseUpdateResult();
+        message.acknowledged = (_a = object.acknowledged) !== null && _a !== void 0 ? _a : false;
+        message.matchedCount = (_b = object.matchedCount) !== null && _b !== void 0 ? _b : 0;
+        message.modifiedCount = (_c = object.modifiedCount) !== null && _c !== void 0 ? _c : 0;
+        message.upsertedCount = (_d = object.upsertedCount) !== null && _d !== void 0 ? _d : 0;
+        message.upsertedId = (_e = object.upsertedId) !== null && _e !== void 0 ? _e : "";
         return message;
     },
 };
 function createBaseUpdateDocumentResponse() {
     return { opresult: undefined };
 }
-export const UpdateDocumentResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.UpdateDocumentResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.opresult !== undefined) {
-            UpdateResult.encode(message.opresult, writer.uint32(10).fork()).ldelim();
+            exports.UpdateResult.encode(message.opresult, writer.uint32(10).fork()).ldelim();
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUpdateDocumentResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUpdateDocumentResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
-                    message.opresult = UpdateResult.decode(reader, reader.uint32());
+                    message.opresult = exports.UpdateResult.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1718,22 +1773,22 @@ export const UpdateDocumentResponse = {
         }
         return message;
     },
-    fromJSON(object) {
-        return { opresult: isSet(object.opresult) ? UpdateResult.fromJSON(object.opresult) : undefined };
+    fromJSON: function (object) {
+        return { opresult: isSet(object.opresult) ? exports.UpdateResult.fromJSON(object.opresult) : undefined };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.opresult !== undefined &&
-            (obj.opresult = message.opresult ? UpdateResult.toJSON(message.opresult) : undefined);
+            (obj.opresult = message.opresult ? exports.UpdateResult.toJSON(message.opresult) : undefined);
         return obj;
     },
-    create(base) {
-        return UpdateDocumentResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UpdateDocumentResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseUpdateDocumentResponse();
+    fromPartial: function (object) {
+        var message = createBaseUpdateDocumentResponse();
         message.opresult = (object.opresult !== undefined && object.opresult !== null)
-            ? UpdateResult.fromPartial(object.opresult)
+            ? exports.UpdateResult.fromPartial(object.opresult)
             : undefined;
         return message;
     },
@@ -1741,8 +1796,9 @@ export const UpdateDocumentResponse = {
 function createBaseInsertOrUpdateOneRequest() {
     return { collectionname: "", uniqeness: "", item: "", w: 0, j: false };
 }
-export const InsertOrUpdateOneRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertOrUpdateOneRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1760,12 +1816,12 @@ export const InsertOrUpdateOneRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertOrUpdateOneRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertOrUpdateOneRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1789,7 +1845,7 @@ export const InsertOrUpdateOneRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             uniqeness: isSet(object.uniqeness) ? String(object.uniqeness) : "",
@@ -1798,8 +1854,8 @@ export const InsertOrUpdateOneRequest = {
             j: isSet(object.j) ? Boolean(object.j) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.uniqeness !== undefined && (obj.uniqeness = message.uniqeness);
         message.item !== undefined && (obj.item = message.item);
@@ -1807,35 +1863,37 @@ export const InsertOrUpdateOneRequest = {
         message.j !== undefined && (obj.j = message.j);
         return obj;
     },
-    create(base) {
-        return InsertOrUpdateOneRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertOrUpdateOneRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertOrUpdateOneRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.uniqeness = object.uniqeness ?? "";
-        message.item = object.item ?? "";
-        message.w = object.w ?? 0;
-        message.j = object.j ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e;
+        var message = createBaseInsertOrUpdateOneRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.uniqeness = (_b = object.uniqeness) !== null && _b !== void 0 ? _b : "";
+        message.item = (_c = object.item) !== null && _c !== void 0 ? _c : "";
+        message.w = (_d = object.w) !== null && _d !== void 0 ? _d : 0;
+        message.j = (_e = object.j) !== null && _e !== void 0 ? _e : false;
         return message;
     },
 };
 function createBaseInsertOrUpdateOneResponse() {
     return { result: "" };
 }
-export const InsertOrUpdateOneResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertOrUpdateOneResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertOrUpdateOneResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertOrUpdateOneResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -1847,28 +1905,30 @@ export const InsertOrUpdateOneResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create(base) {
-        return InsertOrUpdateOneResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertOrUpdateOneResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertOrUpdateOneResponse();
-        message.result = object.result ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseInsertOrUpdateOneResponse();
+        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseInsertOrUpdateManyRequest() {
     return { collectionname: "", uniqeness: "", items: "", w: 0, j: false, skipresults: false };
 }
-export const InsertOrUpdateManyRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertOrUpdateManyRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -1889,12 +1949,12 @@ export const InsertOrUpdateManyRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertOrUpdateManyRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertOrUpdateManyRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -1921,7 +1981,7 @@ export const InsertOrUpdateManyRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             uniqeness: isSet(object.uniqeness) ? String(object.uniqeness) : "",
@@ -1931,8 +1991,8 @@ export const InsertOrUpdateManyRequest = {
             skipresults: isSet(object.skipresults) ? Boolean(object.skipresults) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.uniqeness !== undefined && (obj.uniqeness = message.uniqeness);
         message.items !== undefined && (obj.items = message.items);
@@ -1941,36 +2001,38 @@ export const InsertOrUpdateManyRequest = {
         message.skipresults !== undefined && (obj.skipresults = message.skipresults);
         return obj;
     },
-    create(base) {
-        return InsertOrUpdateManyRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertOrUpdateManyRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertOrUpdateManyRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.uniqeness = object.uniqeness ?? "";
-        message.items = object.items ?? "";
-        message.w = object.w ?? 0;
-        message.j = object.j ?? false;
-        message.skipresults = object.skipresults ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c, _d, _e, _f;
+        var message = createBaseInsertOrUpdateManyRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.uniqeness = (_b = object.uniqeness) !== null && _b !== void 0 ? _b : "";
+        message.items = (_c = object.items) !== null && _c !== void 0 ? _c : "";
+        message.w = (_d = object.w) !== null && _d !== void 0 ? _d : 0;
+        message.j = (_e = object.j) !== null && _e !== void 0 ? _e : false;
+        message.skipresults = (_f = object.skipresults) !== null && _f !== void 0 ? _f : false;
         return message;
     },
 };
 function createBaseInsertOrUpdateManyResponse() {
     return { results: "" };
 }
-export const InsertOrUpdateManyResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.InsertOrUpdateManyResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseInsertOrUpdateManyResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseInsertOrUpdateManyResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -1982,28 +2044,30 @@ export const InsertOrUpdateManyResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create(base) {
-        return InsertOrUpdateManyResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.InsertOrUpdateManyResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseInsertOrUpdateManyResponse();
-        message.results = object.results ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseInsertOrUpdateManyResponse();
+        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseDeleteOneRequest() {
     return { collectionname: "", id: "", recursive: false };
 }
-export const DeleteOneRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DeleteOneRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -2015,12 +2079,12 @@ export const DeleteOneRequest = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteOneRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteOneRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -2038,47 +2102,49 @@ export const DeleteOneRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             id: isSet(object.id) ? String(object.id) : "",
             recursive: isSet(object.recursive) ? Boolean(object.recursive) : false,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.id !== undefined && (obj.id = message.id);
         message.recursive !== undefined && (obj.recursive = message.recursive);
         return obj;
     },
-    create(base) {
-        return DeleteOneRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteOneRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDeleteOneRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.id = object.id ?? "";
-        message.recursive = object.recursive ?? false;
+    fromPartial: function (object) {
+        var _a, _b, _c;
+        var message = createBaseDeleteOneRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.id = (_b = object.id) !== null && _b !== void 0 ? _b : "";
+        message.recursive = (_c = object.recursive) !== null && _c !== void 0 ? _c : false;
         return message;
     },
 };
 function createBaseDeleteOneResponse() {
     return { affectedrows: 0 };
 }
-export const DeleteOneResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DeleteOneResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.affectedrows !== 0) {
             writer.uint32(8).int32(message.affectedrows);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteOneResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteOneResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.affectedrows = reader.int32();
@@ -2090,28 +2156,30 @@ export const DeleteOneResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { affectedrows: isSet(object.affectedrows) ? Number(object.affectedrows) : 0 };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.affectedrows !== undefined && (obj.affectedrows = Math.round(message.affectedrows));
         return obj;
     },
-    create(base) {
-        return DeleteOneResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteOneResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDeleteOneResponse();
-        message.affectedrows = object.affectedrows ?? 0;
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDeleteOneResponse();
+        message.affectedrows = (_a = object.affectedrows) !== null && _a !== void 0 ? _a : 0;
         return message;
     },
 };
 function createBaseDeleteManyRequest() {
     return { collectionname: "", query: "", recursive: false, ids: [] };
 }
-export const DeleteManyRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DeleteManyRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -2121,17 +2189,18 @@ export const DeleteManyRequest = {
         if (message.recursive === true) {
             writer.uint32(24).bool(message.recursive);
         }
-        for (const v of message.ids) {
+        for (var _i = 0, _a = message.ids; _i < _a.length; _i++) {
+            var v = _a[_i];
             writer.uint32(34).string(v);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteManyRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteManyRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -2152,55 +2221,57 @@ export const DeleteManyRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             query: isSet(object.query) ? String(object.query) : "",
             recursive: isSet(object.recursive) ? Boolean(object.recursive) : false,
-            ids: Array.isArray(object?.ids) ? object.ids.map((e) => String(e)) : [],
+            ids: Array.isArray(object === null || object === void 0 ? void 0 : object.ids) ? object.ids.map(function (e) { return String(e); }) : [],
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.query !== undefined && (obj.query = message.query);
         message.recursive !== undefined && (obj.recursive = message.recursive);
         if (message.ids) {
-            obj.ids = message.ids.map((e) => e);
+            obj.ids = message.ids.map(function (e) { return e; });
         }
         else {
             obj.ids = [];
         }
         return obj;
     },
-    create(base) {
-        return DeleteManyRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteManyRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDeleteManyRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.query = object.query ?? "";
-        message.recursive = object.recursive ?? false;
-        message.ids = object.ids?.map((e) => e) || [];
+    fromPartial: function (object) {
+        var _a, _b, _c, _d;
+        var message = createBaseDeleteManyRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.query = (_b = object.query) !== null && _b !== void 0 ? _b : "";
+        message.recursive = (_c = object.recursive) !== null && _c !== void 0 ? _c : false;
+        message.ids = ((_d = object.ids) === null || _d === void 0 ? void 0 : _d.map(function (e) { return e; })) || [];
         return message;
     },
 };
 function createBaseDeleteManyResponse() {
     return { affectedrows: 0 };
 }
-export const DeleteManyResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.DeleteManyResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.affectedrows !== 0) {
             writer.uint32(8).int32(message.affectedrows);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseDeleteManyResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseDeleteManyResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.affectedrows = reader.int32();
@@ -2212,20 +2283,21 @@ export const DeleteManyResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { affectedrows: isSet(object.affectedrows) ? Number(object.affectedrows) : 0 };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.affectedrows !== undefined && (obj.affectedrows = Math.round(message.affectedrows));
         return obj;
     },
-    create(base) {
-        return DeleteManyResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.DeleteManyResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseDeleteManyResponse();
-        message.affectedrows = object.affectedrows ?? 0;
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseDeleteManyResponse();
+        message.affectedrows = (_a = object.affectedrows) !== null && _a !== void 0 ? _a : 0;
         return message;
     },
 };

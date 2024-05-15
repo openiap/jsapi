@@ -1,25 +1,30 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UnWatchResponse = exports.UnWatchRequest = exports.WatchEvent = exports.WatchResponse = exports.WatchRequest = exports.protobufPackage = void 0;
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
-export const protobufPackage = "openiap";
+var _m0 = require("protobufjs/minimal");
+exports.protobufPackage = "openiap";
 function createBaseWatchRequest() {
     return { collectionname: "", paths: [] };
 }
-export const WatchRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.WatchRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
-        for (const v of message.paths) {
+        for (var _i = 0, _a = message.paths; _i < _a.length; _i++) {
+            var v = _a[_i];
             writer.uint32(18).string(v);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseWatchRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseWatchRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -34,49 +39,51 @@ export const WatchRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
-            paths: Array.isArray(object?.paths) ? object.paths.map((e) => String(e)) : [],
+            paths: Array.isArray(object === null || object === void 0 ? void 0 : object.paths) ? object.paths.map(function (e) { return String(e); }) : [],
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         if (message.paths) {
-            obj.paths = message.paths.map((e) => e);
+            obj.paths = message.paths.map(function (e) { return e; });
         }
         else {
             obj.paths = [];
         }
         return obj;
     },
-    create(base) {
-        return WatchRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.WatchRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseWatchRequest();
-        message.collectionname = object.collectionname ?? "";
-        message.paths = object.paths?.map((e) => e) || [];
+    fromPartial: function (object) {
+        var _a, _b;
+        var message = createBaseWatchRequest();
+        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+        message.paths = ((_b = object.paths) === null || _b === void 0 ? void 0 : _b.map(function (e) { return e; })) || [];
         return message;
     },
 };
 function createBaseWatchResponse() {
     return { id: "" };
 }
-export const WatchResponse = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.WatchResponse = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.id !== "") {
             writer.uint32(10).string(message.id);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseWatchResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseWatchResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.id = reader.string();
@@ -88,28 +95,30 @@ export const WatchResponse = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { id: isSet(object.id) ? String(object.id) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.id !== undefined && (obj.id = message.id);
         return obj;
     },
-    create(base) {
-        return WatchResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.WatchResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseWatchResponse();
-        message.id = object.id ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseWatchResponse();
+        message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseWatchEvent() {
     return { id: "", operation: "", document: "" };
 }
-export const WatchEvent = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.WatchEvent = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.id !== "") {
             writer.uint32(10).string(message.id);
         }
@@ -121,12 +130,12 @@ export const WatchEvent = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseWatchEvent();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseWatchEvent();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.id = reader.string();
@@ -144,47 +153,49 @@ export const WatchEvent = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             id: isSet(object.id) ? String(object.id) : "",
             operation: isSet(object.operation) ? String(object.operation) : "",
             document: isSet(object.document) ? String(object.document) : "",
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.id !== undefined && (obj.id = message.id);
         message.operation !== undefined && (obj.operation = message.operation);
         message.document !== undefined && (obj.document = message.document);
         return obj;
     },
-    create(base) {
-        return WatchEvent.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.WatchEvent.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseWatchEvent();
-        message.id = object.id ?? "";
-        message.operation = object.operation ?? "";
-        message.document = object.document ?? "";
+    fromPartial: function (object) {
+        var _a, _b, _c;
+        var message = createBaseWatchEvent();
+        message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
+        message.operation = (_b = object.operation) !== null && _b !== void 0 ? _b : "";
+        message.document = (_c = object.document) !== null && _c !== void 0 ? _c : "";
         return message;
     },
 };
 function createBaseUnWatchRequest() {
     return { id: "" };
 }
-export const UnWatchRequest = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.UnWatchRequest = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.id !== "") {
             writer.uint32(10).string(message.id);
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUnWatchRequest();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUnWatchRequest();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.id = reader.string();
@@ -196,36 +207,38 @@ export const UnWatchRequest = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return { id: isSet(object.id) ? String(object.id) : "" };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.id !== undefined && (obj.id = message.id);
         return obj;
     },
-    create(base) {
-        return UnWatchRequest.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UnWatchRequest.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseUnWatchRequest();
-        message.id = object.id ?? "";
+    fromPartial: function (object) {
+        var _a;
+        var message = createBaseUnWatchRequest();
+        message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
         return message;
     },
 };
 function createBaseUnWatchResponse() {
     return {};
 }
-export const UnWatchResponse = {
-    encode(_, writer = _m0.Writer.create()) {
+exports.UnWatchResponse = {
+    encode: function (_, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUnWatchResponse();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseUnWatchResponse();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -234,18 +247,18 @@ export const UnWatchResponse = {
         }
         return message;
     },
-    fromJSON(_) {
+    fromJSON: function (_) {
         return {};
     },
-    toJSON(_) {
-        const obj = {};
+    toJSON: function (_) {
+        var obj = {};
         return obj;
     },
-    create(base) {
-        return UnWatchResponse.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.UnWatchResponse.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(_) {
-        const message = createBaseUnWatchResponse();
+    fromPartial: function (_) {
+        var message = createBaseUnWatchResponse();
         return message;
     },
 };

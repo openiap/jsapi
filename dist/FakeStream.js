@@ -1,17 +1,10 @@
-import { config } from "./config";
-const { info, err, warn } = config;
-export class FakeStream {
-    buffer;
-    readPointer;
-    basebufferSize;
-    bufferSize;
-    bufferIncrement;
-    writePointer;
-    maxWritePointer;
-    lastDecreased;
-    DecreaseTimeCheck;
-    counter;
-    constructor() {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FakeStream = void 0;
+var config_1 = require("./config");
+var info = config_1.config.info, err = config_1.config.err, warn = config_1.config.warn;
+var FakeStream = /** @class */ (function () {
+    function FakeStream() {
         this.DecreaseTimeCheck = 60;
         this.basebufferSize = 5 * 1024 * 1024;
         this.bufferSize = this.basebufferSize;
@@ -23,30 +16,30 @@ export class FakeStream {
         this.lastDecreased = new Date();
         this.counter = 0;
     }
-    ondata(message) {
-    }
-    onend(buffer) { }
-    end() {
-        const start = this.readPointer;
-        const end = this.writePointer;
-        const result = new Uint8Array(end - start);
+    FakeStream.prototype.ondata = function (message) {
+    };
+    FakeStream.prototype.onend = function (buffer) { };
+    FakeStream.prototype.end = function () {
+        var start = this.readPointer;
+        var end = this.writePointer;
+        var result = new Uint8Array(end - start);
         result.set(this.buffer.slice(start, end));
         this.onend(result);
-    }
-    write(buffer) {
+    };
+    FakeStream.prototype.write = function (buffer) {
         if (buffer instanceof ArrayBuffer) {
             buffer = new Uint8Array(buffer);
         }
-        let newsize = this.calculateMaxBufferSize();
+        var newsize = this.calculateMaxBufferSize();
         if (this.writePointer + buffer.length > newsize) {
             newsize = newsize + this.bufferIncrement;
         }
         if (newsize != this.buffer.length) {
-            let dir = "increased";
+            var dir = "increased";
             if (newsize < this.buffer.length)
                 dir = "decreased";
             this.bufferSize = newsize;
-            const newbuff = new Uint8Array(this.bufferSize);
+            var newbuff = new Uint8Array(this.bufferSize);
             newbuff.set(this.buffer);
             this.buffer = newbuff;
             // show warning as either byte, kilobyte or megabyte
@@ -67,12 +60,12 @@ export class FakeStream {
             this.maxWritePointer = this.writePointer;
         }
         return;
-    }
-    calculateMaxBufferSize() {
-        const now = new Date();
+    };
+    FakeStream.prototype.calculateMaxBufferSize = function () {
+        var now = new Date();
         // @ts-ignore
-        const diff = now - this.lastDecreased;
-        let result = this.buffer.length;
+        var diff = now - this.lastDecreased;
+        var result = this.buffer.length;
         if (diff > (this.DecreaseTimeCheck * 1000)) {
             this.lastDecreased = now;
             if (this.maxWritePointer > 0) {
@@ -84,6 +77,8 @@ export class FakeStream {
             }
         }
         return result;
-    }
-}
+    };
+    return FakeStream;
+}());
+exports.FakeStream = FakeStream;
 //# sourceMappingURL=FakeStream.js.map

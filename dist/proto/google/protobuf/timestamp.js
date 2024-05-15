@@ -1,12 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Timestamp = exports.protobufPackage = void 0;
 /* eslint-disable */
-import * as Long from "long";
-import * as _m0 from "protobufjs/minimal";
-export const protobufPackage = "google.protobuf";
+var Long = require("long");
+var _m0 = require("protobufjs/minimal");
+exports.protobufPackage = "google.protobuf";
 function createBaseTimestamp() {
     return { seconds: 0, nanos: 0 };
 }
-export const Timestamp = {
-    encode(message, writer = _m0.Writer.create()) {
+exports.Timestamp = {
+    encode: function (message, writer) {
+        if (writer === void 0) { writer = _m0.Writer.create(); }
         if (message.seconds !== 0) {
             writer.uint32(8).int64(message.seconds);
         }
@@ -15,12 +19,12 @@ export const Timestamp = {
         }
         return writer;
     },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseTimestamp();
+    decode: function (input, length) {
+        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        var end = length === undefined ? reader.len : reader.pos + length;
+        var message = createBaseTimestamp();
         while (reader.pos < end) {
-            const tag = reader.uint32();
+            var tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.seconds = longToNumber(reader.int64());
@@ -35,29 +39,30 @@ export const Timestamp = {
         }
         return message;
     },
-    fromJSON(object) {
+    fromJSON: function (object) {
         return {
             seconds: isSet(object.seconds) ? Number(object.seconds) : 0,
             nanos: isSet(object.nanos) ? Number(object.nanos) : 0,
         };
     },
-    toJSON(message) {
-        const obj = {};
+    toJSON: function (message) {
+        var obj = {};
         message.seconds !== undefined && (obj.seconds = Math.round(message.seconds));
         message.nanos !== undefined && (obj.nanos = Math.round(message.nanos));
         return obj;
     },
-    create(base) {
-        return Timestamp.fromPartial(base ?? {});
+    create: function (base) {
+        return exports.Timestamp.fromPartial(base !== null && base !== void 0 ? base : {});
     },
-    fromPartial(object) {
-        const message = createBaseTimestamp();
-        message.seconds = object.seconds ?? 0;
-        message.nanos = object.nanos ?? 0;
+    fromPartial: function (object) {
+        var _a, _b;
+        var message = createBaseTimestamp();
+        message.seconds = (_a = object.seconds) !== null && _a !== void 0 ? _a : 0;
+        message.nanos = (_b = object.nanos) !== null && _b !== void 0 ? _b : 0;
         return message;
     },
 };
-var tsProtoGlobalThis = (() => {
+var tsProtoGlobalThis = (function () {
     if (typeof globalThis !== "undefined") {
         return globalThis;
     }
