@@ -63,11 +63,16 @@ var openiap = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve) {
-                        _this.client = protowrap_1.protowrap.connect(_this.url);
+                        if (_this.url != null && _this.url != "") {
+                            _this.client = protowrap_1.protowrap.connect(_this.url);
+                        }
                         if (_this.loginresolve == null)
                             _this.loginresolve = resolve;
                         setTimeout(function () {
                             try {
+                                if (_this.url != null && _this.url != "") {
+                                    _this.client = protowrap_1.protowrap.connect(_this.url);
+                                }
                                 _this.client.onConnected = _this.cliOnConnected.bind(_this);
                                 _this.client.onDisconnected = _this.cliOnDisconnected.bind(_this);
                                 _this.client.onMessage = _this.cliOnMessage.bind(_this);
