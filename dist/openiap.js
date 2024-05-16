@@ -56,7 +56,7 @@ export class openiap {
     }
     async onConnected(client) {
     }
-    async onSignedIn(client, jwt, user) {
+    async onSignedIn(client) {
     }
     async cliOnConnected(client) {
         var u = new URL(this.url);
@@ -261,7 +261,7 @@ export class openiap {
             this.client.jwt = result.jwt;
             this.client.user = result.user;
             try {
-                this.onSignedIn(this.client, result.jwt, result.user);
+                this.onSignedIn(this.client);
             }
             catch (error) {
             }

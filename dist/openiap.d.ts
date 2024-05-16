@@ -16,7 +16,7 @@ export declare class openiap {
     connect(first: boolean): Promise<User>;
     Close(): void;
     onConnected(client: client): Promise<void>;
-    onSignedIn(client: client, jwt: string, user: User): Promise<void>;
+    onSignedIn(client: client): Promise<void>;
     private cliOnConnected;
     onDisconnected(client: client, error: Error): Promise<void>;
     cliOnDisconnected(client: client, error: Error): void;
