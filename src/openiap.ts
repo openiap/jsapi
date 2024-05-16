@@ -172,6 +172,7 @@ export class openiap {
             }
         } else {
             info("Received message from server: ");
+            console.log("command", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
         }
         return reply;
     }

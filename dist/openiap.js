@@ -282,6 +282,7 @@ var openiap = /** @class */ (function () {
                     case 11: return [3 /*break*/, 13];
                     case 12:
                         info("Received message from server: ");
+                        console.log("command", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
                         _b.label = 13;
                     case 13: return [2 /*return*/, reply];
                 }
