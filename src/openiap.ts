@@ -119,7 +119,10 @@ export class openiap {
     // }
     private async cliOnMessage(client: client, message: Envelope): Promise<any> {
         const [command, BLAHBLAH, reply] = protowrap.unpack(message);
-        if (message.command == "refreshtoken") {
+        if (message.command == "ping") {
+            reply.command = "pong";
+            return reply;
+        } else if (message.command == "refreshtoken") {
             let rt: RefreshToken = RefreshToken.decode(message.data.value);
             this.client.jwt = rt.jwt;
             this.client.user = rt.user;
