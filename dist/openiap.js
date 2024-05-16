@@ -209,13 +209,17 @@ var openiap = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = protowrap_1.protowrap.unpack(message), command = _a[0], BLAHBLAH = _a[1], reply = _a[2];
-                        if (!(message.command == "refreshtoken")) return [3 /*break*/, 1];
+                        if (!(command == "ping")) return [3 /*break*/, 1];
+                        reply.command = "pong";
+                        return [2 /*return*/, reply];
+                    case 1:
+                        if (!(message.command == "refreshtoken")) return [3 /*break*/, 2];
                         rt = base_1.RefreshToken.decode(message.data.value);
                         this.client.jwt = rt.jwt;
                         this.client.user = rt.user;
                         return [2 /*return*/, null];
-                    case 1:
-                        if (!(message.command == "watchevent")) return [3 /*break*/, 2];
+                    case 2:
+                        if (!(message.command == "watchevent")) return [3 /*break*/, 3];
                         we = watch_1.WatchEvent.decode(message.data.value);
                         if (this.watchids[we.id]) {
                             doc = we.document;
@@ -231,11 +235,11 @@ var openiap = /** @class */ (function () {
                         else {
                             warn("Got watchevent for unknown id " + we.id);
                         }
-                        return [3 /*break*/, 13];
-                    case 2:
-                        if (!(message.command == "queueevent")) return [3 /*break*/, 12];
+                        return [3 /*break*/, 14];
+                    case 3:
+                        if (!(message.command == "queueevent")) return [3 /*break*/, 13];
                         we = BLAHBLAH;
-                        if (!(this.queuecallbacks[we.correlationId] && (we.replyto == "" || we.replyto == null))) return [3 /*break*/, 3];
+                        if (!(this.queuecallbacks[we.correlationId] && (we.replyto == "" || we.replyto == null))) return [3 /*break*/, 4];
                         data = JSON.parse(we.data);
                         delete data.spanId;
                         delete data.traceId;
@@ -244,12 +248,12 @@ var openiap = /** @class */ (function () {
                         delete data.__user;
                         this.queuecallbacks[we.correlationId](data, user_1);
                         delete this.queuecallbacks[we.correlationId];
-                        return [3 /*break*/, 11];
-                    case 3:
-                        if (!this.queues[we.queuename]) return [3 /*break*/, 10];
-                        _b.label = 4;
+                        return [3 /*break*/, 12];
                     case 4:
-                        _b.trys.push([4, 8, , 9]);
+                        if (!this.queues[we.queuename]) return [3 /*break*/, 11];
+                        _b.label = 5;
+                    case 5:
+                        _b.trys.push([5, 9, , 10]);
                         data = JSON.parse(we.data);
                         if (typeof data == "string") {
                             data = JSON.parse(data);
@@ -263,28 +267,28 @@ var openiap = /** @class */ (function () {
                         delete data.__jwt;
                         delete data.__user;
                         return [4 /*yield*/, this.queues[we.queuename](we, data, user, jwt)];
-                    case 5:
-                        reply2 = _b.sent();
-                        if (!(reply2 != null)) return [3 /*break*/, 7];
-                        return [4 /*yield*/, this.QueueMessage({ correlationId: we.correlationId, queuename: we.replyto, data: reply2, striptoken: true }, false)];
                     case 6:
+                        reply2 = _b.sent();
+                        if (!(reply2 != null)) return [3 /*break*/, 8];
+                        return [4 /*yield*/, this.QueueMessage({ correlationId: we.correlationId, queuename: we.replyto, data: reply2, striptoken: true }, false)];
+                    case 7:
                         _b.sent();
-                        _b.label = 7;
-                    case 7: return [3 /*break*/, 9];
-                    case 8:
+                        _b.label = 8;
+                    case 8: return [3 /*break*/, 10];
+                    case 9:
                         error_2 = _b.sent();
                         err(error_2);
-                        return [3 /*break*/, 9];
-                    case 9: return [3 /*break*/, 11];
-                    case 10:
+                        return [3 /*break*/, 10];
+                    case 10: return [3 /*break*/, 12];
+                    case 11:
                         warn("Got queueevent for unknown queue " + we.queuename);
-                        _b.label = 11;
-                    case 11: return [3 /*break*/, 13];
-                    case 12:
+                        _b.label = 12;
+                    case 12: return [3 /*break*/, 14];
+                    case 13:
                         info("Received message from server: ");
                         console.log("command", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
-                        _b.label = 13;
-                    case 13: return [2 /*return*/, reply];
+                        _b.label = 14;
+                    case 14: return [2 /*return*/, reply];
                 }
             });
         });
