@@ -20,6 +20,13 @@ export class openiap {
     async connect(first: boolean) {
         return new Promise<User>((resolve) => {
             this.client = protowrap.connect(this.url);
+            if(this.url == null || this.url == "") {
+                if(this.loginresolve != null) {
+                    this.loginresolve(null);
+                    this.loginresolve = null;
+                }
+                return;
+            }
             
             if (this.loginresolve == null) this.loginresolve = resolve;
             setTimeout(() => {
