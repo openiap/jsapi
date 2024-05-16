@@ -119,7 +119,7 @@ export class openiap {
     // }
     private async cliOnMessage(client: client, message: Envelope): Promise<any> {
         const [command, BLAHBLAH, reply] = protowrap.unpack(message);
-        if (message.command == "ping") {
+        if (command == "ping") {
             reply.command = "pong";
             return reply;
         } else if (message.command == "refreshtoken") {
