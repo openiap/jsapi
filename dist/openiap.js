@@ -209,6 +209,7 @@ var openiap = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = protowrap_1.protowrap.unpack(message), command = _a[0], BLAHBLAH = _a[1], reply = _a[2];
+                        console.log("command2", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
                         if (!(command == "ping")) return [3 /*break*/, 1];
                         reply.command = "pong";
                         return [2 /*return*/, reply];
