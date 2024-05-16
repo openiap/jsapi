@@ -19,16 +19,11 @@ export class openiap {
     public flowconfig: any = {};
     async connect(first: boolean) {
         return new Promise<User>((resolve) => {
-            if(this.url != null && this.url != "") {
-                this.client = protowrap.connect(this.url);
-            }
+            this.client = protowrap.connect(this.url);
             
             if (this.loginresolve == null) this.loginresolve = resolve;
             setTimeout(() => {
                 try {
-                    if(this.url != null && this.url != "") {
-                        this.client = protowrap.connect(this.url);
-                    }
                     this.client.onConnected = this.cliOnConnected.bind(this);
                     this.client.onDisconnected = this.cliOnDisconnected.bind(this);
                     this.client.onMessage = this.cliOnMessage.bind(this);

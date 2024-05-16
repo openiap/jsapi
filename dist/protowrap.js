@@ -80,6 +80,10 @@ var protowrap = /** @class */ (function () {
     protowrap.connect = function (apiurl) {
         var _this = this;
         var result = new client_1.client();
+        if (apiurl == null || apiurl == "") {
+            result.Initialize(ws, null, null, null);
+            return result;
+        }
         result.connecting = true;
         var u = new URL(apiurl);
         u.username = "";
