@@ -11,8 +11,11 @@ import { QueueEvent, QueueMessageResponse, RegisterExchangeResponse, RegisterQue
 import { DeleteWorkitemResponse, PopWorkitemResponse, PushWorkitemResponse, UpdateWorkitemResponse } from "./proto/workitems";
 
 export class protowrap {
-    static connect(apiurl: string): client {
+    static connect(apiurl: string, onConnected: any, onDisconnected:any, onMessage:any): client {
         const result: client = new client();
+        result.onConnected = onConnected;
+        result.onDisconnected = onDisconnected;
+        result.onMessage = onMessage;
         if(apiurl == null || apiurl == "") {
             result.Initialize(ws, null, null, null);
             return result;
@@ -183,7 +186,6 @@ export class protowrap {
                     msg = ErrorResponse.decode(data);
                     break;
                 default:
-
                     console.error("Unknown reply type " + command)
                     break;
             }

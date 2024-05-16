@@ -1,5 +1,5 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal.js";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import {
@@ -15,9 +15,9 @@ import {
   StartAgentResponse,
   StopAgentRequest,
   StopAgentResponse,
-} from "./agent";
-import { Any } from "./google/protobuf/any";
-import { Timestamp } from "./google/protobuf/timestamp";
+} from "./agent.js";
+import { Any } from "./google/protobuf/any.js";
+import { Timestamp } from "./google/protobuf/timestamp.js";
 import {
   AggregateRequest,
   AggregateResponse,
@@ -49,7 +49,7 @@ import {
   UpdateDocumentResponse,
   UpdateOneRequest,
   UpdateOneResponse,
-} from "./querys";
+} from "./querys.js";
 import {
   InvokeOpenRPARequest,
   InvokeOpenRPAResponse,
@@ -61,9 +61,9 @@ import {
   RegisterQueueResponse,
   UnRegisterQueueRequest,
   UnRegisterQueueResponse,
-} from "./queues";
-import { StripeCustomer } from "./stripe";
-import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch";
+} from "./queues.js";
+import { StripeCustomer } from "./stripe.js";
+import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch.js";
 import {
   AddWorkItemQueueRequest,
   AddWorkItemQueueResponse,
@@ -81,7 +81,7 @@ import {
   UpdateWorkItemQueueResponse,
   UpdateWorkitemRequest,
   UpdateWorkitemResponse,
-} from "./workitems";
+} from "./workitems.js";
 
 export const protobufPackage = "openiap";
 

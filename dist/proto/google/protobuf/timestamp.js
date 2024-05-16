@@ -1,16 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Timestamp = exports.protobufPackage = void 0;
 /* eslint-disable */
-var Long = require("long");
-var _m0 = require("protobufjs/minimal");
-exports.protobufPackage = "google.protobuf";
+import Long from "long";
+import _m0 from "protobufjs/minimal.js";
+export const protobufPackage = "google.protobuf";
 function createBaseTimestamp() {
     return { seconds: 0, nanos: 0 };
 }
-exports.Timestamp = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Timestamp = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.seconds !== 0) {
             writer.uint32(8).int64(message.seconds);
         }
@@ -19,12 +15,12 @@ exports.Timestamp = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseTimestamp();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseTimestamp();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.seconds = longToNumber(reader.int64());
@@ -39,30 +35,29 @@ exports.Timestamp = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             seconds: isSet(object.seconds) ? Number(object.seconds) : 0,
             nanos: isSet(object.nanos) ? Number(object.nanos) : 0,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.seconds !== undefined && (obj.seconds = Math.round(message.seconds));
         message.nanos !== undefined && (obj.nanos = Math.round(message.nanos));
         return obj;
     },
-    create: function (base) {
-        return exports.Timestamp.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Timestamp.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseTimestamp();
-        message.seconds = (_a = object.seconds) !== null && _a !== void 0 ? _a : 0;
-        message.nanos = (_b = object.nanos) !== null && _b !== void 0 ? _b : 0;
+    fromPartial(object) {
+        const message = createBaseTimestamp();
+        message.seconds = object.seconds ?? 0;
+        message.nanos = object.nanos ?? 0;
         return message;
     },
 };
-var tsProtoGlobalThis = (function () {
+var tsProtoGlobalThis = (() => {
     if (typeof globalThis !== "undefined") {
         return globalThis;
     }
@@ -83,8 +78,6 @@ function longToNumber(long) {
     }
     return long.toNumber();
 }
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
 if (_m0.util.Long !== Long) {
     _m0.util.Long = Long;
     _m0.configure();

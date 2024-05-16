@@ -1,4 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal.js";
 export declare const protobufPackage = "google.protobuf";
 /**
  * `Any` contains an arbitrary serialized protocol buffer message along with a

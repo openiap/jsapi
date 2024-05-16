@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
-import { Ace } from "./ace";
+import _m0 from "protobufjs/minimal.js";
+import { Ace } from "./ace.js";
 export declare const protobufPackage = "openiap";
 export interface Workitem {
     _id: string;

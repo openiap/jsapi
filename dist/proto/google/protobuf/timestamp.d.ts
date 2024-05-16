@@ -1,4 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal.js";
 export declare const protobufPackage = "google.protobuf";
 /**
  * A Timestamp represents a point in time independent of any time zone or local

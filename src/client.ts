@@ -53,6 +53,7 @@ export class client {
     return true;;
   }
   onConnected(client: client): void {
+    console.log("client.onConnected")
   }
   onDisconnected(client: client, error: Error): void {
     info("close " + this.id + " " + this.protocol + " " + this.remoteip + " " + this.agent);

@@ -1,4 +1,4 @@
-import * as _m0 from "protobufjs/minimal";
+import _m0 from "protobufjs/minimal.js";
 export declare const protobufPackage = "openiap";
 export interface StartAgentRequest {
     /** _id of an agent from the agents collection */

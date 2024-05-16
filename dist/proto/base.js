@@ -1,24 +1,20 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FlowServiceClientImpl = exports.DeletePackageResponse = exports.DeletePackageRequest = exports.DropIndexResponse = exports.DropIndexRequest = exports.GetIndexesResponse = exports.GetIndexesRequest = exports.CreateIndexResponse = exports.CreateIndexRequest = exports.EnsureCustomerResponse = exports.EnsureCustomerRequest = exports.Customer = exports.User = exports.Role = exports.RefreshToken = exports.SigninResponse = exports.SigninRequest = exports.CustomCommandResponse = exports.CustomCommandRequest = exports.Stat = exports.EndStream = exports.Stream = exports.BeginStream = exports.UploadResponse = exports.UploadRequest = exports.DownloadResponse = exports.DownloadRequest = exports.GetElementResponse = exports.GetElementRequest = exports.ErrorResponse = exports.Noop = exports.PingResponse = exports.PingRequest = exports.Envelope = exports.protobufPackage = void 0;
 /* eslint-disable */
-var _m0 = require("protobufjs/minimal");
-var operators_1 = require("rxjs/operators");
-var agent_1 = require("./agent");
-var any_1 = require("./google/protobuf/any");
-var timestamp_1 = require("./google/protobuf/timestamp");
-var querys_1 = require("./querys");
-var queues_1 = require("./queues");
-var stripe_1 = require("./stripe");
-var watch_1 = require("./watch");
-var workitems_1 = require("./workitems");
-exports.protobufPackage = "openiap";
+import _m0 from "protobufjs/minimal.js";
+import { map } from "rxjs/operators";
+import { DeleteAgentPodRequest, DeleteAgentPodResponse, DeleteAgentRequest, DeleteAgentResponse, GetAgentLogRequest, GetAgentLogResponse, GetAgentPodsRequest, GetAgentPodsResponse, StartAgentRequest, StartAgentResponse, StopAgentRequest, StopAgentResponse, } from "./agent.js";
+import { Any } from "./google/protobuf/any.js";
+import { Timestamp } from "./google/protobuf/timestamp.js";
+import { AggregateRequest, AggregateResponse, CountRequest, CountResponse, CreateCollectionRequest, CreateCollectionResponse, DeleteManyRequest, DeleteManyResponse, DeleteOneRequest, DeleteOneResponse, DropCollectionRequest, DropCollectionResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, InsertManyRequest, InsertManyResponse, InsertOneRequest, InsertOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, ListCollectionsRequest, ListCollectionsResponse, QueryRequest, QueryResponse, UpdateDocumentRequest, UpdateDocumentResponse, UpdateOneRequest, UpdateOneResponse, } from "./querys.js";
+import { InvokeOpenRPARequest, InvokeOpenRPAResponse, QueueMessageRequest, QueueMessageResponse, RegisterExchangeRequest, RegisterExchangeResponse, RegisterQueueRequest, RegisterQueueResponse, UnRegisterQueueRequest, UnRegisterQueueResponse, } from "./queues.js";
+import { StripeCustomer } from "./stripe.js";
+import { UnWatchRequest, UnWatchResponse, WatchRequest, WatchResponse } from "./watch.js";
+import { AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkItemQueueRequest, DeleteWorkItemQueueResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, PushWorkitemRequest, PushWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkItemQueueRequest, UpdateWorkItemQueueResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, } from "./workitems.js";
+export const protobufPackage = "openiap";
 function createBaseEnvelope() {
     return { command: "", priority: 0, seq: 0, id: "", rid: "", data: undefined, jwt: "", traceid: "", spanid: "" };
 }
-exports.Envelope = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Envelope = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.command !== "") {
             writer.uint32(10).string(message.command);
         }
@@ -35,7 +31,7 @@ exports.Envelope = {
             writer.uint32(42).string(message.rid);
         }
         if (message.data !== undefined) {
-            any_1.Any.encode(message.data, writer.uint32(50).fork()).ldelim();
+            Any.encode(message.data, writer.uint32(50).fork()).ldelim();
         }
         if (message.jwt !== "") {
             writer.uint32(58).string(message.jwt);
@@ -48,12 +44,12 @@ exports.Envelope = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseEnvelope();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseEnvelope();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.command = reader.string();
@@ -71,7 +67,7 @@ exports.Envelope = {
                     message.rid = reader.string();
                     break;
                 case 6:
-                    message.data = any_1.Any.decode(reader, reader.uint32());
+                    message.data = Any.decode(reader, reader.uint32());
                     break;
                 case 7:
                     message.jwt = reader.string();
@@ -89,64 +85,62 @@ exports.Envelope = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             command: isSet(object.command) ? String(object.command) : "",
             priority: isSet(object.priority) ? Number(object.priority) : 0,
             seq: isSet(object.seq) ? Number(object.seq) : 0,
             id: isSet(object.id) ? String(object.id) : "",
             rid: isSet(object.rid) ? String(object.rid) : "",
-            data: isSet(object.data) ? any_1.Any.fromJSON(object.data) : undefined,
+            data: isSet(object.data) ? Any.fromJSON(object.data) : undefined,
             jwt: isSet(object.jwt) ? String(object.jwt) : "",
             traceid: isSet(object.traceid) ? String(object.traceid) : "",
             spanid: isSet(object.spanid) ? String(object.spanid) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.command !== undefined && (obj.command = message.command);
         message.priority !== undefined && (obj.priority = Math.round(message.priority));
         message.seq !== undefined && (obj.seq = Math.round(message.seq));
         message.id !== undefined && (obj.id = message.id);
         message.rid !== undefined && (obj.rid = message.rid);
-        message.data !== undefined && (obj.data = message.data ? any_1.Any.toJSON(message.data) : undefined);
+        message.data !== undefined && (obj.data = message.data ? Any.toJSON(message.data) : undefined);
         message.jwt !== undefined && (obj.jwt = message.jwt);
         message.traceid !== undefined && (obj.traceid = message.traceid);
         message.spanid !== undefined && (obj.spanid = message.spanid);
         return obj;
     },
-    create: function (base) {
-        return exports.Envelope.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Envelope.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
-        var message = createBaseEnvelope();
-        message.command = (_a = object.command) !== null && _a !== void 0 ? _a : "";
-        message.priority = (_b = object.priority) !== null && _b !== void 0 ? _b : 0;
-        message.seq = (_c = object.seq) !== null && _c !== void 0 ? _c : 0;
-        message.id = (_d = object.id) !== null && _d !== void 0 ? _d : "";
-        message.rid = (_e = object.rid) !== null && _e !== void 0 ? _e : "";
-        message.data = (object.data !== undefined && object.data !== null) ? any_1.Any.fromPartial(object.data) : undefined;
-        message.jwt = (_f = object.jwt) !== null && _f !== void 0 ? _f : "";
-        message.traceid = (_g = object.traceid) !== null && _g !== void 0 ? _g : "";
-        message.spanid = (_h = object.spanid) !== null && _h !== void 0 ? _h : "";
+    fromPartial(object) {
+        const message = createBaseEnvelope();
+        message.command = object.command ?? "";
+        message.priority = object.priority ?? 0;
+        message.seq = object.seq ?? 0;
+        message.id = object.id ?? "";
+        message.rid = object.rid ?? "";
+        message.data = (object.data !== undefined && object.data !== null) ? Any.fromPartial(object.data) : undefined;
+        message.jwt = object.jwt ?? "";
+        message.traceid = object.traceid ?? "";
+        message.spanid = object.spanid ?? "";
         return message;
     },
 };
 function createBasePingRequest() {
     return {};
 }
-exports.PingRequest = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PingRequest = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePingRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePingRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -155,35 +149,34 @@ exports.PingRequest = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return exports.PingRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PingRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBasePingRequest();
+    fromPartial(_) {
+        const message = createBasePingRequest();
         return message;
     },
 };
 function createBasePingResponse() {
     return {};
 }
-exports.PingResponse = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const PingResponse = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBasePingResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePingResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -192,35 +185,34 @@ exports.PingResponse = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return exports.PingResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return PingResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBasePingResponse();
+    fromPartial(_) {
+        const message = createBasePingResponse();
         return message;
     },
 };
 function createBaseNoop() {
     return {};
 }
-exports.Noop = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Noop = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseNoop();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseNoop();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -229,27 +221,26 @@ exports.Noop = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return exports.Noop.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Noop.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseNoop();
+    fromPartial(_) {
+        const message = createBaseNoop();
         return message;
     },
 };
 function createBaseErrorResponse() {
     return { message: "", code: 0, stack: "" };
 }
-exports.ErrorResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const ErrorResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.message !== "") {
             writer.uint32(10).string(message.message);
         }
@@ -261,12 +252,12 @@ exports.ErrorResponse = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseErrorResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseErrorResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.message = reader.string();
@@ -284,49 +275,47 @@ exports.ErrorResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             message: isSet(object.message) ? String(object.message) : "",
             code: isSet(object.code) ? Number(object.code) : 0,
             stack: isSet(object.stack) ? String(object.stack) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.message !== undefined && (obj.message = message.message);
         message.code !== undefined && (obj.code = Math.round(message.code));
         message.stack !== undefined && (obj.stack = message.stack);
         return obj;
     },
-    create: function (base) {
-        return exports.ErrorResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return ErrorResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c;
-        var message = createBaseErrorResponse();
-        message.message = (_a = object.message) !== null && _a !== void 0 ? _a : "";
-        message.code = (_b = object.code) !== null && _b !== void 0 ? _b : 0;
-        message.stack = (_c = object.stack) !== null && _c !== void 0 ? _c : "";
+    fromPartial(object) {
+        const message = createBaseErrorResponse();
+        message.message = object.message ?? "";
+        message.code = object.code ?? 0;
+        message.stack = object.stack ?? "";
         return message;
     },
 };
 function createBaseGetElementRequest() {
     return { xpath: "" };
 }
-exports.GetElementRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const GetElementRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.xpath !== "") {
             writer.uint32(10).string(message.xpath);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseGetElementRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseGetElementRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.xpath = reader.string();
@@ -338,41 +327,39 @@ exports.GetElementRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { xpath: isSet(object.xpath) ? String(object.xpath) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.xpath !== undefined && (obj.xpath = message.xpath);
         return obj;
     },
-    create: function (base) {
-        return exports.GetElementRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return GetElementRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseGetElementRequest();
-        message.xpath = (_a = object.xpath) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseGetElementRequest();
+        message.xpath = object.xpath ?? "";
         return message;
     },
 };
 function createBaseGetElementResponse() {
     return { xpath: "" };
 }
-exports.GetElementResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const GetElementResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.xpath !== "") {
             writer.uint32(10).string(message.xpath);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseGetElementResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseGetElementResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.xpath = reader.string();
@@ -384,30 +371,28 @@ exports.GetElementResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { xpath: isSet(object.xpath) ? String(object.xpath) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.xpath !== undefined && (obj.xpath = message.xpath);
         return obj;
     },
-    create: function (base) {
-        return exports.GetElementResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return GetElementResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseGetElementResponse();
-        message.xpath = (_a = object.xpath) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseGetElementResponse();
+        message.xpath = object.xpath ?? "";
         return message;
     },
 };
 function createBaseDownloadRequest() {
     return { id: "", filename: "", collectionname: "" };
 }
-exports.DownloadRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DownloadRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.id !== "") {
             writer.uint32(10).string(message.id);
         }
@@ -419,12 +404,12 @@ exports.DownloadRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDownloadRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDownloadRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.id = reader.string();
@@ -442,38 +427,36 @@ exports.DownloadRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             id: isSet(object.id) ? String(object.id) : "",
             filename: isSet(object.filename) ? String(object.filename) : "",
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.id !== undefined && (obj.id = message.id);
         message.filename !== undefined && (obj.filename = message.filename);
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         return obj;
     },
-    create: function (base) {
-        return exports.DownloadRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DownloadRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c;
-        var message = createBaseDownloadRequest();
-        message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
-        message.filename = (_b = object.filename) !== null && _b !== void 0 ? _b : "";
-        message.collectionname = (_c = object.collectionname) !== null && _c !== void 0 ? _c : "";
+    fromPartial(object) {
+        const message = createBaseDownloadRequest();
+        message.id = object.id ?? "";
+        message.filename = object.filename ?? "";
+        message.collectionname = object.collectionname ?? "";
         return message;
     },
 };
 function createBaseDownloadResponse() {
     return { id: "", filename: "", mimetype: "" };
 }
-exports.DownloadResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DownloadResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.id !== "") {
             writer.uint32(10).string(message.id);
         }
@@ -485,12 +468,12 @@ exports.DownloadResponse = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDownloadResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDownloadResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.id = reader.string();
@@ -508,38 +491,36 @@ exports.DownloadResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             id: isSet(object.id) ? String(object.id) : "",
             filename: isSet(object.filename) ? String(object.filename) : "",
             mimetype: isSet(object.mimetype) ? String(object.mimetype) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.id !== undefined && (obj.id = message.id);
         message.filename !== undefined && (obj.filename = message.filename);
         message.mimetype !== undefined && (obj.mimetype = message.mimetype);
         return obj;
     },
-    create: function (base) {
-        return exports.DownloadResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DownloadResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c;
-        var message = createBaseDownloadResponse();
-        message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
-        message.filename = (_b = object.filename) !== null && _b !== void 0 ? _b : "";
-        message.mimetype = (_c = object.mimetype) !== null && _c !== void 0 ? _c : "";
+    fromPartial(object) {
+        const message = createBaseDownloadResponse();
+        message.id = object.id ?? "";
+        message.filename = object.filename ?? "";
+        message.mimetype = object.mimetype ?? "";
         return message;
     },
 };
 function createBaseUploadRequest() {
     return { filename: "", mimetype: "", metadata: "" };
 }
-exports.UploadRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UploadRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.filename !== "") {
             writer.uint32(10).string(message.filename);
         }
@@ -551,12 +532,12 @@ exports.UploadRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUploadRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUploadRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.filename = reader.string();
@@ -574,38 +555,36 @@ exports.UploadRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             filename: isSet(object.filename) ? String(object.filename) : "",
             mimetype: isSet(object.mimetype) ? String(object.mimetype) : "",
             metadata: isSet(object.metadata) ? String(object.metadata) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.filename !== undefined && (obj.filename = message.filename);
         message.mimetype !== undefined && (obj.mimetype = message.mimetype);
         message.metadata !== undefined && (obj.metadata = message.metadata);
         return obj;
     },
-    create: function (base) {
-        return exports.UploadRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UploadRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c;
-        var message = createBaseUploadRequest();
-        message.filename = (_a = object.filename) !== null && _a !== void 0 ? _a : "";
-        message.mimetype = (_b = object.mimetype) !== null && _b !== void 0 ? _b : "";
-        message.metadata = (_c = object.metadata) !== null && _c !== void 0 ? _c : "";
+    fromPartial(object) {
+        const message = createBaseUploadRequest();
+        message.filename = object.filename ?? "";
+        message.mimetype = object.mimetype ?? "";
+        message.metadata = object.metadata ?? "";
         return message;
     },
 };
 function createBaseUploadResponse() {
     return { id: "", filename: "", bytes: 0, chunks: 0, mb: 0, elapsedTime: 0, mbps: 0 };
 }
-exports.UploadResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const UploadResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.id !== "") {
             writer.uint32(10).string(message.id);
         }
@@ -629,12 +608,12 @@ exports.UploadResponse = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUploadResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUploadResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.id = reader.string();
@@ -664,7 +643,7 @@ exports.UploadResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             id: isSet(object.id) ? String(object.id) : "",
             filename: isSet(object.filename) ? String(object.filename) : "",
@@ -675,8 +654,8 @@ exports.UploadResponse = {
             mbps: isSet(object.mbps) ? Number(object.mbps) : 0,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.id !== undefined && (obj.id = message.id);
         message.filename !== undefined && (obj.filename = message.filename);
         message.bytes !== undefined && (obj.bytes = Math.round(message.bytes));
@@ -686,48 +665,46 @@ exports.UploadResponse = {
         message.mbps !== undefined && (obj.mbps = message.mbps);
         return obj;
     },
-    create: function (base) {
-        return exports.UploadResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return UploadResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g;
-        var message = createBaseUploadResponse();
-        message.id = (_a = object.id) !== null && _a !== void 0 ? _a : "";
-        message.filename = (_b = object.filename) !== null && _b !== void 0 ? _b : "";
-        message.bytes = (_c = object.bytes) !== null && _c !== void 0 ? _c : 0;
-        message.chunks = (_d = object.chunks) !== null && _d !== void 0 ? _d : 0;
-        message.mb = (_e = object.mb) !== null && _e !== void 0 ? _e : 0;
-        message.elapsedTime = (_f = object.elapsedTime) !== null && _f !== void 0 ? _f : 0;
-        message.mbps = (_g = object.mbps) !== null && _g !== void 0 ? _g : 0;
+    fromPartial(object) {
+        const message = createBaseUploadResponse();
+        message.id = object.id ?? "";
+        message.filename = object.filename ?? "";
+        message.bytes = object.bytes ?? 0;
+        message.chunks = object.chunks ?? 0;
+        message.mb = object.mb ?? 0;
+        message.elapsedTime = object.elapsedTime ?? 0;
+        message.mbps = object.mbps ?? 0;
         return message;
     },
 };
 function createBaseBeginStream() {
     return { checksum: "", stat: undefined };
 }
-exports.BeginStream = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const BeginStream = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.checksum !== "") {
             writer.uint32(10).string(message.checksum);
         }
         if (message.stat !== undefined) {
-            exports.Stat.encode(message.stat, writer.uint32(18).fork()).ldelim();
+            Stat.encode(message.stat, writer.uint32(18).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseBeginStream();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseBeginStream();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.checksum = reader.string();
                     break;
                 case 2:
-                    message.stat = exports.Stat.decode(reader, reader.uint32());
+                    message.stat = Stat.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -736,46 +713,44 @@ exports.BeginStream = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             checksum: isSet(object.checksum) ? String(object.checksum) : "",
-            stat: isSet(object.stat) ? exports.Stat.fromJSON(object.stat) : undefined,
+            stat: isSet(object.stat) ? Stat.fromJSON(object.stat) : undefined,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.checksum !== undefined && (obj.checksum = message.checksum);
-        message.stat !== undefined && (obj.stat = message.stat ? exports.Stat.toJSON(message.stat) : undefined);
+        message.stat !== undefined && (obj.stat = message.stat ? Stat.toJSON(message.stat) : undefined);
         return obj;
     },
-    create: function (base) {
-        return exports.BeginStream.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return BeginStream.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseBeginStream();
-        message.checksum = (_a = object.checksum) !== null && _a !== void 0 ? _a : "";
-        message.stat = (object.stat !== undefined && object.stat !== null) ? exports.Stat.fromPartial(object.stat) : undefined;
+    fromPartial(object) {
+        const message = createBaseBeginStream();
+        message.checksum = object.checksum ?? "";
+        message.stat = (object.stat !== undefined && object.stat !== null) ? Stat.fromPartial(object.stat) : undefined;
         return message;
     },
 };
 function createBaseStream() {
     return { data: new Uint8Array() };
 }
-exports.Stream = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Stream = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.data.length !== 0) {
             writer.uint32(10).bytes(message.data);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseStream();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseStream();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.data = reader.bytes();
@@ -787,39 +762,37 @@ exports.Stream = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array() };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.data !== undefined &&
             (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
         return obj;
     },
-    create: function (base) {
-        return exports.Stream.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Stream.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseStream();
-        message.data = (_a = object.data) !== null && _a !== void 0 ? _a : new Uint8Array();
+    fromPartial(object) {
+        const message = createBaseStream();
+        message.data = object.data ?? new Uint8Array();
         return message;
     },
 };
 function createBaseEndStream() {
     return {};
 }
-exports.EndStream = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const EndStream = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseEndStream();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseEndStream();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -828,18 +801,18 @@ exports.EndStream = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return exports.EndStream.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return EndStream.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseEndStream();
+    fromPartial(_) {
+        const message = createBaseEndStream();
         return message;
     },
 };
@@ -862,9 +835,8 @@ function createBaseStat() {
         uid: 0,
     };
 }
-exports.Stat = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Stat = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.birthtimeMs !== 0) {
             writer.uint32(13).float(message.birthtimeMs);
         }
@@ -875,7 +847,7 @@ exports.Stat = {
             writer.uint32(24).int32(message.blocks);
         }
         if (message.ctime !== undefined) {
-            timestamp_1.Timestamp.encode(toTimestamp(message.ctime), writer.uint32(34).fork()).ldelim();
+            Timestamp.encode(toTimestamp(message.ctime), writer.uint32(34).fork()).ldelim();
         }
         if (message.ctimeMs !== 0) {
             writer.uint32(45).float(message.ctimeMs);
@@ -893,7 +865,7 @@ exports.Stat = {
             writer.uint32(72).int32(message.mode);
         }
         if (message.mtime !== undefined) {
-            timestamp_1.Timestamp.encode(toTimestamp(message.mtime), writer.uint32(82).fork()).ldelim();
+            Timestamp.encode(toTimestamp(message.mtime), writer.uint32(82).fork()).ldelim();
         }
         if (message.mtimeMs !== 0) {
             writer.uint32(93).float(message.mtimeMs);
@@ -912,12 +884,12 @@ exports.Stat = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseStat();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseStat();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.birthtimeMs = reader.float();
@@ -929,7 +901,7 @@ exports.Stat = {
                     message.blocks = reader.int32();
                     break;
                 case 4:
-                    message.ctime = fromTimestamp(timestamp_1.Timestamp.decode(reader, reader.uint32()));
+                    message.ctime = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
                     break;
                 case 5:
                     message.ctimeMs = reader.float();
@@ -947,7 +919,7 @@ exports.Stat = {
                     message.mode = reader.int32();
                     break;
                 case 10:
-                    message.mtime = fromTimestamp(timestamp_1.Timestamp.decode(reader, reader.uint32()));
+                    message.mtime = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
                     break;
                 case 11:
                     message.mtimeMs = reader.float();
@@ -971,7 +943,7 @@ exports.Stat = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             birthtimeMs: isSet(object.birthtimeMs) ? Number(object.birthtimeMs) : 0,
             blksize: isSet(object.blksize) ? Number(object.blksize) : 0,
@@ -990,8 +962,8 @@ exports.Stat = {
             uid: isSet(object.uid) ? Number(object.uid) : 0,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.birthtimeMs !== undefined && (obj.birthtimeMs = message.birthtimeMs);
         message.blksize !== undefined && (obj.blksize = Math.round(message.blksize));
         message.blocks !== undefined && (obj.blocks = Math.round(message.blocks));
@@ -1009,36 +981,34 @@ exports.Stat = {
         message.uid !== undefined && (obj.uid = Math.round(message.uid));
         return obj;
     },
-    create: function (base) {
-        return exports.Stat.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Stat.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
-        var message = createBaseStat();
-        message.birthtimeMs = (_a = object.birthtimeMs) !== null && _a !== void 0 ? _a : 0;
-        message.blksize = (_b = object.blksize) !== null && _b !== void 0 ? _b : 0;
-        message.blocks = (_c = object.blocks) !== null && _c !== void 0 ? _c : 0;
-        message.ctime = (_d = object.ctime) !== null && _d !== void 0 ? _d : undefined;
-        message.ctimeMs = (_e = object.ctimeMs) !== null && _e !== void 0 ? _e : 0;
-        message.dev = (_f = object.dev) !== null && _f !== void 0 ? _f : 0;
-        message.gid = (_g = object.gid) !== null && _g !== void 0 ? _g : 0;
-        message.ino = (_h = object.ino) !== null && _h !== void 0 ? _h : 0;
-        message.mode = (_j = object.mode) !== null && _j !== void 0 ? _j : 0;
-        message.mtime = (_k = object.mtime) !== null && _k !== void 0 ? _k : undefined;
-        message.mtimeMs = (_l = object.mtimeMs) !== null && _l !== void 0 ? _l : 0;
-        message.nlink = (_m = object.nlink) !== null && _m !== void 0 ? _m : 0;
-        message.rdev = (_o = object.rdev) !== null && _o !== void 0 ? _o : 0;
-        message.size = (_p = object.size) !== null && _p !== void 0 ? _p : 0;
-        message.uid = (_q = object.uid) !== null && _q !== void 0 ? _q : 0;
+    fromPartial(object) {
+        const message = createBaseStat();
+        message.birthtimeMs = object.birthtimeMs ?? 0;
+        message.blksize = object.blksize ?? 0;
+        message.blocks = object.blocks ?? 0;
+        message.ctime = object.ctime ?? undefined;
+        message.ctimeMs = object.ctimeMs ?? 0;
+        message.dev = object.dev ?? 0;
+        message.gid = object.gid ?? 0;
+        message.ino = object.ino ?? 0;
+        message.mode = object.mode ?? 0;
+        message.mtime = object.mtime ?? undefined;
+        message.mtimeMs = object.mtimeMs ?? 0;
+        message.nlink = object.nlink ?? 0;
+        message.rdev = object.rdev ?? 0;
+        message.size = object.size ?? 0;
+        message.uid = object.uid ?? 0;
         return message;
     },
 };
 function createBaseCustomCommandRequest() {
     return { command: "", id: "", name: "", data: "" };
 }
-exports.CustomCommandRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const CustomCommandRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.command !== "") {
             writer.uint32(10).string(message.command);
         }
@@ -1053,12 +1023,12 @@ exports.CustomCommandRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCustomCommandRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCustomCommandRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.command = reader.string();
@@ -1079,7 +1049,7 @@ exports.CustomCommandRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             command: isSet(object.command) ? String(object.command) : "",
             id: isSet(object.id) ? String(object.id) : "",
@@ -1087,44 +1057,42 @@ exports.CustomCommandRequest = {
             data: isSet(object.data) ? String(object.data) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.command !== undefined && (obj.command = message.command);
         message.id !== undefined && (obj.id = message.id);
         message.name !== undefined && (obj.name = message.name);
         message.data !== undefined && (obj.data = message.data);
         return obj;
     },
-    create: function (base) {
-        return exports.CustomCommandRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return CustomCommandRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d;
-        var message = createBaseCustomCommandRequest();
-        message.command = (_a = object.command) !== null && _a !== void 0 ? _a : "";
-        message.id = (_b = object.id) !== null && _b !== void 0 ? _b : "";
-        message.name = (_c = object.name) !== null && _c !== void 0 ? _c : "";
-        message.data = (_d = object.data) !== null && _d !== void 0 ? _d : "";
+    fromPartial(object) {
+        const message = createBaseCustomCommandRequest();
+        message.command = object.command ?? "";
+        message.id = object.id ?? "";
+        message.name = object.name ?? "";
+        message.data = object.data ?? "";
         return message;
     },
 };
 function createBaseCustomCommandResponse() {
     return { result: "" };
 }
-exports.CustomCommandResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const CustomCommandResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCustomCommandResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCustomCommandResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -1136,21 +1104,20 @@ exports.CustomCommandResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create: function (base) {
-        return exports.CustomCommandResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return CustomCommandResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseCustomCommandResponse();
-        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseCustomCommandResponse();
+        message.result = object.result ?? "";
         return message;
     },
 };
@@ -1166,9 +1133,8 @@ function createBaseSigninRequest() {
         longtoken: false,
     };
 }
-exports.SigninRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const SigninRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.username !== "") {
             writer.uint32(10).string(message.username);
         }
@@ -1195,12 +1161,12 @@ exports.SigninRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseSigninRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseSigninRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.username = reader.string();
@@ -1233,7 +1199,7 @@ exports.SigninRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             username: isSet(object.username) ? String(object.username) : "",
             password: isSet(object.password) ? String(object.password) : "",
@@ -1245,8 +1211,8 @@ exports.SigninRequest = {
             longtoken: isSet(object.longtoken) ? Boolean(object.longtoken) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.username !== undefined && (obj.username = message.username);
         message.password !== undefined && (obj.password = message.password);
         message.jwt !== undefined && (obj.jwt = message.jwt);
@@ -1257,52 +1223,50 @@ exports.SigninRequest = {
         message.longtoken !== undefined && (obj.longtoken = message.longtoken);
         return obj;
     },
-    create: function (base) {
-        return exports.SigninRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return SigninRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
-        var message = createBaseSigninRequest();
-        message.username = (_a = object.username) !== null && _a !== void 0 ? _a : "";
-        message.password = (_b = object.password) !== null && _b !== void 0 ? _b : "";
-        message.jwt = (_c = object.jwt) !== null && _c !== void 0 ? _c : "";
-        message.ping = (_d = object.ping) !== null && _d !== void 0 ? _d : false;
-        message.validateonly = (_e = object.validateonly) !== null && _e !== void 0 ? _e : false;
-        message.agent = (_f = object.agent) !== null && _f !== void 0 ? _f : "";
-        message.version = (_g = object.version) !== null && _g !== void 0 ? _g : "";
-        message.longtoken = (_h = object.longtoken) !== null && _h !== void 0 ? _h : false;
+    fromPartial(object) {
+        const message = createBaseSigninRequest();
+        message.username = object.username ?? "";
+        message.password = object.password ?? "";
+        message.jwt = object.jwt ?? "";
+        message.ping = object.ping ?? false;
+        message.validateonly = object.validateonly ?? false;
+        message.agent = object.agent ?? "";
+        message.version = object.version ?? "";
+        message.longtoken = object.longtoken ?? false;
         return message;
     },
 };
 function createBaseSigninResponse() {
     return { jwt: "", user: undefined, config: "" };
 }
-exports.SigninResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const SigninResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.jwt !== "") {
             writer.uint32(10).string(message.jwt);
         }
         if (message.user !== undefined) {
-            exports.User.encode(message.user, writer.uint32(18).fork()).ldelim();
+            User.encode(message.user, writer.uint32(18).fork()).ldelim();
         }
         if (message.config !== "") {
             writer.uint32(26).string(message.config);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseSigninResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseSigninResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.jwt = reader.string();
                     break;
                 case 2:
-                    message.user = exports.User.decode(reader, reader.uint32());
+                    message.user = User.decode(reader, reader.uint32());
                     break;
                 case 3:
                     message.config = reader.string();
@@ -1314,38 +1278,36 @@ exports.SigninResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             jwt: isSet(object.jwt) ? String(object.jwt) : "",
-            user: isSet(object.user) ? exports.User.fromJSON(object.user) : undefined,
+            user: isSet(object.user) ? User.fromJSON(object.user) : undefined,
             config: isSet(object.config) ? String(object.config) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.jwt !== undefined && (obj.jwt = message.jwt);
-        message.user !== undefined && (obj.user = message.user ? exports.User.toJSON(message.user) : undefined);
+        message.user !== undefined && (obj.user = message.user ? User.toJSON(message.user) : undefined);
         message.config !== undefined && (obj.config = message.config);
         return obj;
     },
-    create: function (base) {
-        return exports.SigninResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return SigninResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseSigninResponse();
-        message.jwt = (_a = object.jwt) !== null && _a !== void 0 ? _a : "";
-        message.user = (object.user !== undefined && object.user !== null) ? exports.User.fromPartial(object.user) : undefined;
-        message.config = (_b = object.config) !== null && _b !== void 0 ? _b : "";
+    fromPartial(object) {
+        const message = createBaseSigninResponse();
+        message.jwt = object.jwt ?? "";
+        message.user = (object.user !== undefined && object.user !== null) ? User.fromPartial(object.user) : undefined;
+        message.config = object.config ?? "";
         return message;
     },
 };
 function createBaseRefreshToken() {
     return { username: "", jwt: "", user: undefined };
 }
-exports.RefreshToken = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const RefreshToken = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.username !== "") {
             writer.uint32(10).string(message.username);
         }
@@ -1353,16 +1315,16 @@ exports.RefreshToken = {
             writer.uint32(18).string(message.jwt);
         }
         if (message.user !== undefined) {
-            exports.User.encode(message.user, writer.uint32(26).fork()).ldelim();
+            User.encode(message.user, writer.uint32(26).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseRefreshToken();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseRefreshToken();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.username = reader.string();
@@ -1371,7 +1333,7 @@ exports.RefreshToken = {
                     message.jwt = reader.string();
                     break;
                 case 3:
-                    message.user = exports.User.decode(reader, reader.uint32());
+                    message.user = User.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1380,38 +1342,36 @@ exports.RefreshToken = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             username: isSet(object.username) ? String(object.username) : "",
             jwt: isSet(object.jwt) ? String(object.jwt) : "",
-            user: isSet(object.user) ? exports.User.fromJSON(object.user) : undefined,
+            user: isSet(object.user) ? User.fromJSON(object.user) : undefined,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.username !== undefined && (obj.username = message.username);
         message.jwt !== undefined && (obj.jwt = message.jwt);
-        message.user !== undefined && (obj.user = message.user ? exports.User.toJSON(message.user) : undefined);
+        message.user !== undefined && (obj.user = message.user ? User.toJSON(message.user) : undefined);
         return obj;
     },
-    create: function (base) {
-        return exports.RefreshToken.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return RefreshToken.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseRefreshToken();
-        message.username = (_a = object.username) !== null && _a !== void 0 ? _a : "";
-        message.jwt = (_b = object.jwt) !== null && _b !== void 0 ? _b : "";
-        message.user = (object.user !== undefined && object.user !== null) ? exports.User.fromPartial(object.user) : undefined;
+    fromPartial(object) {
+        const message = createBaseRefreshToken();
+        message.username = object.username ?? "";
+        message.jwt = object.jwt ?? "";
+        message.user = (object.user !== undefined && object.user !== null) ? User.fromPartial(object.user) : undefined;
         return message;
     },
 };
 function createBaseRole() {
     return { _id: "", name: "" };
 }
-exports.Role = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Role = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message._id !== "") {
             writer.uint32(10).string(message._id);
         }
@@ -1420,12 +1380,12 @@ exports.Role = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseRole();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseRole();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message._id = reader.string();
@@ -1440,32 +1400,30 @@ exports.Role = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { _id: isSet(object._id) ? String(object._id) : "", name: isSet(object.name) ? String(object.name) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message._id !== undefined && (obj._id = message._id);
         message.name !== undefined && (obj.name = message.name);
         return obj;
     },
-    create: function (base) {
-        return exports.Role.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Role.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseRole();
-        message._id = (_a = object._id) !== null && _a !== void 0 ? _a : "";
-        message.name = (_b = object.name) !== null && _b !== void 0 ? _b : "";
+    fromPartial(object) {
+        const message = createBaseRole();
+        message._id = object._id ?? "";
+        message.name = object.name ?? "";
         return message;
     },
 };
 function createBaseUser() {
     return { _id: "", name: "", username: "", email: "", roles: [] };
 }
-exports.User = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const User = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message._id !== "") {
             writer.uint32(10).string(message._id);
         }
@@ -1478,18 +1436,17 @@ exports.User = {
         if (message.email !== "") {
             writer.uint32(34).string(message.email);
         }
-        for (var _i = 0, _a = message.roles; _i < _a.length; _i++) {
-            var v = _a[_i];
-            exports.Role.encode(v, writer.uint32(42).fork()).ldelim();
+        for (const v of message.roles) {
+            Role.encode(v, writer.uint32(42).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseUser();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseUser();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message._id = reader.string();
@@ -1504,7 +1461,7 @@ exports.User = {
                     message.email = reader.string();
                     break;
                 case 5:
-                    message.roles.push(exports.Role.decode(reader, reader.uint32()));
+                    message.roles.push(Role.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1513,40 +1470,39 @@ exports.User = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             _id: isSet(object._id) ? String(object._id) : "",
             name: isSet(object.name) ? String(object.name) : "",
             username: isSet(object.username) ? String(object.username) : "",
             email: isSet(object.email) ? String(object.email) : "",
-            roles: Array.isArray(object === null || object === void 0 ? void 0 : object.roles) ? object.roles.map(function (e) { return exports.Role.fromJSON(e); }) : [],
+            roles: Array.isArray(object?.roles) ? object.roles.map((e) => Role.fromJSON(e)) : [],
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message._id !== undefined && (obj._id = message._id);
         message.name !== undefined && (obj.name = message.name);
         message.username !== undefined && (obj.username = message.username);
         message.email !== undefined && (obj.email = message.email);
         if (message.roles) {
-            obj.roles = message.roles.map(function (e) { return e ? exports.Role.toJSON(e) : undefined; });
+            obj.roles = message.roles.map((e) => e ? Role.toJSON(e) : undefined);
         }
         else {
             obj.roles = [];
         }
         return obj;
     },
-    create: function (base) {
-        return exports.User.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return User.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e;
-        var message = createBaseUser();
-        message._id = (_a = object._id) !== null && _a !== void 0 ? _a : "";
-        message.name = (_b = object.name) !== null && _b !== void 0 ? _b : "";
-        message.username = (_c = object.username) !== null && _c !== void 0 ? _c : "";
-        message.email = (_d = object.email) !== null && _d !== void 0 ? _d : "";
-        message.roles = ((_e = object.roles) === null || _e === void 0 ? void 0 : _e.map(function (e) { return exports.Role.fromPartial(e); })) || [];
+    fromPartial(object) {
+        const message = createBaseUser();
+        message._id = object._id ?? "";
+        message.name = object.name ?? "";
+        message.username = object.username ?? "";
+        message.email = object.email ?? "";
+        message.roles = object.roles?.map((e) => Role.fromPartial(e)) || [];
         return message;
     },
 };
@@ -1583,9 +1539,8 @@ function createBaseCustomer() {
         dblocked: false,
     };
 }
-exports.Customer = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const Customer = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message._id !== "") {
             writer.uint32(10).string(message._id);
         }
@@ -1664,8 +1619,7 @@ exports.Customer = {
         if (message.customattr5 !== "") {
             writer.uint32(210).string(message.customattr5);
         }
-        for (var _i = 0, _a = message.domains; _i < _a.length; _i++) {
-            var v = _a[_i];
+        for (const v of message.domains) {
             writer.uint32(218).string(v);
         }
         if (message.dbusage !== 0) {
@@ -1676,12 +1630,12 @@ exports.Customer = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCustomer();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCustomer();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message._id = reader.string();
@@ -1777,7 +1731,7 @@ exports.Customer = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             _id: isSet(object._id) ? String(object._id) : "",
             _type: isSet(object._type) ? String(object._type) : "",
@@ -1805,13 +1759,13 @@ exports.Customer = {
             customattr3: isSet(object.customattr3) ? String(object.customattr3) : "",
             customattr4: isSet(object.customattr4) ? String(object.customattr4) : "",
             customattr5: isSet(object.customattr5) ? String(object.customattr5) : "",
-            domains: Array.isArray(object === null || object === void 0 ? void 0 : object.domains) ? object.domains.map(function (e) { return String(e); }) : [],
+            domains: Array.isArray(object?.domains) ? object.domains.map((e) => String(e)) : [],
             dbusage: isSet(object.dbusage) ? Number(object.dbusage) : 0,
             dblocked: isSet(object.dblocked) ? Boolean(object.dblocked) : false,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message._id !== undefined && (obj._id = message._id);
         message._type !== undefined && (obj._type = message._type);
         message.stripeid !== undefined && (obj.stripeid = message.stripeid);
@@ -1839,7 +1793,7 @@ exports.Customer = {
         message.customattr4 !== undefined && (obj.customattr4 = message.customattr4);
         message.customattr5 !== undefined && (obj.customattr5 = message.customattr5);
         if (message.domains) {
-            obj.domains = message.domains.map(function (e) { return e; });
+            obj.domains = message.domains.map((e) => e);
         }
         else {
             obj.domains = [];
@@ -1848,73 +1802,71 @@ exports.Customer = {
         message.dblocked !== undefined && (obj.dblocked = message.dblocked);
         return obj;
     },
-    create: function (base) {
-        return exports.Customer.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return Customer.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
-        var message = createBaseCustomer();
-        message._id = (_a = object._id) !== null && _a !== void 0 ? _a : "";
-        message._type = (_b = object._type) !== null && _b !== void 0 ? _b : "";
-        message.stripeid = (_c = object.stripeid) !== null && _c !== void 0 ? _c : "";
-        message.userid = (_d = object.userid) !== null && _d !== void 0 ? _d : "";
-        message.name = (_e = object.name) !== null && _e !== void 0 ? _e : "";
-        message.country = (_f = object.country) !== null && _f !== void 0 ? _f : "";
-        message.email = (_g = object.email) !== null && _g !== void 0 ? _g : "";
-        message.address = (_h = object.address) !== null && _h !== void 0 ? _h : "";
-        message.vattype = (_j = object.vattype) !== null && _j !== void 0 ? _j : "";
-        message.vatnumber = (_k = object.vatnumber) !== null && _k !== void 0 ? _k : "";
-        message.taxrate = (_l = object.taxrate) !== null && _l !== void 0 ? _l : "";
-        message.tax = (_m = object.tax) !== null && _m !== void 0 ? _m : 0;
-        message.coupon = (_o = object.coupon) !== null && _o !== void 0 ? _o : "";
-        message.hascard = (_p = object.hascard) !== null && _p !== void 0 ? _p : false;
-        message.memory = (_q = object.memory) !== null && _q !== void 0 ? _q : "";
-        message.openflowuserplan = (_r = object.openflowuserplan) !== null && _r !== void 0 ? _r : "";
-        message.supportplan = (_s = object.supportplan) !== null && _s !== void 0 ? _s : "";
-        message.supporthourplan = (_t = object.supporthourplan) !== null && _t !== void 0 ? _t : "";
-        message.subscriptionid = (_u = object.subscriptionid) !== null && _u !== void 0 ? _u : "";
-        message.admins = (_v = object.admins) !== null && _v !== void 0 ? _v : "";
-        message.users = (_w = object.users) !== null && _w !== void 0 ? _w : "";
-        message.customattr1 = (_x = object.customattr1) !== null && _x !== void 0 ? _x : "";
-        message.customattr2 = (_y = object.customattr2) !== null && _y !== void 0 ? _y : "";
-        message.customattr3 = (_z = object.customattr3) !== null && _z !== void 0 ? _z : "";
-        message.customattr4 = (_0 = object.customattr4) !== null && _0 !== void 0 ? _0 : "";
-        message.customattr5 = (_1 = object.customattr5) !== null && _1 !== void 0 ? _1 : "";
-        message.domains = ((_2 = object.domains) === null || _2 === void 0 ? void 0 : _2.map(function (e) { return e; })) || [];
-        message.dbusage = (_3 = object.dbusage) !== null && _3 !== void 0 ? _3 : 0;
-        message.dblocked = (_4 = object.dblocked) !== null && _4 !== void 0 ? _4 : false;
+    fromPartial(object) {
+        const message = createBaseCustomer();
+        message._id = object._id ?? "";
+        message._type = object._type ?? "";
+        message.stripeid = object.stripeid ?? "";
+        message.userid = object.userid ?? "";
+        message.name = object.name ?? "";
+        message.country = object.country ?? "";
+        message.email = object.email ?? "";
+        message.address = object.address ?? "";
+        message.vattype = object.vattype ?? "";
+        message.vatnumber = object.vatnumber ?? "";
+        message.taxrate = object.taxrate ?? "";
+        message.tax = object.tax ?? 0;
+        message.coupon = object.coupon ?? "";
+        message.hascard = object.hascard ?? false;
+        message.memory = object.memory ?? "";
+        message.openflowuserplan = object.openflowuserplan ?? "";
+        message.supportplan = object.supportplan ?? "";
+        message.supporthourplan = object.supporthourplan ?? "";
+        message.subscriptionid = object.subscriptionid ?? "";
+        message.admins = object.admins ?? "";
+        message.users = object.users ?? "";
+        message.customattr1 = object.customattr1 ?? "";
+        message.customattr2 = object.customattr2 ?? "";
+        message.customattr3 = object.customattr3 ?? "";
+        message.customattr4 = object.customattr4 ?? "";
+        message.customattr5 = object.customattr5 ?? "";
+        message.domains = object.domains?.map((e) => e) || [];
+        message.dbusage = object.dbusage ?? 0;
+        message.dblocked = object.dblocked ?? false;
         return message;
     },
 };
 function createBaseEnsureCustomerRequest() {
     return { customer: undefined, stripe: undefined, ensureas: "" };
 }
-exports.EnsureCustomerRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const EnsureCustomerRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.customer !== undefined) {
-            exports.Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
+            Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
         }
         if (message.stripe !== undefined) {
-            stripe_1.StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
+            StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
         }
         if (message.ensureas !== "") {
             writer.uint32(26).string(message.ensureas);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseEnsureCustomerRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseEnsureCustomerRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
-                    message.customer = exports.Customer.decode(reader, reader.uint32());
+                    message.customer = Customer.decode(reader, reader.uint32());
                     break;
                 case 2:
-                    message.stripe = stripe_1.StripeCustomer.decode(reader, reader.uint32());
+                    message.stripe = StripeCustomer.decode(reader, reader.uint32());
                     break;
                 case 3:
                     message.ensureas = reader.string();
@@ -1926,62 +1878,60 @@ exports.EnsureCustomerRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
-            customer: isSet(object.customer) ? exports.Customer.fromJSON(object.customer) : undefined,
-            stripe: isSet(object.stripe) ? stripe_1.StripeCustomer.fromJSON(object.stripe) : undefined,
+            customer: isSet(object.customer) ? Customer.fromJSON(object.customer) : undefined,
+            stripe: isSet(object.stripe) ? StripeCustomer.fromJSON(object.stripe) : undefined,
             ensureas: isSet(object.ensureas) ? String(object.ensureas) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
-        message.customer !== undefined && (obj.customer = message.customer ? exports.Customer.toJSON(message.customer) : undefined);
-        message.stripe !== undefined && (obj.stripe = message.stripe ? stripe_1.StripeCustomer.toJSON(message.stripe) : undefined);
+    toJSON(message) {
+        const obj = {};
+        message.customer !== undefined && (obj.customer = message.customer ? Customer.toJSON(message.customer) : undefined);
+        message.stripe !== undefined && (obj.stripe = message.stripe ? StripeCustomer.toJSON(message.stripe) : undefined);
         message.ensureas !== undefined && (obj.ensureas = message.ensureas);
         return obj;
     },
-    create: function (base) {
-        return exports.EnsureCustomerRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return EnsureCustomerRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseEnsureCustomerRequest();
+    fromPartial(object) {
+        const message = createBaseEnsureCustomerRequest();
         message.customer = (object.customer !== undefined && object.customer !== null)
-            ? exports.Customer.fromPartial(object.customer)
+            ? Customer.fromPartial(object.customer)
             : undefined;
         message.stripe = (object.stripe !== undefined && object.stripe !== null)
-            ? stripe_1.StripeCustomer.fromPartial(object.stripe)
+            ? StripeCustomer.fromPartial(object.stripe)
             : undefined;
-        message.ensureas = (_a = object.ensureas) !== null && _a !== void 0 ? _a : "";
+        message.ensureas = object.ensureas ?? "";
         return message;
     },
 };
 function createBaseEnsureCustomerResponse() {
     return { customer: undefined, stripe: undefined };
 }
-exports.EnsureCustomerResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const EnsureCustomerResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.customer !== undefined) {
-            exports.Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
+            Customer.encode(message.customer, writer.uint32(10).fork()).ldelim();
         }
         if (message.stripe !== undefined) {
-            stripe_1.StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
+            StripeCustomer.encode(message.stripe, writer.uint32(18).fork()).ldelim();
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseEnsureCustomerResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseEnsureCustomerResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
-                    message.customer = exports.Customer.decode(reader, reader.uint32());
+                    message.customer = Customer.decode(reader, reader.uint32());
                     break;
                 case 2:
-                    message.stripe = stripe_1.StripeCustomer.decode(reader, reader.uint32());
+                    message.stripe = StripeCustomer.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1990,28 +1940,28 @@ exports.EnsureCustomerResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
-            customer: isSet(object.customer) ? exports.Customer.fromJSON(object.customer) : undefined,
-            stripe: isSet(object.stripe) ? stripe_1.StripeCustomer.fromJSON(object.stripe) : undefined,
+            customer: isSet(object.customer) ? Customer.fromJSON(object.customer) : undefined,
+            stripe: isSet(object.stripe) ? StripeCustomer.fromJSON(object.stripe) : undefined,
         };
     },
-    toJSON: function (message) {
-        var obj = {};
-        message.customer !== undefined && (obj.customer = message.customer ? exports.Customer.toJSON(message.customer) : undefined);
-        message.stripe !== undefined && (obj.stripe = message.stripe ? stripe_1.StripeCustomer.toJSON(message.stripe) : undefined);
+    toJSON(message) {
+        const obj = {};
+        message.customer !== undefined && (obj.customer = message.customer ? Customer.toJSON(message.customer) : undefined);
+        message.stripe !== undefined && (obj.stripe = message.stripe ? StripeCustomer.toJSON(message.stripe) : undefined);
         return obj;
     },
-    create: function (base) {
-        return exports.EnsureCustomerResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return EnsureCustomerResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var message = createBaseEnsureCustomerResponse();
+    fromPartial(object) {
+        const message = createBaseEnsureCustomerResponse();
         message.customer = (object.customer !== undefined && object.customer !== null)
-            ? exports.Customer.fromPartial(object.customer)
+            ? Customer.fromPartial(object.customer)
             : undefined;
         message.stripe = (object.stripe !== undefined && object.stripe !== null)
-            ? stripe_1.StripeCustomer.fromPartial(object.stripe)
+            ? StripeCustomer.fromPartial(object.stripe)
             : undefined;
         return message;
     },
@@ -2019,9 +1969,8 @@ exports.EnsureCustomerResponse = {
 function createBaseCreateIndexRequest() {
     return { collectionname: "", index: "", options: "", name: "" };
 }
-exports.CreateIndexRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const CreateIndexRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -2036,12 +1985,12 @@ exports.CreateIndexRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCreateIndexRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCreateIndexRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -2062,7 +2011,7 @@ exports.CreateIndexRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             index: isSet(object.index) ? String(object.index) : "",
@@ -2070,44 +2019,42 @@ exports.CreateIndexRequest = {
             name: isSet(object.name) ? String(object.name) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.index !== undefined && (obj.index = message.index);
         message.options !== undefined && (obj.options = message.options);
         message.name !== undefined && (obj.name = message.name);
         return obj;
     },
-    create: function (base) {
-        return exports.CreateIndexRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return CreateIndexRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b, _c, _d;
-        var message = createBaseCreateIndexRequest();
-        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
-        message.index = (_b = object.index) !== null && _b !== void 0 ? _b : "";
-        message.options = (_c = object.options) !== null && _c !== void 0 ? _c : "";
-        message.name = (_d = object.name) !== null && _d !== void 0 ? _d : "";
+    fromPartial(object) {
+        const message = createBaseCreateIndexRequest();
+        message.collectionname = object.collectionname ?? "";
+        message.index = object.index ?? "";
+        message.options = object.options ?? "";
+        message.name = object.name ?? "";
         return message;
     },
 };
 function createBaseCreateIndexResponse() {
     return { result: "" };
 }
-exports.CreateIndexResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const CreateIndexResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.result !== "") {
             writer.uint32(10).string(message.result);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseCreateIndexResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseCreateIndexResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.result = reader.string();
@@ -2119,41 +2066,39 @@ exports.CreateIndexResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { result: isSet(object.result) ? String(object.result) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.result !== undefined && (obj.result = message.result);
         return obj;
     },
-    create: function (base) {
-        return exports.CreateIndexResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return CreateIndexResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseCreateIndexResponse();
-        message.result = (_a = object.result) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseCreateIndexResponse();
+        message.result = object.result ?? "";
         return message;
     },
 };
 function createBaseGetIndexesRequest() {
     return { collectionname: "" };
 }
-exports.GetIndexesRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const GetIndexesRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseGetIndexesRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseGetIndexesRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -2165,41 +2110,39 @@ exports.GetIndexesRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { collectionname: isSet(object.collectionname) ? String(object.collectionname) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         return obj;
     },
-    create: function (base) {
-        return exports.GetIndexesRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return GetIndexesRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseGetIndexesRequest();
-        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseGetIndexesRequest();
+        message.collectionname = object.collectionname ?? "";
         return message;
     },
 };
 function createBaseGetIndexesResponse() {
     return { results: "" };
 }
-exports.GetIndexesResponse = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const GetIndexesResponse = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.results !== "") {
             writer.uint32(10).string(message.results);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseGetIndexesResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseGetIndexesResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.results = reader.string();
@@ -2211,30 +2154,28 @@ exports.GetIndexesResponse = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { results: isSet(object.results) ? String(object.results) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.results !== undefined && (obj.results = message.results);
         return obj;
     },
-    create: function (base) {
-        return exports.GetIndexesResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return GetIndexesResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseGetIndexesResponse();
-        message.results = (_a = object.results) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseGetIndexesResponse();
+        message.results = object.results ?? "";
         return message;
     },
 };
 function createBaseDropIndexRequest() {
     return { collectionname: "", name: "" };
 }
-exports.DropIndexRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DropIndexRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.collectionname !== "") {
             writer.uint32(10).string(message.collectionname);
         }
@@ -2243,12 +2184,12 @@ exports.DropIndexRequest = {
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDropIndexRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDropIndexRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.collectionname = reader.string();
@@ -2263,43 +2204,41 @@ exports.DropIndexRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return {
             collectionname: isSet(object.collectionname) ? String(object.collectionname) : "",
             name: isSet(object.name) ? String(object.name) : "",
         };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.collectionname !== undefined && (obj.collectionname = message.collectionname);
         message.name !== undefined && (obj.name = message.name);
         return obj;
     },
-    create: function (base) {
-        return exports.DropIndexRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DropIndexRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a, _b;
-        var message = createBaseDropIndexRequest();
-        message.collectionname = (_a = object.collectionname) !== null && _a !== void 0 ? _a : "";
-        message.name = (_b = object.name) !== null && _b !== void 0 ? _b : "";
+    fromPartial(object) {
+        const message = createBaseDropIndexRequest();
+        message.collectionname = object.collectionname ?? "";
+        message.name = object.name ?? "";
         return message;
     },
 };
 function createBaseDropIndexResponse() {
     return {};
 }
-exports.DropIndexResponse = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DropIndexResponse = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDropIndexResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDropIndexResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -2308,38 +2247,37 @@ exports.DropIndexResponse = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return exports.DropIndexResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DropIndexResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseDropIndexResponse();
+    fromPartial(_) {
+        const message = createBaseDropIndexResponse();
         return message;
     },
 };
 function createBaseDeletePackageRequest() {
     return { packageid: "" };
 }
-exports.DeletePackageRequest = {
-    encode: function (message, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DeletePackageRequest = {
+    encode(message, writer = _m0.Writer.create()) {
         if (message.packageid !== "") {
             writer.uint32(10).string(message.packageid);
         }
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDeletePackageRequest();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDeletePackageRequest();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 case 1:
                     message.packageid = reader.string();
@@ -2351,38 +2289,36 @@ exports.DeletePackageRequest = {
         }
         return message;
     },
-    fromJSON: function (object) {
+    fromJSON(object) {
         return { packageid: isSet(object.packageid) ? String(object.packageid) : "" };
     },
-    toJSON: function (message) {
-        var obj = {};
+    toJSON(message) {
+        const obj = {};
         message.packageid !== undefined && (obj.packageid = message.packageid);
         return obj;
     },
-    create: function (base) {
-        return exports.DeletePackageRequest.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DeletePackageRequest.fromPartial(base ?? {});
     },
-    fromPartial: function (object) {
-        var _a;
-        var message = createBaseDeletePackageRequest();
-        message.packageid = (_a = object.packageid) !== null && _a !== void 0 ? _a : "";
+    fromPartial(object) {
+        const message = createBaseDeletePackageRequest();
+        message.packageid = object.packageid ?? "";
         return message;
     },
 };
 function createBaseDeletePackageResponse() {
     return {};
 }
-exports.DeletePackageResponse = {
-    encode: function (_, writer) {
-        if (writer === void 0) { writer = _m0.Writer.create(); }
+export const DeletePackageResponse = {
+    encode(_, writer = _m0.Writer.create()) {
         return writer;
     },
-    decode: function (input, length) {
-        var reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
-        var end = length === undefined ? reader.len : reader.pos + length;
-        var message = createBaseDeletePackageResponse();
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDeletePackageResponse();
         while (reader.pos < end) {
-            var tag = reader.uint32();
+            const tag = reader.uint32();
             switch (tag >>> 3) {
                 default:
                     reader.skipType(tag & 7);
@@ -2391,24 +2327,26 @@ exports.DeletePackageResponse = {
         }
         return message;
     },
-    fromJSON: function (_) {
+    fromJSON(_) {
         return {};
     },
-    toJSON: function (_) {
-        var obj = {};
+    toJSON(_) {
+        const obj = {};
         return obj;
     },
-    create: function (base) {
-        return exports.DeletePackageResponse.fromPartial(base !== null && base !== void 0 ? base : {});
+    create(base) {
+        return DeletePackageResponse.fromPartial(base ?? {});
     },
-    fromPartial: function (_) {
-        var message = createBaseDeletePackageResponse();
+    fromPartial(_) {
+        const message = createBaseDeletePackageResponse();
         return message;
     },
 };
-var FlowServiceClientImpl = /** @class */ (function () {
-    function FlowServiceClientImpl(rpc, opts) {
-        this.service = (opts === null || opts === void 0 ? void 0 : opts.service) || "openiap.FlowService";
+export class FlowServiceClientImpl {
+    rpc;
+    service;
+    constructor(rpc, opts) {
+        this.service = opts?.service || "openiap.FlowService";
         this.rpc = rpc;
         this.SetupStream = this.SetupStream.bind(this);
         this.Signin = this.Signin.bind(this);
@@ -2457,240 +2395,238 @@ var FlowServiceClientImpl = /** @class */ (function () {
         this.DropIndex = this.DropIndex.bind(this);
         this.DeletePackage = this.DeletePackage.bind(this);
     }
-    FlowServiceClientImpl.prototype.SetupStream = function (request) {
-        var data = request.pipe((0, operators_1.map)(function (request) { return exports.Envelope.encode(request).finish(); }));
-        var result = this.rpc.bidirectionalStreamingRequest(this.service, "SetupStream", data);
-        return result.pipe((0, operators_1.map)(function (data) { return exports.Envelope.decode(new _m0.Reader(data)); }));
-    };
-    FlowServiceClientImpl.prototype.Signin = function (request) {
-        var data = exports.SigninRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Signin", data);
-        return promise.then(function (data) { return exports.SigninResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.Download = function (request) {
-        var data = exports.DownloadRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Download", data);
-        return promise.then(function (data) { return exports.DownloadResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.Upload = function (request) {
-        var data = exports.UploadRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Upload", data);
-        return promise.then(function (data) { return exports.UploadResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.CustomCommand = function (request) {
-        var data = exports.CustomCommandRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "CustomCommand", data);
-        return promise.then(function (data) { return exports.CustomCommandResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.ListCollections = function (request) {
-        var data = querys_1.ListCollectionsRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "ListCollections", data);
-        return promise.then(function (data) { return querys_1.ListCollectionsResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DropCollection = function (request) {
-        var data = querys_1.DropCollectionRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DropCollection", data);
-        return promise.then(function (data) { return querys_1.DropCollectionResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.CreateCollection = function (request) {
-        var data = querys_1.CreateCollectionRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "CreateCollection", data);
-        return promise.then(function (data) { return querys_1.CreateCollectionResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.Query = function (request) {
-        var data = querys_1.QueryRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Query", data);
-        return promise.then(function (data) { return querys_1.QueryResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.GetDocumentVersion = function (request) {
-        var data = querys_1.GetDocumentVersionRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "GetDocumentVersion", data);
-        return promise.then(function (data) { return querys_1.GetDocumentVersionResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.Aggregate = function (request) {
-        var data = querys_1.AggregateRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Aggregate", data);
-        return promise.then(function (data) { return querys_1.AggregateResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.Count = function (request) {
-        var data = querys_1.CountRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Count", data);
-        return promise.then(function (data) { return querys_1.CountResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.InsertOne = function (request) {
-        var data = querys_1.InsertOneRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "InsertOne", data);
-        return promise.then(function (data) { return querys_1.InsertOneResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.InsertMany = function (request) {
-        var data = querys_1.InsertManyRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "InsertMany", data);
-        return promise.then(function (data) { return querys_1.InsertManyResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.UpdateOne = function (request) {
-        var data = querys_1.UpdateOneRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "UpdateOne", data);
-        return promise.then(function (data) { return querys_1.UpdateOneResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.UpdateDocument = function (request) {
-        var data = querys_1.UpdateDocumentRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "UpdateDocument", data);
-        return promise.then(function (data) { return querys_1.UpdateDocumentResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.InsertOrUpdateOne = function (request) {
-        var data = querys_1.InsertOrUpdateOneRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "InsertOrUpdateOne", data);
-        return promise.then(function (data) { return querys_1.InsertOrUpdateOneResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.InsertOrUpdateMany = function (request) {
-        var data = querys_1.InsertOrUpdateManyRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "InsertOrUpdateMany", data);
-        return promise.then(function (data) { return querys_1.InsertOrUpdateManyResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeleteOne = function (request) {
-        var data = querys_1.DeleteOneRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeleteOne", data);
-        return promise.then(function (data) { return querys_1.DeleteOneResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeleteMany = function (request) {
-        var data = querys_1.DeleteManyRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeleteMany", data);
-        return promise.then(function (data) { return querys_1.DeleteManyResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.RegisterQueue = function (request) {
-        var data = queues_1.RegisterQueueRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "RegisterQueue", data);
-        return promise.then(function (data) { return queues_1.RegisterQueueResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.RegisterExchange = function (request) {
-        var data = queues_1.RegisterExchangeRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "RegisterExchange", data);
-        return promise.then(function (data) { return queues_1.RegisterExchangeResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.QueueMessage = function (request) {
-        var data = queues_1.QueueMessageRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "QueueMessage", data);
-        return promise.then(function (data) { return queues_1.QueueMessageResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.UnRegisterQueue = function (request) {
-        var data = queues_1.UnRegisterQueueRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "UnRegisterQueue", data);
-        return promise.then(function (data) { return queues_1.UnRegisterQueueResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.Watch = function (request) {
-        var data = watch_1.WatchRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "Watch", data);
-        return promise.then(function (data) { return watch_1.WatchResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.UnWatch = function (request) {
-        var data = watch_1.UnWatchRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "UnWatch", data);
-        return promise.then(function (data) { return watch_1.UnWatchResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.PushWorkitem = function (request) {
-        var data = workitems_1.PushWorkitemRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "PushWorkitem", data);
-        return promise.then(function (data) { return workitems_1.PushWorkitemResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.PushWorkitems = function (request) {
-        var data = workitems_1.PushWorkitemsRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "PushWorkitems", data);
-        return promise.then(function (data) { return workitems_1.PushWorkitemsResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.UpdateWorkitem = function (request) {
-        var data = workitems_1.UpdateWorkitemRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "UpdateWorkitem", data);
-        return promise.then(function (data) { return workitems_1.UpdateWorkitemResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.PopWorkitem = function (request) {
-        var data = workitems_1.PopWorkitemRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "PopWorkitem", data);
-        return promise.then(function (data) { return workitems_1.PopWorkitemResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeleteWorkitem = function (request) {
-        var data = workitems_1.DeleteWorkitemRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeleteWorkitem", data);
-        return promise.then(function (data) { return workitems_1.DeleteWorkitemResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.AddWorkItemQueue = function (request) {
-        var data = workitems_1.AddWorkItemQueueRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "AddWorkItemQueue", data);
-        return promise.then(function (data) { return workitems_1.AddWorkItemQueueResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.UpdateWorkItemQueue = function (request) {
-        var data = workitems_1.UpdateWorkItemQueueRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "UpdateWorkItemQueue", data);
-        return promise.then(function (data) { return workitems_1.UpdateWorkItemQueueResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeleteWorkItemQueue = function (request) {
-        var data = workitems_1.DeleteWorkItemQueueRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeleteWorkItemQueue", data);
-        return promise.then(function (data) { return workitems_1.DeleteWorkItemQueueResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.EnsureCustomer = function (request) {
-        var data = exports.EnsureCustomerRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "EnsureCustomer", data);
-        return promise.then(function (data) { return exports.EnsureCustomerResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.InvokeOpenRPA = function (request) {
-        var data = queues_1.InvokeOpenRPARequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "InvokeOpenRPA", data);
-        return promise.then(function (data) { return queues_1.InvokeOpenRPAResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.StartAgent = function (request) {
-        var data = agent_1.StartAgentRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "StartAgent", data);
-        return promise.then(function (data) { return agent_1.StartAgentResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.StopAgent = function (request) {
-        var data = agent_1.StopAgentRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "StopAgent", data);
-        return promise.then(function (data) { return agent_1.StopAgentResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.GetAgentLog = function (request) {
-        var data = agent_1.GetAgentLogRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "GetAgentLog", data);
-        return promise.then(function (data) { return agent_1.GetAgentLogResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.GetAgentPods = function (request) {
-        var data = agent_1.GetAgentPodsRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "GetAgentPods", data);
-        return promise.then(function (data) { return agent_1.GetAgentPodsResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeleteAgentPod = function (request) {
-        var data = agent_1.DeleteAgentPodRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeleteAgentPod", data);
-        return promise.then(function (data) { return agent_1.DeleteAgentPodResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeleteAgent = function (request) {
-        var data = agent_1.DeleteAgentRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeleteAgent", data);
-        return promise.then(function (data) { return agent_1.DeleteAgentResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.CreateIndex = function (request) {
-        var data = exports.CreateIndexRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "CreateIndex", data);
-        return promise.then(function (data) { return exports.CreateIndexResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.GetIndexes = function (request) {
-        var data = exports.GetIndexesRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "GetIndexes", data);
-        return promise.then(function (data) { return exports.GetIndexesResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DropIndex = function (request) {
-        var data = exports.DropIndexRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DropIndex", data);
-        return promise.then(function (data) { return exports.DropIndexResponse.decode(new _m0.Reader(data)); });
-    };
-    FlowServiceClientImpl.prototype.DeletePackage = function (request) {
-        var data = exports.DeletePackageRequest.encode(request).finish();
-        var promise = this.rpc.request(this.service, "DeletePackage", data);
-        return promise.then(function (data) { return exports.DeletePackageResponse.decode(new _m0.Reader(data)); });
-    };
-    return FlowServiceClientImpl;
-}());
-exports.FlowServiceClientImpl = FlowServiceClientImpl;
-var tsProtoGlobalThis = (function () {
+    SetupStream(request) {
+        const data = request.pipe(map((request) => Envelope.encode(request).finish()));
+        const result = this.rpc.bidirectionalStreamingRequest(this.service, "SetupStream", data);
+        return result.pipe(map((data) => Envelope.decode(new _m0.Reader(data))));
+    }
+    Signin(request) {
+        const data = SigninRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Signin", data);
+        return promise.then((data) => SigninResponse.decode(new _m0.Reader(data)));
+    }
+    Download(request) {
+        const data = DownloadRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Download", data);
+        return promise.then((data) => DownloadResponse.decode(new _m0.Reader(data)));
+    }
+    Upload(request) {
+        const data = UploadRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Upload", data);
+        return promise.then((data) => UploadResponse.decode(new _m0.Reader(data)));
+    }
+    CustomCommand(request) {
+        const data = CustomCommandRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "CustomCommand", data);
+        return promise.then((data) => CustomCommandResponse.decode(new _m0.Reader(data)));
+    }
+    ListCollections(request) {
+        const data = ListCollectionsRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "ListCollections", data);
+        return promise.then((data) => ListCollectionsResponse.decode(new _m0.Reader(data)));
+    }
+    DropCollection(request) {
+        const data = DropCollectionRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DropCollection", data);
+        return promise.then((data) => DropCollectionResponse.decode(new _m0.Reader(data)));
+    }
+    CreateCollection(request) {
+        const data = CreateCollectionRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "CreateCollection", data);
+        return promise.then((data) => CreateCollectionResponse.decode(new _m0.Reader(data)));
+    }
+    Query(request) {
+        const data = QueryRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Query", data);
+        return promise.then((data) => QueryResponse.decode(new _m0.Reader(data)));
+    }
+    GetDocumentVersion(request) {
+        const data = GetDocumentVersionRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "GetDocumentVersion", data);
+        return promise.then((data) => GetDocumentVersionResponse.decode(new _m0.Reader(data)));
+    }
+    Aggregate(request) {
+        const data = AggregateRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Aggregate", data);
+        return promise.then((data) => AggregateResponse.decode(new _m0.Reader(data)));
+    }
+    Count(request) {
+        const data = CountRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Count", data);
+        return promise.then((data) => CountResponse.decode(new _m0.Reader(data)));
+    }
+    InsertOne(request) {
+        const data = InsertOneRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "InsertOne", data);
+        return promise.then((data) => InsertOneResponse.decode(new _m0.Reader(data)));
+    }
+    InsertMany(request) {
+        const data = InsertManyRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "InsertMany", data);
+        return promise.then((data) => InsertManyResponse.decode(new _m0.Reader(data)));
+    }
+    UpdateOne(request) {
+        const data = UpdateOneRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "UpdateOne", data);
+        return promise.then((data) => UpdateOneResponse.decode(new _m0.Reader(data)));
+    }
+    UpdateDocument(request) {
+        const data = UpdateDocumentRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "UpdateDocument", data);
+        return promise.then((data) => UpdateDocumentResponse.decode(new _m0.Reader(data)));
+    }
+    InsertOrUpdateOne(request) {
+        const data = InsertOrUpdateOneRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "InsertOrUpdateOne", data);
+        return promise.then((data) => InsertOrUpdateOneResponse.decode(new _m0.Reader(data)));
+    }
+    InsertOrUpdateMany(request) {
+        const data = InsertOrUpdateManyRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "InsertOrUpdateMany", data);
+        return promise.then((data) => InsertOrUpdateManyResponse.decode(new _m0.Reader(data)));
+    }
+    DeleteOne(request) {
+        const data = DeleteOneRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeleteOne", data);
+        return promise.then((data) => DeleteOneResponse.decode(new _m0.Reader(data)));
+    }
+    DeleteMany(request) {
+        const data = DeleteManyRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeleteMany", data);
+        return promise.then((data) => DeleteManyResponse.decode(new _m0.Reader(data)));
+    }
+    RegisterQueue(request) {
+        const data = RegisterQueueRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "RegisterQueue", data);
+        return promise.then((data) => RegisterQueueResponse.decode(new _m0.Reader(data)));
+    }
+    RegisterExchange(request) {
+        const data = RegisterExchangeRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "RegisterExchange", data);
+        return promise.then((data) => RegisterExchangeResponse.decode(new _m0.Reader(data)));
+    }
+    QueueMessage(request) {
+        const data = QueueMessageRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "QueueMessage", data);
+        return promise.then((data) => QueueMessageResponse.decode(new _m0.Reader(data)));
+    }
+    UnRegisterQueue(request) {
+        const data = UnRegisterQueueRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "UnRegisterQueue", data);
+        return promise.then((data) => UnRegisterQueueResponse.decode(new _m0.Reader(data)));
+    }
+    Watch(request) {
+        const data = WatchRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "Watch", data);
+        return promise.then((data) => WatchResponse.decode(new _m0.Reader(data)));
+    }
+    UnWatch(request) {
+        const data = UnWatchRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "UnWatch", data);
+        return promise.then((data) => UnWatchResponse.decode(new _m0.Reader(data)));
+    }
+    PushWorkitem(request) {
+        const data = PushWorkitemRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "PushWorkitem", data);
+        return promise.then((data) => PushWorkitemResponse.decode(new _m0.Reader(data)));
+    }
+    PushWorkitems(request) {
+        const data = PushWorkitemsRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "PushWorkitems", data);
+        return promise.then((data) => PushWorkitemsResponse.decode(new _m0.Reader(data)));
+    }
+    UpdateWorkitem(request) {
+        const data = UpdateWorkitemRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "UpdateWorkitem", data);
+        return promise.then((data) => UpdateWorkitemResponse.decode(new _m0.Reader(data)));
+    }
+    PopWorkitem(request) {
+        const data = PopWorkitemRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "PopWorkitem", data);
+        return promise.then((data) => PopWorkitemResponse.decode(new _m0.Reader(data)));
+    }
+    DeleteWorkitem(request) {
+        const data = DeleteWorkitemRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeleteWorkitem", data);
+        return promise.then((data) => DeleteWorkitemResponse.decode(new _m0.Reader(data)));
+    }
+    AddWorkItemQueue(request) {
+        const data = AddWorkItemQueueRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "AddWorkItemQueue", data);
+        return promise.then((data) => AddWorkItemQueueResponse.decode(new _m0.Reader(data)));
+    }
+    UpdateWorkItemQueue(request) {
+        const data = UpdateWorkItemQueueRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "UpdateWorkItemQueue", data);
+        return promise.then((data) => UpdateWorkItemQueueResponse.decode(new _m0.Reader(data)));
+    }
+    DeleteWorkItemQueue(request) {
+        const data = DeleteWorkItemQueueRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeleteWorkItemQueue", data);
+        return promise.then((data) => DeleteWorkItemQueueResponse.decode(new _m0.Reader(data)));
+    }
+    EnsureCustomer(request) {
+        const data = EnsureCustomerRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "EnsureCustomer", data);
+        return promise.then((data) => EnsureCustomerResponse.decode(new _m0.Reader(data)));
+    }
+    InvokeOpenRPA(request) {
+        const data = InvokeOpenRPARequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "InvokeOpenRPA", data);
+        return promise.then((data) => InvokeOpenRPAResponse.decode(new _m0.Reader(data)));
+    }
+    StartAgent(request) {
+        const data = StartAgentRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "StartAgent", data);
+        return promise.then((data) => StartAgentResponse.decode(new _m0.Reader(data)));
+    }
+    StopAgent(request) {
+        const data = StopAgentRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "StopAgent", data);
+        return promise.then((data) => StopAgentResponse.decode(new _m0.Reader(data)));
+    }
+    GetAgentLog(request) {
+        const data = GetAgentLogRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "GetAgentLog", data);
+        return promise.then((data) => GetAgentLogResponse.decode(new _m0.Reader(data)));
+    }
+    GetAgentPods(request) {
+        const data = GetAgentPodsRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "GetAgentPods", data);
+        return promise.then((data) => GetAgentPodsResponse.decode(new _m0.Reader(data)));
+    }
+    DeleteAgentPod(request) {
+        const data = DeleteAgentPodRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeleteAgentPod", data);
+        return promise.then((data) => DeleteAgentPodResponse.decode(new _m0.Reader(data)));
+    }
+    DeleteAgent(request) {
+        const data = DeleteAgentRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeleteAgent", data);
+        return promise.then((data) => DeleteAgentResponse.decode(new _m0.Reader(data)));
+    }
+    CreateIndex(request) {
+        const data = CreateIndexRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "CreateIndex", data);
+        return promise.then((data) => CreateIndexResponse.decode(new _m0.Reader(data)));
+    }
+    GetIndexes(request) {
+        const data = GetIndexesRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "GetIndexes", data);
+        return promise.then((data) => GetIndexesResponse.decode(new _m0.Reader(data)));
+    }
+    DropIndex(request) {
+        const data = DropIndexRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DropIndex", data);
+        return promise.then((data) => DropIndexResponse.decode(new _m0.Reader(data)));
+    }
+    DeletePackage(request) {
+        const data = DeletePackageRequest.encode(request).finish();
+        const promise = this.rpc.request(this.service, "DeletePackage", data);
+        return promise.then((data) => DeletePackageResponse.decode(new _m0.Reader(data)));
+    }
+}
+var tsProtoGlobalThis = (() => {
     if (typeof globalThis !== "undefined") {
         return globalThis;
     }
@@ -2710,9 +2646,9 @@ function bytesFromBase64(b64) {
         return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
     }
     else {
-        var bin = tsProtoGlobalThis.atob(b64);
-        var arr = new Uint8Array(bin.length);
-        for (var i = 0; i < bin.length; ++i) {
+        const bin = tsProtoGlobalThis.atob(b64);
+        const arr = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; ++i) {
             arr[i] = bin.charCodeAt(i);
         }
         return arr;
@@ -2723,21 +2659,21 @@ function base64FromBytes(arr) {
         return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
     }
     else {
-        var bin_1 = [];
-        arr.forEach(function (byte) {
-            bin_1.push(String.fromCharCode(byte));
+        const bin = [];
+        arr.forEach((byte) => {
+            bin.push(String.fromCharCode(byte));
         });
-        return tsProtoGlobalThis.btoa(bin_1.join(""));
+        return tsProtoGlobalThis.btoa(bin.join(""));
     }
 }
 function toTimestamp(date) {
-    var seconds = date.getTime() / 1000;
-    var nanos = (date.getTime() % 1000) * 1000000;
-    return { seconds: seconds, nanos: nanos };
+    const seconds = date.getTime() / 1_000;
+    const nanos = (date.getTime() % 1_000) * 1_000_000;
+    return { seconds, nanos };
 }
 function fromTimestamp(t) {
-    var millis = t.seconds * 1000;
-    millis += t.nanos / 1000000;
+    let millis = t.seconds * 1_000;
+    millis += t.nanos / 1_000_000;
     return new Date(millis);
 }
 function fromJsonTimestamp(o) {
@@ -2748,7 +2684,7 @@ function fromJsonTimestamp(o) {
         return new Date(o);
     }
     else {
-        return fromTimestamp(timestamp_1.Timestamp.fromJSON(o));
+        return fromTimestamp(Timestamp.fromJSON(o));
     }
 }
 function isSet(value) {

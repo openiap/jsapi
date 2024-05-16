@@ -19,7 +19,7 @@ export class openiap {
     public flowconfig: any = {};
     async connect(first: boolean) {
         return new Promise<User>((resolve) => {
-            this.client = protowrap.connect(this.url);
+            this.client = protowrap.connect(this.url, this.cliOnConnected.bind(this), this.cliOnDisconnected.bind(this), this.cliOnMessage.bind(this));
             if(this.url == null || this.url == "") {
                 if(this.loginresolve != null) {
                     this.loginresolve(null);
@@ -31,9 +31,9 @@ export class openiap {
             if (this.loginresolve == null) this.loginresolve = resolve;
             setTimeout(() => {
                 try {
-                    this.client.onConnected = this.cliOnConnected.bind(this);
-                    this.client.onDisconnected = this.cliOnDisconnected.bind(this);
-                    this.client.onMessage = this.cliOnMessage.bind(this);
+                    // this.client.onConnected = this.cliOnConnected.bind(this);
+                    // this.client.onDisconnected = this.cliOnDisconnected.bind(this);
+                    // this.client.onMessage = this.cliOnMessage.bind(this);
                 } catch (error) {
                     this.cliOnDisconnected(this.client, error);
                 }
@@ -174,7 +174,7 @@ export class openiap {
                 warn("Got queueevent for unknown queue " + we.queuename);
             }
         } else {
-            info("Received message from server: ");
+            info("Received unknown message from server: ");
             console.log("command", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
         }
         return reply;

@@ -1,7 +1,7 @@
 /* eslint-disable */
-import * as _m0 from "protobufjs/minimal";
-import { Ace } from "./ace";
-import { Timestamp } from "./google/protobuf/timestamp";
+import _m0 from "protobufjs/minimal.js";
+import { Ace } from "./ace.js";
+import { Timestamp } from "./google/protobuf/timestamp.js";
 
 export const protobufPackage = "openiap";
 

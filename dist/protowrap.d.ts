@@ -1,7 +1,7 @@
 import { client } from "./client";
 import { Envelope } from "./proto/base";
 export declare class protowrap {
-    static connect(apiurl: string): client;
+    static connect(apiurl: string, onConnected: any, onDisconnected: any, onMessage: any): client;
     static unpack(message: any): any[];
     static IsPendingReply(client: client, payload: any): any;
     static sendMesssag(client: client, payload: Envelope, id: string | undefined, dumpmsg: boolean): number;

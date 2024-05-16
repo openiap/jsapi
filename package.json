@@ -8,9 +8,10 @@
   "scripts": {
     "watch": "tsc -w",
     "updateproto": "npm uninstall @openiap/proto && npm --save-dev i openiap/proto",
-    "generate": "mkdir -p src/proto && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_out='service=grpc-node,mode=grpc-js:./src/proto' --ts_proto_opt=snakeToCamel=false --proto_path=node_modules/@openiap/proto/ --ts_proto_out=./src/proto node_modules/@openiap/proto/base.proto node_modules/@openiap/proto/ace.proto node_modules/@openiap/proto/querys.proto node_modules/@openiap/proto/queues.proto node_modules/@openiap/proto/watch.proto node_modules/@openiap/proto/workitems.proto node_modules/@openiap/proto/stripe.proto node_modules/@openiap/proto/agent.proto && cp -r node_modules/@openiap/proto . && find proto -type f ! -name '*.proto' -exec rm {} +",
+    "generate": "mkdir -p src/proto && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_out='service=grpc-node,mode=grpc-js:./src/proto' --ts_proto_opt=snakeToCamel=false --proto_path=node_modules/@openiap/proto/ --ts_proto_out=./src/proto node_modules/@openiap/proto/base.proto node_modules/@openiap/proto/ace.proto node_modules/@openiap/proto/querys.proto node_modules/@openiap/proto/queues.proto node_modules/@openiap/proto/watch.proto node_modules/@openiap/proto/workitems.proto node_modules/@openiap/proto/stripe.proto node_modules/@openiap/proto/agent.proto --ts_proto_opt=esModuleInterop=true --ts_proto_opt=importSuffix=.js && cp -r node_modules/@openiap/proto . && find proto -type f ! -name '*.proto' -exec rm {} +",
     "generate.old": "mkdir -p src/proto && protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_opt=snakeToCamel=false --proto_path=proto --ts_proto_out=./src/proto proto/base.proto proto/ace.proto agent.proto proto/querys.proto proto/queues.proto proto/stripe.proto proto/watch.proto proto/workitems.proto"
   },
+  "type": "module",
   "keywords": [],
   "publishConfig": {
     "access": "public"
