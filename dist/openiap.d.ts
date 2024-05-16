@@ -12,9 +12,11 @@ export declare class openiap {
     constructor(url: string, jwt: string);
     loginresolve: any;
     flowconfig: any;
+    get connected(): boolean;
     connect(first: boolean): Promise<User>;
     Close(): void;
     onConnected(client: client): Promise<void>;
+    onSignedIn(client: client, jwt: string, user: User): Promise<void>;
     private cliOnConnected;
     onDisconnected(client: client, error: Error): Promise<void>;
     cliOnDisconnected(client: client, error: Error): void;
@@ -23,6 +25,7 @@ export declare class openiap {
     private cliOnMessage;
     Ping(): Promise<void>;
     stringify(object: any): string;
+    isdoingsignin: boolean;
     Signin(options: SigninOptions): Promise<SigninResponse>;
     ListCollections(options?: ListCollectionsOptions): Promise<any[]>;
     /**

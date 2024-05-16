@@ -17,6 +17,9 @@ export class openiap {
     }
     loginresolve: any;
     public flowconfig: any = {};
+    get connected() {
+        return this.client.connected;
+    }
     async connect(first: boolean) {
         return new Promise<User>((resolve) => {
             this.client = protowrap.connect(this.url, this.cliOnConnected.bind(this), this.cliOnDisconnected.bind(this), this.cliOnMessage.bind(this));
@@ -48,6 +51,8 @@ export class openiap {
         if (this.client && this.client.Close) this.client.Close();
     }
     async onConnected(client: client) {
+    }
+    async onSignedIn(client: client, jwt: string, user: User) {
     }
     private async cliOnConnected(client: client) {
         var u = new URL(this.url);
@@ -199,30 +204,42 @@ export class openiap {
             } else return value;
         });
     }
+    public isdoingsignin: boolean = false;
     async Signin(options: SigninOptions): Promise<SigninResponse> {
-        const opt: SigninOptions = Object.assign(new SigninDefaults(), options)
-        let message = SigninRequest.create({ username: opt.username, password: opt.password, ping: opt.ping, longtoken: opt.longtoken })
-        if (opt.jwt != null && opt.jwt != "") {
-            message = SigninRequest.create({ jwt: opt.jwt, ping: opt.ping })
-        }
-        const data = Any.create({ type_url: "type.googleapis.com/openiap.SigninRequest", value: SigninRequest.encode(message).finish() })
-        const payload = Envelope.create({ command: "signin", data, jwt: opt.jwt });
-        const result = SigninResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
-        if (options.validateonly) {
-            info("Validated " + result.user.name);
-            return result;
-        }
-        if (result.config != null && result.config != "") {
-            try {
-                this.flowconfig = JSON.parse(result.config);
-            } catch (error) {
+        this.isdoingsignin = true;
+        try {
+            const opt: SigninOptions = Object.assign(new SigninDefaults(), options)
+            let message = SigninRequest.create({ username: opt.username, password: opt.password, ping: opt.ping, longtoken: opt.longtoken })
+            if (opt.jwt != null && opt.jwt != "") {
+                message = SigninRequest.create({ jwt: opt.jwt, ping: opt.ping })
             }
+            const data = Any.create({ type_url: "type.googleapis.com/openiap.SigninRequest", value: SigninRequest.encode(message).finish() })
+            const payload = Envelope.create({ command: "signin", data, jwt: opt.jwt });
+            const result = SigninResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+            if (options.validateonly) {
+                info("Validated " + result.user.name);
+                return result;
+            }
+            if (result.config != null && result.config != "") {
+                try {
+                    this.flowconfig = JSON.parse(result.config);
+                } catch (error) {
+                }
+            }
+            info("Signed in as " + result.user.name);
+            this.signedin = true;
+            this.client.jwt = result.jwt;
+            this.client.user = result.user;
+            try {
+                this.onSignedIn(this.client, result.jwt, result.user);
+            } catch (error) {
+                
+            }
+            return result;
+        } finally {
+            this.isdoingsignin = false;
         }
-        info("Signed in as " + result.user.name);
-        this.signedin = true;
-        this.client.jwt = result.jwt;
-        this.client.user = result.user;
-        return result;
+
     }
     async ListCollections(options: ListCollectionsOptions = {}): Promise<any[]> {
         const opt: ListCollectionsOptions = Object.assign(new ListCollectionsDefaults(), options)

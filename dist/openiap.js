@@ -19,6 +19,9 @@ export class openiap {
     }
     loginresolve;
     flowconfig = {};
+    get connected() {
+        return this.client.connected;
+    }
     async connect(first) {
         return new Promise((resolve) => {
             this.client = protowrap.connect(this.url, this.cliOnConnected.bind(this), this.cliOnDisconnected.bind(this), this.cliOnMessage.bind(this));
@@ -52,6 +55,8 @@ export class openiap {
             this.client.Close();
     }
     async onConnected(client) {
+    }
+    async onSignedIn(client, jwt, user) {
     }
     async cliOnConnected(client) {
         var u = new URL(this.url);
@@ -228,31 +233,43 @@ export class openiap {
                 return value;
         });
     }
+    isdoingsignin = false;
     async Signin(options) {
-        const opt = Object.assign(new SigninDefaults(), options);
-        let message = SigninRequest.create({ username: opt.username, password: opt.password, ping: opt.ping, longtoken: opt.longtoken });
-        if (opt.jwt != null && opt.jwt != "") {
-            message = SigninRequest.create({ jwt: opt.jwt, ping: opt.ping });
-        }
-        const data = Any.create({ type_url: "type.googleapis.com/openiap.SigninRequest", value: SigninRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "signin", data, jwt: opt.jwt });
-        const result = SigninResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
-        if (options.validateonly) {
-            info("Validated " + result.user.name);
-            return result;
-        }
-        if (result.config != null && result.config != "") {
+        this.isdoingsignin = true;
+        try {
+            const opt = Object.assign(new SigninDefaults(), options);
+            let message = SigninRequest.create({ username: opt.username, password: opt.password, ping: opt.ping, longtoken: opt.longtoken });
+            if (opt.jwt != null && opt.jwt != "") {
+                message = SigninRequest.create({ jwt: opt.jwt, ping: opt.ping });
+            }
+            const data = Any.create({ type_url: "type.googleapis.com/openiap.SigninRequest", value: SigninRequest.encode(message).finish() });
+            const payload = Envelope.create({ command: "signin", data, jwt: opt.jwt });
+            const result = SigninResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+            if (options.validateonly) {
+                info("Validated " + result.user.name);
+                return result;
+            }
+            if (result.config != null && result.config != "") {
+                try {
+                    this.flowconfig = JSON.parse(result.config);
+                }
+                catch (error) {
+                }
+            }
+            info("Signed in as " + result.user.name);
+            this.signedin = true;
+            this.client.jwt = result.jwt;
+            this.client.user = result.user;
             try {
-                this.flowconfig = JSON.parse(result.config);
+                this.onSignedIn(this.client, result.jwt, result.user);
             }
             catch (error) {
             }
+            return result;
         }
-        info("Signed in as " + result.user.name);
-        this.signedin = true;
-        this.client.jwt = result.jwt;
-        this.client.user = result.user;
-        return result;
+        finally {
+            this.isdoingsignin = false;
+        }
     }
     async ListCollections(options = {}) {
         const opt = Object.assign(new ListCollectionsDefaults(), options);
