@@ -1,8 +1,8 @@
-export { config } from "./config";
-export { protowrap } from "./protowrap";
-export { openiap } from "./openiap";
-export { Ace } from "./proto/ace";
-export { Envelope, User, Role, RefreshToken, ErrorResponse } from "./proto/base";
-export { Workitem, WorkItemQueue, WorkitemFile } from "./proto/workitems";
-export { WatchEvent } from "./proto/watch";
+export { config } from "./config.js";
+export { protowrap } from "./protowrap.js";
+export { openiap } from "./openiap.js";
+export { Ace } from "./proto/ace.js";
+export { Envelope, User, Role, RefreshToken, ErrorResponse } from "./proto/base.js";
+export { Workitem, WorkItemQueue, WorkitemFile } from "./proto/workitems.js";
+export { WatchEvent } from "./proto/watch.js";
 //# sourceMappingURL=index.js.map

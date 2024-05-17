@@ -1,4 +1,4 @@
-import { config } from "./config";
+import { config } from "./config.js";
 const { info, err, warn } = config;
 export class FakeStream {
     buffer;

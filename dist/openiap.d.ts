@@ -1,8 +1,8 @@
-import { client } from "./client";
-import { User, SigninResponse, DownloadResponse } from "./proto/base";
-import { UpdateResult } from "./proto/querys";
-import { QueueEvent } from "./proto/queues";
-import { Workitem } from "./proto/workitems";
+import { client } from "./client.js";
+import { User, SigninResponse, DownloadResponse } from "./proto/base.js";
+import { UpdateResult } from "./proto/querys.js";
+import { QueueEvent } from "./proto/queues.js";
+import { Workitem } from "./proto/workitems.js";
 export declare class openiap {
     url: string;
     jwt: string;

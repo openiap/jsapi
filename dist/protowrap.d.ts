@@ -1,5 +1,5 @@
-import { client } from "./client";
-import { Envelope } from "./proto/base";
+import { client } from "./client.js";
+import { Envelope } from "./proto/base.js";
 export declare class protowrap {
     static connect(apiurl: string, onConnected: any, onDisconnected: any, onMessage: any): client;
     static unpack(message: any): any[];

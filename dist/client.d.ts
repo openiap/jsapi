@@ -1,4 +1,4 @@
-import { Envelope } from "./proto/base";
+import { Envelope } from "./proto/base.js";
 export type clientType = "socket" | "pipe" | "ws" | "grpc" | "rest";
 export type clientAgent = "node" | "browser" | "nodered" | "openrpa";
 export declare class client {

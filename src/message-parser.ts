@@ -1,6 +1,6 @@
-import { config } from "./config";
+import { config } from "./config.js";
 const { info, err, warn }  = config;
-import { Envelope } from "./proto/base";
+import { Envelope } from "./proto/base.js";
 export class messageParser {
   seq: number;
   buffer: Uint8Array;

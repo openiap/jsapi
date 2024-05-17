@@ -1,4 +1,4 @@
-import { Envelope } from "./proto/base";
+import { Envelope } from "./proto/base.js";
 export declare class FakeStream {
     buffer: Uint8Array;
     readPointer: number;

@@ -1,10 +1,10 @@
 // import * as net from "net";
 // import * as  grpc from "@grpc/grpc-js";
 // import * as  WebSocket from "ws";
-import { protowrap } from "./protowrap";
-import { config } from "./config";
+import { protowrap } from "./protowrap.js";
+import { config } from "./config.js";
 const { info, err, warn } = config;
-import { Envelope } from "./proto/base";
+import { Envelope } from "./proto/base.js";
 export class client {
     id = "";
     seq = 0;

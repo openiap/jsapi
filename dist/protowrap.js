@@ -1,14 +1,14 @@
-import { client } from "./client";
-import { config } from "./config";
+import { client } from "./client.js";
+import { config } from "./config.js";
 const { info, err, warn } = config;
-import { messageParser } from "./message-parser";
-import { FakeStream } from "./FakeStream";
-import { Any } from "./proto/google/protobuf/any";
-import { BeginStream, DownloadRequest, DownloadResponse, EndStream, Envelope, ErrorResponse, GetElementResponse, RefreshToken, SigninRequest, SigninResponse, Stream, UploadRequest, UploadResponse } from "./proto/base";
-import { AggregateResponse, CountResponse, DeleteManyResponse, DeleteOneResponse, DropCollectionResponse, GetDocumentVersionResponse, InsertManyResponse, InsertOneResponse, InsertOrUpdateOneResponse, ListCollectionsResponse, CreateCollectionResponse, QueryResponse, UpdateDocumentResponse, UpdateOneResponse } from "./proto/querys";
-import { UnWatchResponse, WatchEvent, WatchResponse } from "./proto/watch";
-import { QueueEvent, QueueMessageResponse, RegisterExchangeResponse, RegisterQueueResponse, UnRegisterQueueResponse } from "./proto/queues";
-import { DeleteWorkitemResponse, PopWorkitemResponse, PushWorkitemResponse, UpdateWorkitemResponse } from "./proto/workitems";
+import { messageParser } from "./message-parser.js";
+import { FakeStream } from "./FakeStream.js";
+import { Any } from "./proto/google/protobuf/any.js";
+import { BeginStream, DownloadRequest, DownloadResponse, EndStream, Envelope, ErrorResponse, GetElementResponse, RefreshToken, SigninRequest, SigninResponse, Stream, UploadRequest, UploadResponse } from "./proto/base.js";
+import { AggregateResponse, CountResponse, DeleteManyResponse, DeleteOneResponse, DropCollectionResponse, GetDocumentVersionResponse, InsertManyResponse, InsertOneResponse, InsertOrUpdateOneResponse, ListCollectionsResponse, CreateCollectionResponse, QueryResponse, UpdateDocumentResponse, UpdateOneResponse } from "./proto/querys.js";
+import { UnWatchResponse, WatchEvent, WatchResponse } from "./proto/watch.js";
+import { QueueEvent, QueueMessageResponse, RegisterExchangeResponse, RegisterQueueResponse, UnRegisterQueueResponse } from "./proto/queues.js";
+import { DeleteWorkitemResponse, PopWorkitemResponse, PushWorkitemResponse, UpdateWorkitemResponse } from "./proto/workitems.js";
 export class protowrap {
     static connect(apiurl, onConnected, onDisconnected, onMessage) {
         const result = new client();

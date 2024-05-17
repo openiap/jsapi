@@ -1,4 +1,4 @@
-import { Envelope } from "./proto/base";
+import { Envelope } from "./proto/base.js";
 export declare class messageParser {
     seq: number;
     buffer: Uint8Array;
