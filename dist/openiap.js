@@ -76,17 +76,27 @@ export class openiap {
         if (_password == null)
             _password = "";
         if (_username != "" && _password != "") {
-            var user = await this.Signin({ username: _username, password: _password, ping: config.settings.DoPing });
-            if (this.loginresolve != null) {
-                this.loginresolve(user);
-                this.loginresolve = null;
+            try {
+                var user = await this.Signin({ username: _username, password: _password, ping: config.settings.DoPing });
+                if (this.loginresolve != null) {
+                    this.loginresolve(user);
+                    this.loginresolve = null;
+                }
+            }
+            catch (error) {
+                err(error);
             }
         }
         else if (_jwt != "") {
-            var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing });
-            if (this.loginresolve != null) {
-                this.loginresolve(user);
-                this.loginresolve = null;
+            try {
+                var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing });
+                if (this.loginresolve != null) {
+                    this.loginresolve(user);
+                    this.loginresolve = null;
+                }
+            }
+            catch (error) {
+                err(error);
             }
         }
         try {
