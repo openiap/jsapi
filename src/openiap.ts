@@ -32,15 +32,6 @@ export class openiap {
             }
             
             if (this.loginresolve == null) this.loginresolve = resolve;
-            setTimeout(() => {
-                try {
-                    // this.client.onConnected = this.cliOnConnected.bind(this);
-                    // this.client.onDisconnected = this.cliOnDisconnected.bind(this);
-                    // this.client.onMessage = this.cliOnMessage.bind(this);
-                } catch (error) {
-                    this.cliOnDisconnected(this.client, error);
-                }
-            }, this.reconnectms);
         });
     }
     Close() {
@@ -75,7 +66,9 @@ export class openiap {
                     this.loginresolve = null;
                 }
             } catch (error) {
-                err(error);                
+                err(error);
+                this.Close();
+                return;
             }
         } else if (_jwt != "") {
             try {
@@ -85,7 +78,9 @@ export class openiap {
                     this.loginresolve = null;
                 }
             } catch (error) {
-                err(error);                
+                err(error);
+                this.Close();
+                return;
             }
         }
         try {
@@ -120,7 +115,10 @@ export class openiap {
         } catch (error) {
             err(error)
         }
-        this.connect(false);
+        setTimeout(() => {
+            this.connect(false);
+        }, this.reconnectms);
+        
     }
     onWatch(id: string, operation: string, document: any) {
         // info("watchevent " + operation + " " + document._id);
