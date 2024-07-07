@@ -322,6 +322,54 @@ export class openiap {
         const result = QueryResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return JSON.parse(result.results);
     }
+    /**
+     * Query a collection for data and return the first document
+     * @param options {@link FindOneOptions}
+     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+     * @returns a document matching the query
+     * @example
+     * Get the first document with type "test" from entities collection
+     * ```typescript
+     * const result = await client.FindOne({ query: { "_type": "test" } });
+     * ```
+     * @example
+     * Get the first document with type "test" from entities collection and only return the name field
+     * ```typescript
+     * const result = await client.FindOne({ collectionname: "entities", query: { "_type": "test" }, projection: { "name": 1 } });
+     * ```
+     * @example
+     * Get the first document with type "test" from entities collection and only return the name field and order by name
+     * ```typescript
+     * const result = await client.FindOne({ collectionname: "entities", query: { "_type": "test" }, projection: { "name": 1 }, orderby: { "name": 1 } });
+     * ```
+     */
+    async FindOne(options, priority = 2) {
+        if (!this.connected)
+            throw new Error("Not connected to server");
+        if (!this.signedin)
+            throw new Error("Not signed in to server");
+        const opt = Object.assign(new FindOneDefaults(), options);
+        let message = QueryRequest.create(opt);
+        message.top = 1;
+        if (typeof message.query == "object")
+            message.query = this.stringify(message.query);
+        if (typeof message.orderby == "object")
+            message.orderby = this.stringify(message.orderby);
+        if (typeof message.projection == "object")
+            message.projection = this.stringify(message.projection);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.QueryRequest", "value": QueryRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "query", data, jwt: opt.jwt });
+        payload.priority = priority;
+        const result = QueryResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        if (result.results == null || result.results == "")
+            return null;
+        var array = JSON.parse(result.results);
+        if (!Array.isArray(array))
+            return null;
+        if (array.length == 0)
+            return null;
+        return array[0];
+    }
     async GetDocumentVersion(options) {
         const opt = Object.assign(new GetDocumentVersionDefaults(), options);
         let message = GetDocumentVersionRequest.create(opt);
@@ -653,6 +701,10 @@ class QueryDefaults {
     top = 100;
     skip = 0;
     explain = false;
+}
+class FindOneDefaults {
+    collectionname = "entities";
+    query = {};
 }
 class GetDocumentVersionDefaults {
     collectionname = "entities";

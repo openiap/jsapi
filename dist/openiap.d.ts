@@ -36,6 +36,28 @@ export declare class openiap {
     CreateCollection(options: CreateCollectionOptions, priority?: number): Promise<void>;
     DropCollection(options: DropCollectionOptions): Promise<void>;
     Query<T>(options: QueryOptions): Promise<T[]>;
+    /**
+     * Query a collection for data and return the first document
+     * @param options {@link FindOneOptions}
+     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+     * @returns a document matching the query
+     * @example
+     * Get the first document with type "test" from entities collection
+     * ```typescript
+     * const result = await client.FindOne({ query: { "_type": "test" } });
+     * ```
+     * @example
+     * Get the first document with type "test" from entities collection and only return the name field
+     * ```typescript
+     * const result = await client.FindOne({ collectionname: "entities", query: { "_type": "test" }, projection: { "name": 1 } });
+     * ```
+     * @example
+     * Get the first document with type "test" from entities collection and only return the name field and order by name
+     * ```typescript
+     * const result = await client.FindOne({ collectionname: "entities", query: { "_type": "test" }, projection: { "name": 1 }, orderby: { "name": 1 } });
+     * ```
+     */
+    FindOne<T>(options: FindOneOptions, priority?: number): Promise<T>;
     GetDocumentVersion<T>(options: GetDocumentVersionOptions): Promise<T[]>;
     Count(options: CountOptions): Promise<number>;
     Distinct(options: DistinctOptions): Promise<string[]>;
@@ -128,6 +150,14 @@ export type QueryOptions = {
     orderby?: Object | string;
     queryas?: string;
     explain?: boolean;
+    jwt?: string;
+};
+export type FindOneOptions = {
+    collectionname?: string;
+    query?: object;
+    projection?: Object;
+    orderby?: Object | string;
+    queryas?: string;
     jwt?: string;
 };
 export type GetDocumentVersionOptions = {
