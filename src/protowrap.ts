@@ -119,6 +119,9 @@ export class protowrap {
                 case "aggregatereply":
                     msg = AggregateResponse.decode(data);
                     break;
+                case "distinctreply":
+                    msg = QueryResponse.decode(data);
+                    break;
                 case "countreply":
                     msg = CountResponse.decode(data);
                     break;
