@@ -70,6 +70,8 @@ export declare class openiap {
     InsertOrUpdateMany<T>(options: InsertOrUpdateManyOptions): Promise<T[]>;
     DeleteOne(options: DeleteOneOptions): Promise<number>;
     DeleteMany(options: DeleteManyOptions): Promise<number>;
+    DropIndex(options: DropIndexOptions): Promise<void>;
+    CreateIndex(options: CreateIndexOptions): Promise<string>;
     watchids: any;
     Watch(options: WatchOptions, callback: any): Promise<string>;
     UnWatch(options: UnWatchOptions): Promise<void>;
@@ -90,6 +92,7 @@ export declare class openiap {
     DeleteWorkitem(options: DeleteWorkitemOptions): Promise<void>;
     CustomCommand<T>(options: CustomCommandOptions): Promise<string>;
     CreateWorkflowInstance(options: CreateWorkflowInstanceOptions): Promise<string>;
+    GetIndexes(options: GetIndexesOptions): Promise<string[]>;
 }
 export type SigninOptions = {
     username?: string;
@@ -348,5 +351,21 @@ export type CreateWorkflowInstanceOptions = {
     resultqueue: string;
     data: any;
     initialrun: boolean;
+    jwt?: string;
+};
+export type GetIndexesOptions = {
+    collectionname: string;
+    jwt?: string;
+};
+export type DropIndexOptions = {
+    collectionname: string;
+    name: string;
+    jwt?: string;
+};
+export type CreateIndexOptions = {
+    collectionname: string;
+    index: string;
+    options?: string;
+    name?: string;
     jwt?: string;
 };

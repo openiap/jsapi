@@ -2,11 +2,12 @@ import { protowrap } from "./protowrap.js";
 import { config } from "./config.js";
 const { info, err, warn } = config;
 import { Any } from "./proto/google/protobuf/any.js";
-import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken } from "./proto/base.js";
+import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken, GetIndexesRequest, GetIndexesResponse, DropIndexRequest } from "./proto/base.js";
 import { ListCollectionsRequest, CreateCollectionRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys.js";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues.js";
 import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch.js";
 import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems.js";
+import { CreateIndexRequest, CreateIndexResponse } from "./proto/base.js";
 export class openiap {
     url;
     jwt;
@@ -489,6 +490,21 @@ export class openiap {
         const result = DeleteManyResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.affectedrows;
     }
+    async DropIndex(options) {
+        const opt = Object.assign(new DropIndexDefaults(), options);
+        let message = DropIndexRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.DropIndexRequest", "value": DropIndexRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "dropindex", data, jwt: opt.jwt });
+        await protowrap.RPC(this.client, payload);
+    }
+    async CreateIndex(options) {
+        const opt = Object.assign(new CreateIndexDefaults(), options);
+        let message = CreateIndexRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.CreateIndexRequest", "value": CreateIndexRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "createindex", data, jwt: opt.jwt });
+        const result = CreateIndexResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return result.result;
+    }
     watchids = {};
     async Watch(options, callback) {
         if (!callback)
@@ -680,6 +696,14 @@ export class openiap {
         const result = CreateWorkflowInstanceResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.instanceid;
     }
+    async GetIndexes(options) {
+        const opt = Object.assign(new GetIndexesDefaults(), options);
+        let message = GetIndexesRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.GetIndexesRequest", "value": GetIndexesRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "getindexes", data, jwt: opt.jwt });
+        const result = GetIndexesResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return JSON.parse(result.results);
+    }
 }
 class SigninDefaults {
     ping = true;
@@ -789,5 +813,15 @@ class CustomCommandDefaults {
 }
 class CreateWorkflowInstanceDefaults {
     initialrun = false;
+}
+class GetIndexesDefaults {
+    collectionname = "entities";
+}
+class DropIndexDefaults {
+    collectionname = "entities";
+}
+class CreateIndexDefaults {
+    options = "{}";
+    name = "";
 }
 //# sourceMappingURL=openiap.js.map
