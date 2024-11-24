@@ -3,11 +3,12 @@ import { protowrap } from "./protowrap.js";
 import { config } from "./config.js";
 const { info, err, warn } = config;
 import { Any } from "./proto/google/protobuf/any.js";
-import { User, SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, DownloadResponse, UploadResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken } from "./proto/base.js";
+import { User, SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementResponse, DownloadResponse, UploadResponse, CustomCommandRequest, CustomCommandResponse, PingRequest, RefreshToken, GetIndexesRequest, GetIndexesResponse, DropIndexRequest, DropIndexResponse } from "./proto/base.js";
 import { ListCollectionsRequest, CreateCollectionRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateResult, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys.js";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, QueueEvent, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues.js";
 import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch.js";
 import { Workitem, PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems.js";
+import { CreateIndexRequest, CreateIndexResponse } from "./proto/base.js";
 
 export class openiap {
     client: client;
@@ -278,6 +279,7 @@ export class openiap {
         const payload = Envelope.create({ command: "dropcollection", data, jwt: opt.jwt });
         const result = await protowrap.RPC(this.client, payload);
     }
+    
     async Query<T>(options: QueryOptions): Promise<T[]> {
         const opt: QueryOptions = Object.assign(new QueryDefaults(), options)
         let message = QueryRequest.create(opt as any);
@@ -436,6 +438,21 @@ export class openiap {
         const payload = Envelope.create({ command: "deletemany", data });
         const result = DeleteManyResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.affectedrows;
+    }
+    async DropIndex(options: DropIndexOptions): Promise<void> {
+        const opt: DropIndexOptions = Object.assign(new DropIndexDefaults(), options);
+        let message = DropIndexRequest.create(opt as any);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.DropIndexRequest", "value": DropIndexRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "dropindex", data, jwt: opt.jwt });
+        await protowrap.RPC(this.client, payload);
+    }
+    async CreateIndex(options: CreateIndexOptions): Promise<string> {
+        const opt: CreateIndexOptions = Object.assign(new CreateIndexDefaults(), options);
+        let message = CreateIndexRequest.create(opt as any);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.CreateIndexRequest", "value": CreateIndexRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "createindex", data, jwt: opt.jwt });
+        const result = CreateIndexResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return result.result;
     }
     watchids: any = {};
     async Watch(options: WatchOptions, callback: any): Promise<string> {
@@ -613,6 +630,14 @@ export class openiap {
         const payload = Envelope.create({ command: "createworkflowinstance", data, jwt: opt.jwt });
         const result = CreateWorkflowInstanceResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.instanceid;
+    }
+    async GetIndexes(options: GetIndexesOptions): Promise<string[]> {
+        const opt: GetIndexesOptions = Object.assign(new GetIndexesDefaults(), options);
+        let message = GetIndexesRequest.create(opt as any);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.GetIndexesRequest", "value": GetIndexesRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "getindexes", data, jwt: opt.jwt });
+        const result = GetIndexesResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return JSON.parse(result.results);
     }
 }
 export type SigninOptions = {
@@ -984,4 +1009,30 @@ export type CreateWorkflowInstanceOptions = {
 }
 class CreateWorkflowInstanceDefaults {
     initialrun: boolean = false;
+}
+export type GetIndexesOptions = {
+    collectionname: string;
+    jwt?: string;
+}
+class GetIndexesDefaults {
+    collectionname: string = "entities";
+}
+export type DropIndexOptions = {
+    collectionname: string;
+    name: string;
+    jwt?: string;
+}
+class DropIndexDefaults {
+    collectionname: string = "entities";
+}
+export type CreateIndexOptions = {
+    collectionname: string;
+    index: string;
+    options?: string;
+    name?: string;
+    jwt?: string;
+}
+class CreateIndexDefaults {
+    options: string = "{}";
+    name: string = "";
 }
