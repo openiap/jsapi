@@ -101,6 +101,15 @@ export class protowrap {
                 case "dropcollectionreply":
                     msg = DropCollectionResponse.decode(data);
                     break;
+                case "getindexesreply":
+                    msg = ListCollectionsResponse.decode(data);
+                    break;
+                case "dropindexreply":
+                    msg = DropCollectionResponse.decode(data);
+                    break;
+                case "createindexreply":
+                    msg = CreateCollectionResponse.decode(data);
+                    break;
                 case "queryreply":
                     msg = QueryResponse.decode(data);
                     break;
