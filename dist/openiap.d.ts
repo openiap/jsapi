@@ -92,7 +92,7 @@ export declare class openiap {
     DeleteWorkitem(options: DeleteWorkitemOptions): Promise<void>;
     CustomCommand<T>(options: CustomCommandOptions): Promise<string>;
     CreateWorkflowInstance(options: CreateWorkflowInstanceOptions): Promise<string>;
-    GetIndexes(options: GetIndexesOptions): Promise<string[]>;
+    GetIndexes(options: GetIndexesOptions): Promise<any[]>;
 }
 export type SigninOptions = {
     username?: string;

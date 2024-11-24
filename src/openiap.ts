@@ -631,7 +631,7 @@ export class openiap {
         const result = CreateWorkflowInstanceResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.instanceid;
     }
-    async GetIndexes(options: GetIndexesOptions): Promise<string[]> {
+    async GetIndexes(options: GetIndexesOptions): Promise<any[]> {
         const opt: GetIndexesOptions = Object.assign(new GetIndexesDefaults(), options);
         let message = GetIndexesRequest.create(opt as any);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.GetIndexesRequest", "value": GetIndexesRequest.encode(message).finish() });
