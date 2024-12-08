@@ -262,8 +262,6 @@ export class openiap {
  * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
  */
     async CreateCollection(options: CreateCollectionOptions, priority: number = 2): Promise<void> {
-        // if (!this.connected) throw new Error("Not connected to server");
-        if (!this.signedin) throw new Error("Not signed in to server");
         const opt: CreateCollectionOptions = Object.assign(new CreateCollectionDefaults(), options)
         let message = CreateCollectionRequest.create(opt as any);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.CreateCollectionRequest", "value": CreateCollectionRequest.encode(message).finish() })
@@ -313,8 +311,6 @@ export class openiap {
      * ```
      */
     async FindOne<T>(options: FindOneOptions, priority: number = 2): Promise<T> {
-        if (!this.connected) throw new Error("Not connected to server");
-        if (!this.signedin) throw new Error("Not signed in to server");
         const opt: FindOneOptions = Object.assign(new FindOneDefaults(), options)
         let message = QueryRequest.create(opt as any);
         message.top = 1;
