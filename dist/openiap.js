@@ -319,7 +319,7 @@ export class openiap {
         if (typeof message.projection == "object")
             message.projection = this.stringify(message.projection);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.QueryRequest", "value": QueryRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "query", data });
+        const payload = Envelope.create({ command: "query", data, jwt: opt.jwt });
         const result = QueryResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return JSON.parse(result.results);
     }
@@ -375,7 +375,7 @@ export class openiap {
         const opt = Object.assign(new GetDocumentVersionDefaults(), options);
         let message = GetDocumentVersionRequest.create(opt);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.GetDocumentVersionRequest", "value": GetDocumentVersionRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "getdocumentversion", data });
+        const payload = Envelope.create({ command: "getdocumentversion", data, jwt: opt.jwt });
         const result = GetDocumentVersionResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return JSON.parse(result.result);
     }
@@ -416,7 +416,7 @@ export class openiap {
         if (typeof message.item == "object")
             message.item = JSON.stringify(message.item);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.InsertOneRequest", "value": InsertOneRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "insertone", data });
+        const payload = Envelope.create({ command: "insertone", data, jwt: opt.jwt });
         const result = InsertOneResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return JSON.parse(result.result);
     }
@@ -436,7 +436,7 @@ export class openiap {
         if (typeof message.item == "object")
             message.item = JSON.stringify(message.item);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.UpdateOneRequest", "value": UpdateOneRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "updateone", data });
+        const payload = Envelope.create({ command: "updateone", data, jwt: opt.jwt });
         const result = UpdateOneResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return JSON.parse(result.result);
     }
@@ -486,7 +486,7 @@ export class openiap {
         if (typeof message.query == "object")
             message.query = this.stringify(message.query);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.DeleteManyRequest", "value": DeleteManyRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "deletemany", data });
+        const payload = Envelope.create({ command: "deletemany", data, jwt: opt.jwt });
         const result = DeleteManyResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.affectedrows;
     }
@@ -533,7 +533,7 @@ export class openiap {
         delete this.watchids[opt.id];
         let message = UnWatchRequest.create(opt);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.UnWatchRequest", "value": UnWatchRequest.encode(message).finish() });
-        const payload = Envelope.create({ command: "unwatch", data });
+        const payload = Envelope.create({ command: "unwatch", data, jwt: opt.jwt });
         const result = await protowrap.RPC(this.client, payload);
     }
     async GetElement(xpath) {
@@ -545,10 +545,10 @@ export class openiap {
     }
     async DownloadFile(options) {
         const opt = Object.assign(new DownloadFileDefaults(), options);
-        return await protowrap.DownloadFile(this.client, opt.id, opt.collectionname, opt.filename);
+        return await protowrap.DownloadFile(this.client, opt.id, opt.collectionname, opt.filename, opt.jwt);
     }
-    async UploadFile(filename, mimetype, content) {
-        return protowrap.UploadFile(this.client, filename, mimetype, content);
+    async UploadFile(filename, mimetype, content, jwt) {
+        return protowrap.UploadFile(this.client, filename, mimetype, content, jwt);
     }
     queues = {};
     defaltqueue = "";

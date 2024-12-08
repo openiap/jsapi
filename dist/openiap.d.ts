@@ -77,7 +77,7 @@ export declare class openiap {
     UnWatch(options: UnWatchOptions): Promise<void>;
     GetElement(xpath: string): Promise<string>;
     DownloadFile(options: DownloadFileOptions): Promise<DownloadResponse>;
-    UploadFile(filename: string, mimetype: string, content: Uint8Array): Promise<string>;
+    UploadFile(filename: string, mimetype: string, content: Uint8Array, jwt: string): Promise<string>;
     queues: any;
     defaltqueue: string;
     RegisterQueue(options: RegisterQueueOptions, callback: (msg: QueueEvent, payload: any, user: any, jwt: string) => any): Promise<string>;
@@ -259,6 +259,7 @@ export type WatchOptions = {
 };
 export type UnWatchOptions = {
     id: string;
+    jwt?: string;
 };
 export type DownloadFileOptions = {
     id?: string;

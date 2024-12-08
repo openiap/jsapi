@@ -367,7 +367,7 @@ export class protowrap {
         client.streams[rid] = { stream, chunks: 0, bytes: 0 };
         return client.streams[rid];
     }
-    static DownloadFile(client, id, collectionname, filename) {
+    static DownloadFile(client, id, collectionname, filename, jwt) {
         return new Promise(async (resolve, reject) => {
             try {
                 var msg = { id, filename, collectionname };
@@ -378,7 +378,7 @@ export class protowrap {
                 if (msg.collectionname == null)
                     msg.collectionname = "";
                 const data = Any.create({ "typeUrl": "type.googleapis.com/openiap.DownloadRequest", "value": DownloadRequest.encode(msg).finish() });
-                const payload = Envelope.create({ command: "download", data });
+                const payload = Envelope.create({ command: "download", data, jwt: jwt });
                 const [rid, promise] = this._RPC(client, payload);
                 promise.catch((error) => {
                     console.error(error);
@@ -395,11 +395,11 @@ export class protowrap {
             }
         });
     }
-    static UploadFile(client, filename, mimetype, content) {
+    static UploadFile(client, filename, mimetype, content, jwt) {
         return new Promise(async (resolve, reject) => {
             const uploaddata = Any.create({ "typeUrl": "type.googleapis.com/openiap.UploadRequest",
                 "value": UploadRequest.encode(UploadRequest.create({ filename, mimetype })).finish() });
-            const payload = Envelope.create({ command: "upload", data: uploaddata });
+            const payload = Envelope.create({ command: "upload", data: uploaddata, jwt: jwt });
             const [rid, promise] = this._RPC(client, payload);
             const chunksize = 5 * 1024 * 1024;
             const chunks = Math.ceil(content.length / chunksize);
