@@ -4,7 +4,7 @@ const { info, err, warn }  = config;
 import { messageParser } from "./message-parser.js";
 import { FakeStream } from "./FakeStream.js";
 import { Any } from "./proto/google/protobuf/any.js";
-import { BeginStream, DownloadRequest, DownloadResponse, EndStream, Envelope, ErrorResponse, GetElementResponse, RefreshToken, SigninRequest, SigninResponse, Stream, UploadRequest, UploadResponse } from "./proto/base.js";
+import { BeginStream, CustomCommandResponse, DownloadRequest, DownloadResponse, EndStream, Envelope, ErrorResponse, GetElementResponse, RefreshToken, SigninRequest, SigninResponse, Stream, UploadRequest, UploadResponse } from "./proto/base.js";
 import { AggregateResponse, CountResponse, DeleteManyResponse, DeleteOneResponse, DropCollectionResponse, GetDocumentVersionResponse, InsertManyResponse, InsertOneResponse, InsertOrUpdateOneResponse, ListCollectionsResponse, CreateCollectionResponse, QueryResponse, UpdateDocumentResponse, UpdateOneResponse } from "./proto/querys.js";
 import { UnWatchResponse, WatchEvent, WatchResponse } from "./proto/watch.js";
 import { QueueEvent, QueueMessageResponse, RegisterExchangeResponse, RegisterQueueResponse, UnRegisterQueueResponse } from "./proto/queues.js";
@@ -82,6 +82,9 @@ export class protowrap {
                     break;
                 case "getelement":
                     msg = GetElementResponse.decode(data);
+                    break;
+                case "customcommandreply":
+                    msg = CustomCommandResponse.decode(data);
                     break;
                 case "signin":
                     msg = SigninRequest.decode(data);
