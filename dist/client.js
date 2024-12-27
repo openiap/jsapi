@@ -9,9 +9,9 @@ export class client {
     id = "";
     seq = 0;
     remoteip = "unknown";
-    agent;
+    agent = "browser";
     protocol = "ws";
-    version = "0.0.1";
+    version = "0.0.17";
     doping = false;
     created = new Date();
     lastheartbeat = new Date();

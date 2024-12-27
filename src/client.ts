@@ -12,9 +12,9 @@ export class client {
   public id: string = "";
   public seq: number = 0;
   public remoteip: string = "unknown";
-  public agent: clientAgent | undefined;
+  public agent: clientAgent = "browser";
   public protocol: clientType = "ws";
-  public version: string = "0.0.1";
+  public version: string = "0.0.17";
   public doping: boolean = false;
   public created: Date = new Date();
   public lastheartbeat: Date = new Date();

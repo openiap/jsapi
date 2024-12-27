@@ -5,7 +5,7 @@ export declare class client {
     id: string;
     seq: number;
     remoteip: string;
-    agent: clientAgent | undefined;
+    agent: clientAgent;
     protocol: clientType;
     version: string;
     doping: boolean;

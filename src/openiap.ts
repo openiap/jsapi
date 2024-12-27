@@ -61,7 +61,7 @@ export class openiap {
 
         if (_username != "" && _password != "") {
             try {
-                var user = await this.Signin({ username: _username, password: _password, ping: config.settings.DoPing })
+                var user = await this.Signin({ username: _username, password: _password, ping: config.settings.DoPing, agent: client.agent,version: client.version })
                 if (this.loginresolve != null) {
                     this.loginresolve(user);
                     this.loginresolve = null;
@@ -73,7 +73,7 @@ export class openiap {
             }
         } else if (_jwt != "") {
             try {
-                var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing })
+                var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing, agent: client.agent,version: client.version })
                 if (this.loginresolve != null) {
                     this.loginresolve(user);
                     this.loginresolve = null;
@@ -649,8 +649,8 @@ export type SigninOptions = {
 class SigninDefaults {
     ping: boolean = true;
     validateonly: boolean = false;
-    agent: string = "nodeagent"
-    version: string = "0.0.1"
+    agent: string = "browser"
+    version: string = "0.0.17"
     longtoken: boolean = false;
 }
 export type ListCollectionsOptions = {

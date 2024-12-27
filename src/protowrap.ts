@@ -221,6 +221,7 @@ export class protowrap {
                         if (command == "error") {
                             var _er = JSON.parse(JSON.stringify(msg));
                             var error = new Error(_er.message);
+                            console.log(client.replies[rid].command, "failed with:", error.message);
                             // @ts-ignore
                             error.serverstack = _er.stack;
                             // @ts-ignore
