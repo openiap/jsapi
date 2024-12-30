@@ -11,7 +11,7 @@ export class client {
     remoteip = "unknown";
     agent = "browser";
     protocol = "ws";
-    version = "0.0.17";
+    version = "0.0.18";
     doping = false;
     created = new Date();
     lastheartbeat = new Date();

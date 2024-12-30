@@ -154,6 +154,7 @@ export class openiap {
             } else {
                 warn("Got watchevent for unknown id " + we.id);
             }
+            return null;
         } else if (message.command == "queueevent") {
             let we: QueueEvent = BLAHBLAH;
             if (this.queuecallbacks[we.correlationId] && (we.replyto == "" || we.replyto == null)) {
@@ -188,6 +189,7 @@ export class openiap {
         } else {
             info("Received unknown message from server: ");
             console.log("command", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
+            return null;
         }
         return reply;
     }
@@ -650,7 +652,7 @@ class SigninDefaults {
     ping: boolean = true;
     validateonly: boolean = false;
     agent: string = "browser"
-    version: string = "0.0.17"
+    version: string = "0.0.18"
     longtoken: boolean = false;
 }
 export type ListCollectionsOptions = {

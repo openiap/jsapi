@@ -170,6 +170,7 @@ export class openiap {
             else {
                 warn("Got watchevent for unknown id " + we.id);
             }
+            return null;
         }
         else if (message.command == "queueevent") {
             let we = BLAHBLAH;
@@ -213,6 +214,7 @@ export class openiap {
         else {
             info("Received unknown message from server: ");
             console.log("command", command, "BLAHBLAH", BLAHBLAH, "reply", reply);
+            return null;
         }
         return reply;
     }
@@ -702,7 +704,7 @@ class SigninDefaults {
     ping = true;
     validateonly = false;
     agent = "browser";
-    version = "0.0.17";
+    version = "0.0.18";
     longtoken = false;
 }
 class ListCollectionsDefaults {

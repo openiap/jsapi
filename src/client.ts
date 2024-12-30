@@ -14,7 +14,7 @@ export class client {
   public remoteip: string = "unknown";
   public agent: clientAgent = "browser";
   public protocol: clientType = "ws";
-  public version: string = "0.0.17";
+  public version: string = "0.0.18";
   public doping: boolean = false;
   public created: Date = new Date();
   public lastheartbeat: Date = new Date();
