@@ -70,7 +70,7 @@ export class openiap {
             try {
                 var user = await this.Signin({ username: _username, password: _password, ping: config.settings.DoPing, agent: client.agent, version: client.version });
                 if (this.loginresolve != null) {
-                    this.loginresolve(user);
+                    this.loginresolve(user.user);
                     this.loginresolve = null;
                 }
             }
@@ -84,7 +84,7 @@ export class openiap {
             try {
                 var user = await this.Signin({ jwt: _jwt, ping: config.settings.DoPing, agent: client.agent, version: client.version });
                 if (this.loginresolve != null) {
-                    this.loginresolve(user);
+                    this.loginresolve(user.user);
                     this.loginresolve = null;
                 }
             }
