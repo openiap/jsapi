@@ -32,12 +32,13 @@ export class openiap {
                     this.loginresolve(null);
                     this.loginresolve = null;
                 }
+                this.loginreject = null;
                 return;
             }
             if (this.loginresolve == null)
                 this.loginresolve = resolve;
             if (this.loginreject == null)
-                this.loginreject = resolve;
+                this.loginreject = reject;
         });
     }
     Close() {
