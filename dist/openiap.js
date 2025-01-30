@@ -19,12 +19,13 @@ export class openiap {
         this.jwt = jwt;
     }
     loginresolve;
+    loginreject;
     flowconfig = {};
     get connected() {
         return this.client.connected;
     }
     async connect(first) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this.client = protowrap.connect(this.url, this.cliOnConnected.bind(this), this.cliOnDisconnected.bind(this), this.cliOnMessage.bind(this));
             if (this.url == null || this.url == "") {
                 if (this.loginresolve != null) {
@@ -35,6 +36,8 @@ export class openiap {
             }
             if (this.loginresolve == null)
                 this.loginresolve = resolve;
+            if (this.loginreject == null)
+                this.loginreject = resolve;
         });
     }
     Close() {
@@ -75,8 +78,14 @@ export class openiap {
                 }
             }
             catch (error) {
-                err(error);
                 this.Close();
+                if (this.loginreject != null) {
+                    this.loginreject(error);
+                    this.loginreject = null;
+                }
+                else {
+                    err(error);
+                }
                 return;
             }
         }
@@ -89,8 +98,14 @@ export class openiap {
                 }
             }
             catch (error) {
-                err(error);
                 this.Close();
+                if (this.loginreject != null) {
+                    this.loginreject(error);
+                    this.loginreject = null;
+                }
+                else {
+                    err(error);
+                }
                 return;
             }
         }
