@@ -26,11 +26,13 @@ export class openiap {
         return new Promise<User>((resolve, reject) => {
             this.client = protowrap.connect(this.url, this.cliOnConnected.bind(this), this.cliOnDisconnected.bind(this), this.cliOnMessage.bind(this));
             if (this.url == null || this.url == "") {
-                if (this.loginresolve != null) {
-                    this.loginresolve(null);
-                    this.loginresolve = null;
-                }
-                this.loginreject = null;
+                // if (this.loginresolve != null) {
+                //     this.loginresolve(null);
+                //     this.loginresolve = null;
+                // }
+                // this.loginreject = null;
+                if (this.loginresolve == null) this.loginresolve = resolve;
+                if (this.loginreject == null) this.loginreject = reject;
                 return;
             }
 
