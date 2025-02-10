@@ -13,6 +13,7 @@ export class openiap {
     jwt;
     client;
     reconnectms = 100;
+    maxreconnectms = 30000;
     signedin = false;
     constructor(url, jwt) {
         this.url = url;
@@ -131,8 +132,8 @@ export class openiap {
     cliOnDisconnected(client, error) {
         this.reconnectms += 100;
         this.signedin = false;
-        if (this.reconnectms > 30000)
-            this.reconnectms = 30000;
+        if (this.reconnectms > this.maxreconnectms)
+            this.reconnectms = this.maxreconnectms;
         var msg = "";
         if (error) {
             var message = (error.message || error);

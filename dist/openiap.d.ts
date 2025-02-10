@@ -8,6 +8,7 @@ export declare class openiap {
     jwt: string;
     client: client;
     reconnectms: number;
+    maxreconnectms: number;
     signedin: boolean;
     constructor(url: string, jwt: string);
     loginresolve: any;

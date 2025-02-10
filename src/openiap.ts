@@ -13,6 +13,7 @@ import { CreateIndexRequest, CreateIndexResponse } from "./proto/base.js";
 export class openiap {
     client: client;
     reconnectms: number = 100;
+    maxreconnectms: number = 30000;
     public signedin: boolean = false;
     constructor(public url: string, public jwt: string) {
     }
@@ -117,7 +118,7 @@ export class openiap {
     cliOnDisconnected(client: client, error: Error) {
         this.reconnectms += 100;
         this.signedin = false;
-        if (this.reconnectms > 30000) this.reconnectms = 30000;
+        if (this.reconnectms > this.maxreconnectms) this.reconnectms = this.maxreconnectms;
         var msg: string = "";
         if (error) {
             var message: string = (error.message || error as any);
