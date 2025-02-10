@@ -129,7 +129,11 @@ export class openiap {
             info("Disconnected from server");
         }
         try {
-            this.onDisconnected(client, error);
+            if(this.client.connected) {
+                this.onDisconnected(client, error).catch(err => {
+                    console.error(err);
+                });
+            }
         } catch (error) {
             err(error)
         }

@@ -337,9 +337,9 @@ export class protowrap {
             }
             var keys = Object.keys(client.streams);
             if (client.connected == true || client.connecting == true) {
+                onClientDisconnected(client, error);
                 client.connected = false;
                 client.connecting = false;
-                onClientDisconnected(client, error);
             }
         }
         catch (e) {
