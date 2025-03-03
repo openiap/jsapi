@@ -2,7 +2,7 @@ import { client } from "./client.js";
 import { User, SigninResponse, DownloadResponse } from "./proto/base.js";
 import { UpdateResult } from "./proto/querys.js";
 import { QueueEvent } from "./proto/queues.js";
-import { Workitem } from "./proto/workitems.js";
+import { Workitem, WorkItemQueue } from "./proto/workitems.js";
 export declare class openiap {
     url: string;
     jwt: string;
@@ -92,6 +92,7 @@ export declare class openiap {
     PopWorkitem(options: PopWorkitemOptions): Promise<Workitem | undefined>;
     UpdateWorkitem(options: UpdateWorkitemOptions): Promise<Workitem>;
     DeleteWorkitem(options: DeleteWorkitemOptions): Promise<void>;
+    UpdateWorkitemQueue(options: UpdateWorkitemQueueOptions): Promise<WorkItemQueue>;
     CustomCommand<T>(options: CustomCommandOptions): Promise<string>;
     CreateWorkflowInstance(options: CreateWorkflowInstanceOptions): Promise<string>;
     GetIndexes(options: GetIndexesOptions): Promise<any[]>;
@@ -334,6 +335,12 @@ export type PopWorkitemOptions = {
 export type UpdateWorkitemOptions = {
     workitem: Workitem;
     ignoremaxretries?: boolean;
+    jwt?: string;
+};
+export type UpdateWorkitemQueueOptions = {
+    workitemqueue: WorkItemQueue;
+    skiprole?: boolean;
+    purge?: boolean;
     jwt?: string;
 };
 export type DeleteWorkitemOptions = {

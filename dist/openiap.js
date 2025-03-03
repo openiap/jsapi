@@ -6,7 +6,7 @@ import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementR
 import { ListCollectionsRequest, CreateCollectionRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys.js";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues.js";
 import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch.js";
-import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse } from "./proto/workitems.js";
+import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkItemQueueRequest, UpdateWorkItemQueueResponse } from "./proto/workitems.js";
 import { CreateIndexRequest, CreateIndexResponse } from "./proto/base.js";
 export class openiap {
     url;
@@ -698,8 +698,18 @@ export class openiap {
         const payload = Envelope.create({ command: "deleteworkitem", data, jwt: opt.jwt });
         const result = DeleteWorkitemResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
     }
+    async UpdateWorkitemQueue(options) {
+        const opt = Object.assign(new UpdateWorkitemQueueDefaults(), options);
+        let message = UpdateWorkItemQueueRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.UpdateWorkitemQueueRequest", "value": UpdateWorkItemQueueRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "updateworkitemqueue", data, jwt: opt.jwt });
+        const result = UpdateWorkItemQueueResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return result.workitemqueue;
+    }
     async CustomCommand(options) {
         const opt = Object.assign(new CustomCommandDefaults(), options);
+        if (opt.data != null && typeof opt.data !== 'string')
+            opt.data = JSON.stringify(opt.data);
         let message = CustomCommandRequest.create(opt);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.CustomCommand", "value": CustomCommandRequest.encode(message).finish() });
         const payload = Envelope.create({ command: "customcommand", data, jwt: opt.jwt });
@@ -826,6 +836,10 @@ class PopWorkitemDefaults {
 }
 class UpdateWorkitemDefaults {
     ignoremaxretries = false;
+}
+class UpdateWorkitemQueueDefaults {
+    skiprole = true;
+    purge = false;
 }
 class DeleteWorkitemDefaults {
 }
