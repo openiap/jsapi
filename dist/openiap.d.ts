@@ -93,6 +93,24 @@ export declare class openiap {
     UpdateWorkitem(options: UpdateWorkitemOptions): Promise<Workitem>;
     DeleteWorkitem(options: DeleteWorkitemOptions): Promise<void>;
     UpdateWorkitemQueue(options: UpdateWorkitemQueueOptions): Promise<WorkItemQueue>;
+    /**
+    * Create a new workitem queue. Workitem queues are registered in the wiq collection.
+    * @param options {@link AddWorkItemQueueOptions}
+    * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+    */
+    AddWorkItemQueue(options: AddWorkItemQueueOptions, priority?: number): Promise<WorkItemQueue>;
+    /**
+    * Create a new workitem queue. Workitem queues are registered in the wiq collection. To delete all items from qyueue, set purge to true.
+    * @param options {@link UpdateWorkItemQueueOptions}
+    * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+    */
+    UpdateWorkItemQueue(options: UpdateWorkItemQueueOptions, priority?: number): Promise<WorkItemQueue>;
+    /**
+    * Delete a workitem queue. Workitem queues are registered in the wiq collection. If queue has workitems in it, the request will fail, unless purge is set to true.
+    * @param options {@link DeleteWorkItemQueueOptions}
+    * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+    */
+    DeleteWorkItemQueue(options: DeleteWorkItemQueueOptions, priority?: number): Promise<void>;
     CustomCommand<T>(options: CustomCommandOptions): Promise<string>;
     CreateWorkflowInstance(options: CreateWorkflowInstanceOptions): Promise<string>;
     GetIndexes(options: GetIndexesOptions): Promise<any[]>;
@@ -352,6 +370,22 @@ export type CustomCommandOptions = {
     id?: string;
     name?: string;
     data?: string;
+    jwt?: string;
+};
+export type AddWorkItemQueueOptions = {
+    workitemqueue: WorkItemQueue;
+    skiprole?: boolean;
+    jwt?: string;
+};
+export type UpdateWorkItemQueueOptions = {
+    workitemqueue: WorkItemQueue;
+    skiprole?: boolean;
+    purge?: boolean;
+    jwt?: string;
+};
+export type DeleteWorkItemQueueOptions = {
+    wiq?: string;
+    wiqid?: string;
     jwt?: string;
 };
 export type CreateWorkflowInstanceOptions = {

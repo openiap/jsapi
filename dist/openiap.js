@@ -6,7 +6,7 @@ import { SigninResponse, SigninRequest, Envelope, GetElementRequest, GetElementR
 import { ListCollectionsRequest, CreateCollectionRequest, ListCollectionsResponse, DropCollectionRequest, QueryRequest, QueryResponse, GetDocumentVersionRequest, GetDocumentVersionResponse, CountRequest, CountResponse, AggregateRequest, AggregateResponse, InsertOneRequest, InsertOneResponse, InsertManyRequest, InsertManyResponse, UpdateOneRequest, UpdateOneResponse, UpdateDocumentRequest, UpdateDocumentResponse, InsertOrUpdateOneRequest, InsertOrUpdateOneResponse, InsertOrUpdateManyRequest, InsertOrUpdateManyResponse, DeleteOneRequest, DeleteOneResponse, DeleteManyRequest, DeleteManyResponse, DistinctRequest, DistinctResponse } from "./proto/querys.js";
 import { RegisterQueueRequest, RegisterQueueResponse, RegisterExchangeRequest, RegisterExchangeResponse, UnRegisterQueueRequest, QueueMessageRequest, CreateWorkflowInstanceRequest, CreateWorkflowInstanceResponse } from "./proto/queues.js";
 import { WatchRequest, WatchResponse, UnWatchRequest, WatchEvent } from "./proto/watch.js";
-import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkItemQueueRequest, UpdateWorkItemQueueResponse } from "./proto/workitems.js";
+import { PushWorkitemRequest, PushWorkitemResponse, PopWorkitemRequest, PopWorkitemResponse, UpdateWorkitemRequest, UpdateWorkitemResponse, DeleteWorkitemRequest, DeleteWorkitemResponse, PushWorkitemsRequest, PushWorkitemsResponse, UpdateWorkItemQueueRequest, UpdateWorkItemQueueResponse, AddWorkItemQueueRequest, AddWorkItemQueueResponse, DeleteWorkItemQueueRequest } from "./proto/workitems.js";
 import { CreateIndexRequest, CreateIndexResponse } from "./proto/base.js";
 export class openiap {
     url;
@@ -706,6 +706,59 @@ export class openiap {
         const result = UpdateWorkItemQueueResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
         return result.workitemqueue;
     }
+    /**
+    * Create a new workitem queue. Workitem queues are registered in the wiq collection.
+    * @param options {@link AddWorkItemQueueOptions}
+    * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+    */
+    async AddWorkItemQueue(options, priority = 2) {
+        if (!this.connected)
+            throw new Error("Not connected to server");
+        if (!this.signedin)
+            throw new Error("Not signed in to server");
+        const opt = Object.assign(new AddWorkItemQueueDefaults(), options);
+        let message = AddWorkItemQueueRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.AddWorkItemQueueRequest", "value": AddWorkItemQueueRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "addworkitemqueue", data, jwt: opt.jwt });
+        payload.priority = priority;
+        const result = AddWorkItemQueueResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return result.workitemqueue;
+    }
+    /**
+    * Create a new workitem queue. Workitem queues are registered in the wiq collection. To delete all items from qyueue, set purge to true.
+    * @param options {@link UpdateWorkItemQueueOptions}
+    * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+    */
+    async UpdateWorkItemQueue(options, priority = 2) {
+        if (!this.connected)
+            throw new Error("Not connected to server");
+        if (!this.signedin)
+            throw new Error("Not signed in to server");
+        const opt = Object.assign(new UpdateWorkItemQueueDefaults(), options);
+        let message = UpdateWorkItemQueueRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.UpdateWorkItemQueueRequest", "value": UpdateWorkItemQueueRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "updateworkitemqueue", data, jwt: opt.jwt });
+        payload.priority = priority;
+        const result = UpdateWorkItemQueueResponse.decode((await protowrap.RPC(this.client, payload)).data.value);
+        return result.workitemqueue;
+    }
+    /**
+    * Delete a workitem queue. Workitem queues are registered in the wiq collection. If queue has workitems in it, the request will fail, unless purge is set to true.
+    * @param options {@link DeleteWorkItemQueueOptions}
+    * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
+    */
+    async DeleteWorkItemQueue(options, priority = 2) {
+        if (!this.connected)
+            throw new Error("Not connected to server");
+        if (!this.signedin)
+            throw new Error("Not signed in to server");
+        const opt = Object.assign(new DeleteWorkItemQueueDefaults(), options);
+        let message = DeleteWorkItemQueueRequest.create(opt);
+        const data = Any.create({ type_url: "type.googleapis.com/openiap.DeleteWorkItemQueueRequest", "value": DeleteWorkItemQueueRequest.encode(message).finish() });
+        const payload = Envelope.create({ command: "deleteworkitemqueue", data, jwt: opt.jwt });
+        payload.priority = priority;
+        await protowrap.RPC(this.client, payload);
+    }
     async CustomCommand(options) {
         const opt = Object.assign(new CustomCommandDefaults(), options);
         if (opt.data != null && typeof opt.data !== 'string')
@@ -842,6 +895,16 @@ class UpdateWorkitemQueueDefaults {
     purge = false;
 }
 class DeleteWorkitemDefaults {
+}
+class AddWorkItemQueueDefaults {
+    skiprole = false;
+}
+class UpdateWorkItemQueueDefaults {
+    skiprole = true;
+    purge = false;
+}
+class DeleteWorkItemQueueDefaults {
+    purge = false;
 }
 class CustomCommandDefaults {
 }
