@@ -1,6 +1,6 @@
 {
   "name": "@openiap/jsapi",
-  "version": "0.0.19.8",
+  "version": "0.0.19.9",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
