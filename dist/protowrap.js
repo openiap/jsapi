@@ -8,7 +8,7 @@ import { BeginStream, CustomCommandResponse, DownloadRequest, DownloadResponse, 
 import { AggregateResponse, CountResponse, DeleteManyResponse, DeleteOneResponse, DropCollectionResponse, GetDocumentVersionResponse, InsertManyResponse, InsertOneResponse, InsertOrUpdateOneResponse, ListCollectionsResponse, CreateCollectionResponse, QueryResponse, UpdateDocumentResponse, UpdateOneResponse } from "./proto/querys.js";
 import { UnWatchResponse, WatchEvent, WatchResponse } from "./proto/watch.js";
 import { QueueEvent, QueueMessageResponse, RegisterExchangeResponse, RegisterQueueResponse, UnRegisterQueueResponse } from "./proto/queues.js";
-import { DeleteWorkitemResponse, PopWorkitemResponse, PushWorkitemResponse, UpdateWorkItemQueueResponse, UpdateWorkitemResponse } from "./proto/workitems.js";
+import { DeleteWorkItemQueueResponse, DeleteWorkitemResponse, PopWorkitemResponse, PushWorkitemResponse, UpdateWorkItemQueueResponse, UpdateWorkitemResponse } from "./proto/workitems.js";
 export class protowrap {
     static connect(apiurl, onConnected, onDisconnected, onMessage) {
         const result = new client();
@@ -203,6 +203,9 @@ export class protowrap {
                     break;
                 case "updateworkitemqueuereply":
                     msg = UpdateWorkItemQueueResponse.decode(data);
+                    break;
+                case "deleteworkitemqueuereply":
+                    msg = DeleteWorkItemQueueResponse.decode(data);
                     break;
                 case "error":
                     msg = ErrorResponse.decode(data);
