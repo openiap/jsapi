@@ -24,6 +24,7 @@ function createBaseWorkitem() {
         errormessage: "",
         errorsource: "",
         errortype: "",
+        _workspaceid: "",
     };
 }
 export const Workitem = {
@@ -84,6 +85,9 @@ export const Workitem = {
         }
         if (message.errortype !== "") {
             writer.uint32(154).string(message.errortype);
+        }
+        if (message._workspaceid !== "") {
+            writer.uint32(162).string(message._workspaceid);
         }
         return writer;
     },
@@ -151,6 +155,9 @@ export const Workitem = {
                 case 19:
                     message.errortype = reader.string();
                     break;
+                case 20:
+                    message._workspaceid = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -179,6 +186,7 @@ export const Workitem = {
             errormessage: isSet(object.errormessage) ? String(object.errormessage) : "",
             errorsource: isSet(object.errorsource) ? String(object.errorsource) : "",
             errortype: isSet(object.errortype) ? String(object.errortype) : "",
+            _workspaceid: isSet(object._workspaceid) ? String(object._workspaceid) : "",
         };
     },
     toJSON(message) {
@@ -207,6 +215,7 @@ export const Workitem = {
         message.errormessage !== undefined && (obj.errormessage = message.errormessage);
         message.errorsource !== undefined && (obj.errorsource = message.errorsource);
         message.errortype !== undefined && (obj.errortype = message.errortype);
+        message._workspaceid !== undefined && (obj._workspaceid = message._workspaceid);
         return obj;
     },
     create(base) {
@@ -233,6 +242,7 @@ export const Workitem = {
         message.errormessage = object.errormessage ?? "";
         message.errorsource = object.errorsource ?? "";
         message.errortype = object.errortype ?? "";
+        message._workspaceid = object._workspaceid ?? "";
         return message;
     },
 };
@@ -1034,6 +1044,7 @@ function createBaseWorkItemQueue() {
         _modified: undefined,
         _version: 0,
         packageid: "",
+        _workspaceid: "",
     };
 }
 export const WorkItemQueue = {
@@ -1106,6 +1117,9 @@ export const WorkItemQueue = {
         }
         if (message.packageid !== "") {
             writer.uint32(186).string(message.packageid);
+        }
+        if (message._workspaceid !== "") {
+            writer.uint32(194).string(message._workspaceid);
         }
         return writer;
     },
@@ -1185,6 +1199,9 @@ export const WorkItemQueue = {
                 case 23:
                     message.packageid = reader.string();
                     break;
+                case 24:
+                    message._workspaceid = reader.string();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -1217,6 +1234,7 @@ export const WorkItemQueue = {
             _modified: isSet(object._modified) ? fromJsonTimestamp(object._modified) : undefined,
             _version: isSet(object._version) ? Number(object._version) : 0,
             packageid: isSet(object.packageid) ? String(object.packageid) : "",
+            _workspaceid: isSet(object._workspaceid) ? String(object._workspaceid) : "",
         };
     },
     toJSON(message) {
@@ -1249,6 +1267,7 @@ export const WorkItemQueue = {
         message._modified !== undefined && (obj._modified = message._modified.toISOString());
         message._version !== undefined && (obj._version = Math.round(message._version));
         message.packageid !== undefined && (obj.packageid = message.packageid);
+        message._workspaceid !== undefined && (obj._workspaceid = message._workspaceid);
         return obj;
     },
     create(base) {
@@ -1279,6 +1298,7 @@ export const WorkItemQueue = {
         message._modified = object._modified ?? undefined;
         message._version = object._version ?? 0;
         message.packageid = object.packageid ?? "";
+        message._workspaceid = object._workspaceid ?? "";
         return message;
     },
 };

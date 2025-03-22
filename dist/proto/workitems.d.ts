@@ -21,6 +21,7 @@ export interface Workitem {
     errormessage: string;
     errorsource: string;
     errortype: string;
+    _workspaceid: string;
 }
 export interface WorkitemFile {
     filename: string;
@@ -104,6 +105,7 @@ export interface WorkItemQueue {
     _modified: Date | undefined;
     _version: number;
     packageid: string;
+    _workspaceid: string;
 }
 export interface AddWorkItemQueueRequest {
     workitemqueue: WorkItemQueue | undefined;
@@ -157,6 +159,7 @@ export declare const Workitem: {
         errormessage?: string;
         errorsource?: string;
         errortype?: string;
+        _workspaceid?: string;
     } & {
         _id?: string;
         name?: string;
@@ -197,6 +200,7 @@ export declare const Workitem: {
         errormessage?: string;
         errorsource?: string;
         errortype?: string;
+        _workspaceid?: string;
     } & { [K_2 in Exclude<keyof I, keyof Workitem>]: never; }>(base?: I): Workitem;
     fromPartial<I_1 extends {
         _id?: string;
@@ -223,6 +227,7 @@ export declare const Workitem: {
         errormessage?: string;
         errorsource?: string;
         errortype?: string;
+        _workspaceid?: string;
     } & {
         _id?: string;
         name?: string;
@@ -263,6 +268,7 @@ export declare const Workitem: {
         errormessage?: string;
         errorsource?: string;
         errortype?: string;
+        _workspaceid?: string;
     } & { [K_5 in Exclude<keyof I_1, keyof Workitem>]: never; }>(object: I_1): Workitem;
 };
 export declare const WorkitemFile: {
@@ -430,6 +436,7 @@ export declare const PushWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
     } & {
         workitem?: {
@@ -457,6 +464,7 @@ export declare const PushWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -497,6 +505,7 @@ export declare const PushWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitem"], keyof Workitem>]: never; };
     } & { [K_3 in Exclude<keyof I, "workitem">]: never; }>(base?: I): PushWorkitemResponse;
     fromPartial<I_1 extends {
@@ -525,6 +534,7 @@ export declare const PushWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
     } & {
         workitem?: {
@@ -552,6 +562,7 @@ export declare const PushWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -592,6 +603,7 @@ export declare const PushWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitem"], keyof Workitem>]: never; };
     } & { [K_7 in Exclude<keyof I_1, "workitem">]: never; }>(object: I_1): PushWorkitemResponse;
 };
@@ -634,6 +646,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[];
     } & {
         wiq?: string;
@@ -669,6 +682,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[] & ({
             _id?: string;
             name?: string;
@@ -694,6 +708,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -734,6 +749,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["items"][number], keyof Workitem>]: never; })[] & { [K_3 in Exclude<keyof I["items"], keyof {
             _id?: string;
             name?: string;
@@ -759,6 +775,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[]>]: never; };
     } & { [K_4 in Exclude<keyof I, keyof PushWorkitemsRequest>]: never; }>(base?: I): PushWorkitemsRequest;
     fromPartial<I_1 extends {
@@ -795,6 +812,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[];
     } & {
         wiq?: string;
@@ -830,6 +848,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[] & ({
             _id?: string;
             name?: string;
@@ -855,6 +874,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -895,6 +915,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_7 in Exclude<keyof I_1["items"][number], keyof Workitem>]: never; })[] & { [K_8 in Exclude<keyof I_1["items"], keyof {
             _id?: string;
             name?: string;
@@ -920,6 +941,7 @@ export declare const PushWorkitemsRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[]>]: never; };
     } & { [K_9 in Exclude<keyof I_1, keyof PushWorkitemsRequest>]: never; }>(object: I_1): PushWorkitemsRequest;
 };
@@ -954,6 +976,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[];
     } & {
         workitems?: {
@@ -981,6 +1004,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[] & ({
             _id?: string;
             name?: string;
@@ -1006,6 +1030,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1046,6 +1071,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitems"][number], keyof Workitem>]: never; })[] & { [K_3 in Exclude<keyof I["workitems"], keyof {
             _id?: string;
             name?: string;
@@ -1071,6 +1097,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[]>]: never; };
     } & { [K_4 in Exclude<keyof I, "workitems">]: never; }>(base?: I): PushWorkitemsResponse;
     fromPartial<I_1 extends {
@@ -1099,6 +1126,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[];
     } & {
         workitems?: {
@@ -1126,6 +1154,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[] & ({
             _id?: string;
             name?: string;
@@ -1151,6 +1180,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1191,6 +1221,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_7 in Exclude<keyof I_1["workitems"][number], keyof Workitem>]: never; })[] & { [K_8 in Exclude<keyof I_1["workitems"], keyof {
             _id?: string;
             name?: string;
@@ -1216,6 +1247,7 @@ export declare const PushWorkitemsResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         }[]>]: never; };
     } & { [K_9 in Exclude<keyof I_1, "workitems">]: never; }>(object: I_1): PushWorkitemsResponse;
 };
@@ -1250,6 +1282,7 @@ export declare const UpdateWorkitemRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
         ignoremaxretries?: boolean;
         files?: {
@@ -1284,6 +1317,7 @@ export declare const UpdateWorkitemRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1324,6 +1358,7 @@ export declare const UpdateWorkitemRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitem"], keyof Workitem>]: never; };
         ignoremaxretries?: boolean;
         files?: {
@@ -1374,6 +1409,7 @@ export declare const UpdateWorkitemRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
         ignoremaxretries?: boolean;
         files?: {
@@ -1408,6 +1444,7 @@ export declare const UpdateWorkitemRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1448,6 +1485,7 @@ export declare const UpdateWorkitemRequest: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_8 in Exclude<keyof I_1["workitem"], keyof Workitem>]: never; };
         ignoremaxretries?: boolean;
         files?: {
@@ -1504,6 +1542,7 @@ export declare const UpdateWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
     } & {
         workitem?: {
@@ -1531,6 +1570,7 @@ export declare const UpdateWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1571,6 +1611,7 @@ export declare const UpdateWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitem"], keyof Workitem>]: never; };
     } & { [K_3 in Exclude<keyof I, "workitem">]: never; }>(base?: I): UpdateWorkitemResponse;
     fromPartial<I_1 extends {
@@ -1599,6 +1640,7 @@ export declare const UpdateWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
     } & {
         workitem?: {
@@ -1626,6 +1668,7 @@ export declare const UpdateWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1666,6 +1709,7 @@ export declare const UpdateWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitem"], keyof Workitem>]: never; };
     } & { [K_7 in Exclude<keyof I_1, "workitem">]: never; }>(object: I_1): UpdateWorkitemResponse;
 };
@@ -1728,6 +1772,7 @@ export declare const PopWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
     } & {
         workitem?: {
@@ -1755,6 +1800,7 @@ export declare const PopWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1795,6 +1841,7 @@ export declare const PopWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitem"], keyof Workitem>]: never; };
     } & { [K_3 in Exclude<keyof I, "workitem">]: never; }>(base?: I): PopWorkitemResponse;
     fromPartial<I_1 extends {
@@ -1823,6 +1870,7 @@ export declare const PopWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         };
     } & {
         workitem?: {
@@ -1850,6 +1898,7 @@ export declare const PopWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & {
             _id?: string;
             name?: string;
@@ -1890,6 +1939,7 @@ export declare const PopWorkitemResponse: {
             errormessage?: string;
             errorsource?: string;
             errortype?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitem"], keyof Workitem>]: never; };
     } & { [K_7 in Exclude<keyof I_1, "workitem">]: never; }>(object: I_1): PopWorkitemResponse;
 };
@@ -1950,6 +2000,7 @@ export declare const WorkItemQueue: {
         _modified?: Date | undefined;
         _version?: number;
         packageid?: string;
+        _workspaceid?: string;
     } & {
         workflowid?: string;
         robotqueue?: string;
@@ -1990,6 +2041,7 @@ export declare const WorkItemQueue: {
         _modified?: Date | undefined;
         _version?: number;
         packageid?: string;
+        _workspaceid?: string;
     } & { [K_2 in Exclude<keyof I, keyof WorkItemQueue>]: never; }>(base?: I): WorkItemQueue;
     fromPartial<I_1 extends {
         workflowid?: string;
@@ -2019,6 +2071,7 @@ export declare const WorkItemQueue: {
         _modified?: Date | undefined;
         _version?: number;
         packageid?: string;
+        _workspaceid?: string;
     } & {
         workflowid?: string;
         robotqueue?: string;
@@ -2059,6 +2112,7 @@ export declare const WorkItemQueue: {
         _modified?: Date | undefined;
         _version?: number;
         packageid?: string;
+        _workspaceid?: string;
     } & { [K_5 in Exclude<keyof I_1, keyof WorkItemQueue>]: never; }>(object: I_1): WorkItemQueue;
 };
 export declare const AddWorkItemQueueRequest: {
@@ -2095,6 +2149,7 @@ export declare const AddWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
         skiprole?: boolean;
     } & {
@@ -2126,6 +2181,7 @@ export declare const AddWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2166,6 +2222,7 @@ export declare const AddWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
         skiprole?: boolean;
     } & { [K_3 in Exclude<keyof I, keyof AddWorkItemQueueRequest>]: never; }>(base?: I): AddWorkItemQueueRequest;
@@ -2198,6 +2255,7 @@ export declare const AddWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
         skiprole?: boolean;
     } & {
@@ -2229,6 +2287,7 @@ export declare const AddWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2269,6 +2328,7 @@ export declare const AddWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
         skiprole?: boolean;
     } & { [K_7 in Exclude<keyof I_1, keyof AddWorkItemQueueRequest>]: never; }>(object: I_1): AddWorkItemQueueRequest;
@@ -2307,6 +2367,7 @@ export declare const AddWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
     } & {
         workitemqueue?: {
@@ -2337,6 +2398,7 @@ export declare const AddWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2377,6 +2439,7 @@ export declare const AddWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
     } & { [K_3 in Exclude<keyof I, "workitemqueue">]: never; }>(base?: I): AddWorkItemQueueResponse;
     fromPartial<I_1 extends {
@@ -2408,6 +2471,7 @@ export declare const AddWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
     } & {
         workitemqueue?: {
@@ -2438,6 +2502,7 @@ export declare const AddWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2478,6 +2543,7 @@ export declare const AddWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
     } & { [K_7 in Exclude<keyof I_1, "workitemqueue">]: never; }>(object: I_1): AddWorkItemQueueResponse;
 };
@@ -2515,6 +2581,7 @@ export declare const UpdateWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
         skiprole?: boolean;
         purge?: boolean;
@@ -2547,6 +2614,7 @@ export declare const UpdateWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2587,6 +2655,7 @@ export declare const UpdateWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
         skiprole?: boolean;
         purge?: boolean;
@@ -2620,6 +2689,7 @@ export declare const UpdateWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
         skiprole?: boolean;
         purge?: boolean;
@@ -2652,6 +2722,7 @@ export declare const UpdateWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2692,6 +2763,7 @@ export declare const UpdateWorkItemQueueRequest: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
         skiprole?: boolean;
         purge?: boolean;
@@ -2731,6 +2803,7 @@ export declare const UpdateWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
     } & {
         workitemqueue?: {
@@ -2761,6 +2834,7 @@ export declare const UpdateWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2801,6 +2875,7 @@ export declare const UpdateWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_2 in Exclude<keyof I["workitemqueue"], keyof WorkItemQueue>]: never; };
     } & { [K_3 in Exclude<keyof I, "workitemqueue">]: never; }>(base?: I): UpdateWorkItemQueueResponse;
     fromPartial<I_1 extends {
@@ -2832,6 +2907,7 @@ export declare const UpdateWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         };
     } & {
         workitemqueue?: {
@@ -2862,6 +2938,7 @@ export declare const UpdateWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & {
             workflowid?: string;
             robotqueue?: string;
@@ -2902,6 +2979,7 @@ export declare const UpdateWorkItemQueueResponse: {
             _modified?: Date | undefined;
             _version?: number;
             packageid?: string;
+            _workspaceid?: string;
         } & { [K_6 in Exclude<keyof I_1["workitemqueue"], keyof WorkItemQueue>]: never; };
     } & { [K_7 in Exclude<keyof I_1, "workitemqueue">]: never; }>(object: I_1): UpdateWorkItemQueueResponse;
 };
