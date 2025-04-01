@@ -140,6 +140,9 @@ export class openiap {
             if (message && !message.startsWith("Disconnected from server")) {
                 err(new Error("Disconnected from server " + message));
             }
+            else {
+                info("Disconnected from server");
+            }
         }
         else {
             info("Disconnected from server");
