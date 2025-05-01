@@ -649,8 +649,6 @@ export class openiap {
     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
     */
     async AddWorkItemQueue(options: AddWorkItemQueueOptions, priority: number = 2): Promise<WorkItemQueue> {
-        if (!this.connected) throw new Error("Not connected to server");
-        if (!this.signedin) throw new Error("Not signed in to server");
         const opt: AddWorkItemQueueOptions = Object.assign(new AddWorkItemQueueDefaults(), options)
         let message = AddWorkItemQueueRequest.create(opt as any);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.AddWorkItemQueueRequest", "value": AddWorkItemQueueRequest.encode(message).finish() })
@@ -665,8 +663,6 @@ export class openiap {
     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
     */
     async UpdateWorkItemQueue(options: UpdateWorkItemQueueOptions, priority: number = 2): Promise<WorkItemQueue> {
-        if (!this.connected) throw new Error("Not connected to server");
-        if (!this.signedin) throw new Error("Not signed in to server");
         const opt: UpdateWorkItemQueueOptions = Object.assign(new UpdateWorkItemQueueDefaults(), options)
         let message = UpdateWorkItemQueueRequest.create(opt as any);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.UpdateWorkItemQueueRequest", "value": UpdateWorkItemQueueRequest.encode(message).finish() })
@@ -681,8 +677,6 @@ export class openiap {
     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
     */
     async DeleteWorkItemQueue(options: DeleteWorkItemQueueOptions, priority: number = 2): Promise<void> {
-        if (!this.connected) throw new Error("Not connected to server");
-        if (!this.signedin) throw new Error("Not signed in to server");
         const opt: DeleteWorkItemQueueOptions = Object.assign(new DeleteWorkItemQueueDefaults(), options)
         let message = DeleteWorkItemQueueRequest.create(opt as any);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.DeleteWorkItemQueueRequest", "value": DeleteWorkItemQueueRequest.encode(message).finish() })

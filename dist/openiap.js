@@ -715,10 +715,6 @@ export class openiap {
     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
     */
     async AddWorkItemQueue(options, priority = 2) {
-        if (!this.connected)
-            throw new Error("Not connected to server");
-        if (!this.signedin)
-            throw new Error("Not signed in to server");
         const opt = Object.assign(new AddWorkItemQueueDefaults(), options);
         let message = AddWorkItemQueueRequest.create(opt);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.AddWorkItemQueueRequest", "value": AddWorkItemQueueRequest.encode(message).finish() });
@@ -733,10 +729,6 @@ export class openiap {
     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
     */
     async UpdateWorkItemQueue(options, priority = 2) {
-        if (!this.connected)
-            throw new Error("Not connected to server");
-        if (!this.signedin)
-            throw new Error("Not signed in to server");
         const opt = Object.assign(new UpdateWorkItemQueueDefaults(), options);
         let message = UpdateWorkItemQueueRequest.create(opt);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.UpdateWorkItemQueueRequest", "value": UpdateWorkItemQueueRequest.encode(message).finish() });
@@ -751,10 +743,6 @@ export class openiap {
     * @param priority Message priority, the higher the number the higher the priority. Default is 2, 3 or higher requeires updates to server configuration
     */
     async DeleteWorkItemQueue(options, priority = 2) {
-        if (!this.connected)
-            throw new Error("Not connected to server");
-        if (!this.signedin)
-            throw new Error("Not signed in to server");
         const opt = Object.assign(new DeleteWorkItemQueueDefaults(), options);
         let message = DeleteWorkItemQueueRequest.create(opt);
         const data = Any.create({ type_url: "type.googleapis.com/openiap.DeleteWorkItemQueueRequest", "value": DeleteWorkItemQueueRequest.encode(message).finish() });
